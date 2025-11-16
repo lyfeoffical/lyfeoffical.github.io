@@ -347,6 +347,52 @@
     font-family: 'Prompt', sans-serif;
     box-shadow: 0 0 20px rgba(255,0,70,0.6);
 }
+
+
+.music-player {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
+  z-index: 999;
+  transition: transform 0.4s ease-in-out;
+}
+
+/* ปุ่ม toggle */
+#toggleBtn {
+  position: absolute;
+  top: 26%;
+  right: -25px;
+  width: 25px;
+  height: 50px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 0 12px 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+#toggleBtn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.music-player.hidden {
+  transform: translateX(-260px); /* เลื่อนออกจากจอ */
+}
+
   </style>
 </head>
 
@@ -356,7 +402,7 @@
     <div class="box">กดทำควยไร</div>
 </div>
 
-<div class="music-player">
+<div class="music-player" id="musicPlayer">
     <div class="cover-container">
         <img id="cover" src="cover.jpg" class="music-cover">
     </div>
@@ -368,10 +414,15 @@
             <i id="playPause" class="fa-solid fa-play"></i>
             <input type="range" id="trackBar" value="0" min="0">
         </div>
-
-        <audio id="music" src="music.mp3"></audio>
     </div>
+
+    <div id="toggleBtn">
+        <i class="fa-solid fa-angle-left"></i>
+    </div>
+
+    <audio id="music" src="music.mp3"></audio>
 </div>
+
 
 
   <!-- 🔹 Navbar -->
@@ -620,6 +671,22 @@ function showBlockPopup() {
         setTimeout(() => popup.style.display = "none", 400);
     }, 2000);
 }
+
+const musicPlayer = document.getElementById("musicPlayer");
+const toggleBtn = document.getElementById("toggleBtn");
+
+toggleBtn.addEventListener("click", () => {
+    musicPlayer.classList.toggle("hidden");
+
+    // เปลี่ยนไอคอนตามสถานะ
+    const icon = toggleBtn.querySelector("i");
+    if(musicPlayer.classList.contains("hidden")) {
+        icon.classList.replace("fa-angle-left", "fa-angle-right");
+    } else {
+        icon.classList.replace("fa-angle-right", "fa-angle-left");
+    }
+});
+
   </script>
 
 </body>
