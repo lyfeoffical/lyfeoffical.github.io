@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LYFESTYLE - ROLEPLAY</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LYFESTYLE - HOME</title>
+  <link rel="icon" type="image/png" href="https://media.discordapp.net/attachments/1096094177827225650/1305581275845074984/lyfe_white.png">
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700&family=Bebas+Neue&family=Sarabun&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     :root {
       --bg-color: #0e0e0e;
@@ -21,19 +20,23 @@
       --nav-font: 'Bebas Neue', sans-serif;
     }
 
-    * {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-      font-family: var(--body-font);
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: var(--bg-color);
+  background-image: 
+    linear-gradient(rgb(14, 14, 14), rgba(14, 14, 14, 0.886)),
+    url('https://img5.pic.in.th/file/secure-sv1/ChatGPT_Image_Sep_20_2025_02_07_49_AM.png');
+
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 80vw;
       color: var(--text);
-      min-height: 100vh;
+      font-family: var(--body-font);
+      overflow-x: hidden;
     }
 
-    /* 🔹 Navbar เหมือนหน้าแรก */
+
+    /* 🔹 Navbar */
     header {
       background: rgba(14,14,14,0.85);
       backdrop-filter: blur(12px);
@@ -43,30 +46,28 @@
       border-bottom: 1px solid #2a2a2a;
       z-index: 10;
     }
-
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
     .logo img {
       height: 40px;
       filter: drop-shadow(0 0 10px var(--accent-glow));
       transition: 0.3s;
     }
-    .logo img:hover { transform: scale(1.05); }
-
+    .logo img:hover {
+      transform: scale(1.05);
+    }
     nav ul {
       list-style: none;
       display: flex;
       gap: 40px;
     }
-
     nav a {
       color: #ccc;
-      font-family: var(--nav-font);
       text-decoration: none;
+      font-family: var(--nav-font);
       font-size: 1.3rem;
       letter-spacing: 2px;
       display: flex;
@@ -75,7 +76,6 @@
       position: relative;
       transition: 0.3s;
     }
-
     nav a::after {
       content: "";
       position: absolute;
@@ -86,246 +86,149 @@
       background: var(--accent);
       transition: width 0.3s;
     }
-
     nav a:hover,
-    nav a.active { color: #fff; }
-
+    nav a.active {
+      color: #fff;
+    }
     nav a:hover::after,
-    nav a.active::after { width: 100%; }
-
-    .title {
-      text-align: center;
-      font-size: 3rem;
-      margin-top: 40px;
-      font-family: 'Kanit', sans-serif;
+    nav a.active::after {
+      width: 100%;
     }
 
-    .highlight {
+    /* 🔹 Hero */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 40vh;
+      margin-top: 60px;
+      animation: fadeInDown 0.8s ease-out both;
+    }
+    .hero h1 {
+      font-family: var(--heading-font);
+      font-size: 3.5rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+    }
+    .hero h1 .highlight {
       color: var(--accent);
       text-shadow: 0 0 15px var(--accent-glow);
     }
-
-    .search-box {
-      text-align: center;
-      margin: 30px 0 40px;
-    }
-
-    .search-box input {
-      width: 300px;
-      padding: 12px 18px;
-      border-radius: 25px;
-      border: 1px solid #333;
-      outline: none;
-      font-size: 15px;
-      background: #121212;
-      color: var(--text);
-      box-shadow: 0 0 12px rgba(168,168,168,0.15);
-      transition: 0.3s;
-    }
-
-    .search-box input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 18px var(--accent-glow);
-    }
-
-    table {
-      width: 90%;
-      max-width: 900px;
-      margin: auto;
-      margin-bottom: 30px;
-      border-collapse: collapse;
-      background: #151515;
-      border: 1px solid #2a2a2a;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    
-    th, td {
-      padding: 14px 20px;
-      text-align: left;
-    }
-
-    th {
-      background: #1d1d1d;
-      color: var(--accent);
-      font-family: 'Bebas Neue', sans-serif;
-      letter-spacing: 2px;
-    }
-
-    tr {
-      border-bottom: 1px solid #222;
-      transition: .2s;
-    }
-
-    tr:hover {
-      background: #202020;
-    }
-
-    /* 🔹 Member Table */
-    .member-list {
-      width: 90%;
-      max-width: 800px;
-      margin: 0 auto 60px;
-      border-collapse: collapse;
-      background: #151515;
-      border: 1px solid #2a2a2a;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .member-list thead {
-      background: #1b1b1b;
-      border-bottom: 2px solid var(--accent);
-    }
-
-    .member-list th,
-    .member-list td {
-      padding: 15px 20px;
-      text-align: left;
-    }
-
-    .member-list th {
+    .hero-button {
       font-family: var(--nav-font);
       font-size: 1.2rem;
       letter-spacing: 2px;
-      color: var(--accent);
-    }
-
-    .member-list tbody tr {
-      border-bottom: 1px solid #222;
+      color: var(--text);
+      background: transparent;
+      border: 2px solid var(--accent);
+      padding: 10px 30px;
+      margin-top: 25px;
       transition: 0.3s;
     }
-
-    .member-list tbody tr:hover {
-      background: #202020;
-      box-shadow: inset 0 0 12px var(--accent-glow);
+    .hero-button:hover {
+      background: var(--accent);
+      color: var(--bg-color);
+      box-shadow: 0 0 20px var(--accent-glow);
+      transform: translateY(-2px);
     }
 
-    .member-list td { color: #ddd; }
+    .title-lyfe {
+      font-size: 3rem;
+      text-align: center;
+      color: #fff;
+      margin-top: 40px;
+      letter-spacing: 2px;
+    }
 
-    /* Facebook button */
-    .fb-btn {
-      padding: 6px 12px;
-      background: #1877f2;
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 14px;
+    .highlight {
+      color: #fffbfb;
+      text-shadow: 0 0 10px #fffbfb, 0 0 20px #fffbfb;
+    }
+
+    /* เด้ง + เรืองแสง */
+    .bounce1, .bounce2 {
       display: inline-block;
-      transition: .2s;
-    }
-    .fb-btn:hover {
-      background: #0f5bcc;
+      animation: bounceGlow 2.5s ease-in-out infinite;
     }
 
-    /* Pagination */
-    .pagination {
+    .bounce2 {
+      animation-delay: 1.25s; /* เด้งสลับกัน */
+    }
+
+    @keyframes bounceGlow {
+      0%, 100% {
+        transform: translateY(0);
+        text-shadow: 0 0 10px rgba(0,191,255,0.3);
+      }
+      50% {
+        transform: translateY(-10px);
+        text-shadow: 0 0 20px rgb(221, 221, 221), 0 0 40px rgba(255, 255, 255, 0.8);
+      }
+    }
+
+
+
+    .latest-news {
+      margin-top: 70px;
       text-align: center;
-      margin: 20px 0 40px;
-      display: flex;
+    }
+    .section-title {
+      font-family: var(--heading-font);
+      font-size: 2.5rem;
+      border-bottom: 3px solid var(--accent);
+      display: inline-block;
+      padding-bottom: 10px;
+      margin-bottom: 40px;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
       justify-content: center;
-      gap: 12px;
+      padding: 0 40px;
     }
-
-    .page-btn {
-      padding: 10px 18px;
-      background: #1a1a1a;
-      border: 1px solid #333;
-      color: #eee;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: .2s;
+    .news-card {
+      background: var(--surface-color);
+      border: 1px solid #282828;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: 0.4s;
     }
-
-    .page-btn:hover {
-      background: #252525;
-      box-shadow: 0 0 10px var(--accent-glow);
+    .news-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 20px var(--accent-glow);
     }
-
-    .disabled {
-      opacity: .3;
-      pointer-events: none;
+    .card-img {
+      width: 100%;
+      height: 180px;
+      background-size: cover;
+      background-position: center;
     }
-
-    footer {
-      text-align: center;
-      margin: 40px 0;
-      color: #777;
-      font-size: 14px;
+    .card-content {
+      padding: 15px 20px;
+    }
+    .card-category {
+      color: var(--accent);
+      font-family: var(--nav-font);
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
+    .card-content h3 {
+      margin-top: 8px;
+      font-size: 1.4rem;
+      color: #fff;
+    }
+    
+    /* 🔹 Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     
-/* 🎵 Music Player Bottom Left */
-/* 🎧 Elegant Music Player */
-.music-player {
-  position: fixed;
-  bottom: 25px;
-  left: 25px;
-  width: 280px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.17);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
-  z-index: 999;
-}
-
-.cover-container {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid rgba(255,255,255,0.7);
-}
-
-.music-cover {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  animation: rotateCover 4s linear infinite paused;
-}
-
-/* หมุนปกตอนเล่นเพลง */
-@keyframes rotateCover {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.music-title {
-  font-size: 14px;
-  font-weight: bold;
-  color: #ffffff;
-  text-shadow: 0 0 5px black;
-}
-
-.controls {
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.controls i {
-  font-size: 20px;
-  cursor: pointer;
-  color: #fff;
-  transition: 0.2s;
-}
-
-.controls i:hover {
-  transform: scale(1.2);
-}
-
-#trackBar {
-  width: 140px;
-  accent-color: #ffffff;
-}
-
 #block-popup {
     display: none;
     position: fixed;
@@ -348,230 +251,144 @@
     box-shadow: 0 0 20px rgba(255,0,70,0.6);
 }
 
-
-.music-player {
-  position: fixed;
-  bottom: 25px;
-  left: 25px;
-  width: 280px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.17);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
-  z-index: 999;
-  transition: transform 0.4s ease-in-out;
-}
-
-/* ปุ่ม toggle */
-#toggleBtn {
-  position: absolute;
-  top: 26%;
-  right: -25px;
-  width: 25px;
-  height: 50px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 0 12px 12px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* 🔹 ปุ่ม Hamburger */
+.hamburger {
+  display: none;
+  width: 32px;
+  height: 22px;
+  flex-direction: column;
+  justify-content: space-between;
   cursor: pointer;
-  color: #fff;
-  font-size: 18px;
+  z-index: 9999;
+}
+
+.hamburger span {
+  display: block;
+  height: 4px;
+  background: white;
+  border-radius: 4px;
+  transition: 0.4s;
+}
+
+/* เปิดเมนู → เปลี่ยนรูปเป็นกากบาท */
+.hamburger.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* 🔹 เมนูมือถือ */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background: rgba(20,20,20,0.95);
+  backdrop-filter: blur(6px);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 15px;
+  z-index: 9998;
+  animation: fadeIn 0.3s ease;
+}
+
+.mobile-menu a {
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  border-radius: 8px;
   transition: 0.3s;
+  font-family: 'Bebas Neue', sans-serif;
 }
 
-#toggleBtn:hover {
-  background: rgba(255,255,255,0.3);
+.mobile-menu a:hover {
+  background: #333;
 }
 
-.music-player.hidden {
-  transform: translateX(-260px); /* เลื่อนออกจากจอ */
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
 }
 
+/* ===== MOBILE MODE ===== */
+@media (max-width: 768px) {
+  nav.nav-desktop {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+    
   </style>
 </head>
-
 <body>
 
+  
 <div id="block-popup">
     <div class="box">กดทำควยไร</div>
 </div>
 
-<div class="music-player" id="musicPlayer">
-    <div class="cover-container">
-        <img id="cover" src="cover.jpg" class="music-cover">
-    </div>
 
-    <div class="music-content">
-        <div class="music-title">LYFESTYLE GANG - LYCAN</div>
-
-        <div class="controls">
-            <i id="playPause" class="fa-solid fa-play"></i>
-            <input type="range" id="trackBar" value="0" min="0">
-        </div>
-    </div>
-
-    <div id="toggleBtn">
-        <i class="fa-solid fa-angle-left"></i>
-    </div>
-
-    <audio id="music" src="music.mp3"></audio>
-</div>
-
-
-
-  <!-- 🔹 Navbar -->
   <header>
     <div class="navbar">
       <div class="logo">
         <img src="https://img5.pic.in.th/file/secure-sv1/ChatGPT_Image_Sep_20_2025_02_07_49_AM.png" alt="LYFESTYLE Logo">
       </div>
-
       <nav>
         <ul>
-          <li><a href="index.html"><i class=""></i> HOME</a></li>
-          <li><a href="members.html"><i class=""></i> GANG MEMBERS</a></li>
-          <li><a href="membersrp.html" class="active"><i class=""></i> MEMBERS ROLEPLAY</a></li>
-          <li><a href="official.html"><i class=""></i> OFFICIAL</a></li>
+          <li><a href="index.html" class="active"><i class="fas fa-house-chimney"></i> HOME</a></li>
+          <li><a href="members.html"><i class="fas fa-users"></i> GANG MEMBERS</a></li>
+          <li><a href="membersrp.html"><i class="fas fa-users"></i> MEMBERS ROLEPLAY</a></li>
+          <li><a href="official.html" class=""><i class=""></i> OFFICIAL</a></li>
         </ul>
       </nav>
+      <!-- ปุ่ม Hamburger -->
+<div class="hamburger" onclick="toggleMenu()">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<!-- เมนูมือถือ -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">HOME</a>
+  <a href="members.html">GANG MEMBERS</a>
+  <a href="membersrp.html">MEMBERS ROLEPLAY</a>
+  <a href="official.html">OFFICIAL</a>
+</div>
     </div>
   </header>
 
-  <!-- 🔹 Title -->
-<h1 class="title"><span class="highlight"></span>LYFESTYLE MEMBERS ROLEPLAY</h1>
+  <section class="hero">
+    <h1>
+  <span class="bounce1">LYFESTYLE</span>
+  <span class="highlight bounce2">LIST</span>
+</h1>
+    <a href="members.html" class="hero-button">MEMBER LIST</a>
+  </section>
 
-  <!-- 🔹 Search -->
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="ค้นหาสมาชิก...">
-  </div>
-
-<table id="memberTable">
-  <thead>
-    <tr>
-      <th>MEMBERS LIST</th>
-      <th>SERVER</th>
-      <th>Facebook</th>
-    </tr>
-  </thead>
-  <tbody id="memberBody"></tbody>
-</table>
-
-<div class="pagination">
-  <button id="prevBtn" class="page-btn"> < </button>
-  <button id="nextBtn" class="page-btn"> > </button>
-</div>
-
-  <script>
-   const members = [
-    { name: "XeRz Lyfestyle", role: "PLAY COMMUNITY", fb: "https://web.facebook.com/profile.php?id=61582917428035" },
-    { name: "Nept Lyfestyle", role: "PLAY COMMUNITY", fb: "https://web.facebook.com/Mispers.Nowaja" },
-    { name: "Bray Lyfestyle", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/bray.lyfestyle" },
-    { name: "Jaypark Lyfestyle", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/jubjubjubjubjubjubjubjubjubjub" },
-    { name: "Aaiffyz Tripx", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/profile.php?id=61578934048364#" },
-    { name: "Gusjung Lovetoyou", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/delay.falstaff#" },
-    { name: "Gxvi Privy", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/gavi.privy#" },
-    { name: "Hellomikunakano Homieclub", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/nongpatchahighmind#" },
-    { name: "Jaobright Raikhonrak", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/profile.php?id=61580939525059#" },
-    { name: "Kwahii Pentagon", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/kwahii.pentagon#" },
-    { name: "Lama Freesmoke", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/betty.betty.betty.717380#" },
-    { name: "Martin Dekdee", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/rwraith.winter#" },
-    { name: "Rakd Badsometime", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/rak.d.wintom#" },
-    { name: "Remix Neverbrokeboyd", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/remix.neverbrokeboyd#" },
-    { name: "Sayfxckluv Phawha", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/jayhigh.phawhabestoftoxicboys#" },
-    { name: "SeeYou Gxssipgirl", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/aileen52197#" },
-    { name: "Shadowx Prime", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/roger.aboutme#" },
-    { name: "Zaika Sunfieldstyle", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/profile.php?id=61551734673581" },
-    { name: "วิน วิน เด็กดี", role: "PLAY COMMUNITY", fb: "https://www.facebook.com/vin.vin.vin.584595#" },
-  ];
-
-  let currentPage = 1;
-  const perPage = 9;
-
-  const body = document.getElementById("memberBody");
-  const prevBtn = document.getElementById("prevBtn");
-  const nextBtn = document.getElementById("nextBtn");
-  const searchInput = document.getElementById("searchInput");
-
-  let filteredList = members;
-
-  function renderTable() {
-    body.innerHTML = "";
-
-    const start = (currentPage - 1) * perPage;
-    const pageItems = filteredList.slice(start, start + perPage);
-
-    pageItems.forEach(m => {
-      body.innerHTML += `
-        <tr>
-          <td>${m.name}</td>
-          <td>${m.role}</td>
-          <td><a href="${m.fb}" target="_blank" class="fb-btn"><i class="fa-brands fa-facebook-f"></i> facebook</a></td>
-        </tr>`;
-    });
-
-    updateButtons();
-  }
-
-  function updateButtons() {
-    prevBtn.classList.toggle("disabled", currentPage === 1);
-    nextBtn.classList.toggle("disabled", currentPage * perPage >= filteredList.length);
-  }
-
-  prevBtn.onclick = () => {
-    if (currentPage > 1) currentPage--;
-    renderTable();
-  };
-
-  nextBtn.onclick = () => {
-    if (currentPage * perPage < filteredList.length) currentPage++;
-    renderTable();
-  };
-
-  searchInput.addEventListener("input", () => {
-    const keyword = searchInput.value.toLowerCase();
-    filteredList = members.filter(m => m.name.toLowerCase().includes(keyword));
-
-    currentPage = 1;
-    renderTable();
-  });
-
-  renderTable();
-
-const music = document.getElementById("music");
-const playPause = document.getElementById("playPause");
-const cover = document.getElementById("cover");
-const trackBar = document.getElementById("trackBar");
-
-// ▶ Play / Pause
-playPause.addEventListener("click", () => {
-  if (music.paused) {
-    music.play();
-    playPause.classList.replace("fa-play", "fa-pause");
-    cover.style.animationPlayState = "running";
-  } else {
-    music.pause();
-    playPause.classList.replace("fa-pause", "fa-play");
-    cover.style.animationPlayState = "paused";
-  }
-});
-
-// ⏱ Track Progress
-music.addEventListener("timeupdate", () => {
-  trackBar.value = (music.currentTime / music.duration) * 100;
-});
-
-// 🔘 Seek
-trackBar.addEventListener("input", () => {
-  music.currentTime = (trackBar.value / 100) * music.duration;
-});
-
-document.onkeydown = function(e) {
+  <section class="latest-news">
+    <h2 class="section-title">LATEST NEWS</h2>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="card-img" style="background-image:url('');"></div>
+        <div class="card-content">
+          <span class="card-category">coming soon</span>
+          <h3></h3>
+        </div>
+    </div>
+    <script>document.onkeydown = function(e) {
     if (e.keyCode == 123 ||
         (e.ctrlKey && e.shiftKey && e.keyCode == 73) ||
         (e.ctrlKey && e.shiftKey && e.keyCode == 74) ||
@@ -601,23 +418,20 @@ function showBlockPopup() {
     }, 2000);
 }
 
-const musicPlayer = document.getElementById("musicPlayer");
-const toggleBtn = document.getElementById("toggleBtn");
+function toggleMenu() {
+  const menu = document.getElementById("mobileMenu");
+  const burger = document.querySelector(".hamburger");
 
-toggleBtn.addEventListener("click", () => {
-    musicPlayer.classList.toggle("hidden");
-
-    // เปลี่ยนไอคอนตามสถานะ
-    const icon = toggleBtn.querySelector("i");
-    if(musicPlayer.classList.contains("hidden")) {
-        icon.classList.replace("fa-angle-left", "fa-angle-right");
-    } else {
-        icon.classList.replace("fa-angle-right", "fa-angle-left");
-    }
-});
-
-  </script>
-
+  if (menu.style.display === "flex") {
+    menu.style.display = "none";
+    burger.classList.remove("active");
+  } else {
+    menu.style.display = "flex";
+    burger.classList.add("active");
+  }
+}
+</script>
+  </section>
 </body>
 </html>
 
