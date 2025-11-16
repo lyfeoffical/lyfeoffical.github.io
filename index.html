@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LYFESTYLE - HOME</title>
+  <link rel="icon" type="image/png" href="https://media.discordapp.net/attachments/1096094177827225650/1305581275845074984/lyfe_white.png">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700&family=Bebas+Neue&family=Sarabun&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg-color: #0e0e0e;
+      --surface-color: #181818;
+      --accent: #fffbfb;
+      --accent-glow: rgba(168, 168, 168, 0.3);
+      --text: #fff;
+      --text-dim: #bbb;
+      --heading-font: 'Kanit', sans-serif;
+      --body-font: 'Sarabun', sans-serif;
+      --nav-font: 'Bebas Neue', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg-color);
+  background-image: 
+    linear-gradient(rgba(14,14,14,0.75), rgba(14,14,14,0.75)),
+    url('');
+
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 80vw;
+      color: var(--text);
+      font-family: var(--body-font);
+      overflow-x: hidden;
+    }
+
+
+    /* 🔹 Navbar */
+    header {
+      background: rgba(14,14,14,0.85);
+      backdrop-filter: blur(12px);
+      padding: 12px 50px;
+      position: sticky;
+      top: 0;
+      border-bottom: 1px solid #2a2a2a;
+      z-index: 10;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo img {
+      height: 40px;
+      filter: drop-shadow(0 0 10px var(--accent-glow));
+      transition: 0.3s;
+    }
+    .logo img:hover {
+      transform: scale(1.05);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+    }
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      font-family: var(--nav-font);
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      transition: 0.3s;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    nav a:hover,
+    nav a.active {
+      color: #fff;
+    }
+    nav a:hover::after,
+    nav a.active::after {
+      width: 100%;
+    }
+
+    /* 🔹 Hero */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 40vh;
+      margin-top: 60px;
+      animation: fadeInDown 0.8s ease-out both;
+    }
+    .hero h1 {
+      font-family: var(--heading-font);
+      font-size: 3.5rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+    }
+    .hero h1 .highlight {
+      color: var(--accent);
+      text-shadow: 0 0 15px var(--accent-glow);
+    }
+    .hero-button {
+      font-family: var(--nav-font);
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      color: var(--text);
+      background: transparent;
+      border: 2px solid var(--accent);
+      padding: 10px 30px;
+      margin-top: 25px;
+      transition: 0.3s;
+    }
+    .hero-button:hover {
+      background: var(--accent);
+      color: var(--bg-color);
+      box-shadow: 0 0 20px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .title-lyfe {
+      font-size: 3rem;
+      text-align: center;
+      color: #fff;
+      margin-top: 40px;
+      letter-spacing: 2px;
+    }
+
+    .highlight {
+      color: #fffbfb;
+      text-shadow: 0 0 10px #fffbfb, 0 0 20px #fffbfb;
+    }
+
+    /* เด้ง + เรืองแสง */
+    .bounce1, .bounce2 {
+      display: inline-block;
+      animation: bounceGlow 2.5s ease-in-out infinite;
+    }
+
+    .bounce2 {
+      animation-delay: 1.25s; /* เด้งสลับกัน */
+    }
+
+    @keyframes bounceGlow {
+      0%, 100% {
+        transform: translateY(0);
+        text-shadow: 0 0 10px rgba(0,191,255,0.3);
+      }
+      50% {
+        transform: translateY(-10px);
+        text-shadow: 0 0 20px rgb(221, 221, 221), 0 0 40px rgba(255, 255, 255, 0.8);
+      }
+    }
+
+
+
+    .latest-news {
+      margin-top: 70px;
+      text-align: center;
+    }
+    .section-title {
+      font-family: var(--heading-font);
+      font-size: 2.5rem;
+      border-bottom: 3px solid var(--accent);
+      display: inline-block;
+      padding-bottom: 10px;
+      margin-bottom: 40px;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      justify-content: center;
+      padding: 0 40px;
+    }
+    .news-card {
+      background: var(--surface-color);
+      border: 1px solid #282828;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: 0.4s;
+    }
+    .news-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .card-img {
+      width: 100%;
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+    }
+    .card-content {
+      padding: 15px 20px;
+    }
+    .card-category {
+      color: var(--accent);
+      font-family: var(--nav-font);
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
+    .card-content h3 {
+      margin-top: 8px;
+      font-size: 1.4rem;
+      color: #fff;
+    }
+    
+    /* 🔹 Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    
+#block-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    opacity: 0;
+    transition: .4s;
+}
+
+#block-popup .box {
+    background: #ff2e63;
+    padding: 20px 40px;
+    border-radius: 12px;
+    font-size: 22px;
+    color: white;
+    font-family: 'Prompt', sans-serif;
+    box-shadow: 0 0 20px rgba(255,0,70,0.6);
+}
+    
+  </style>
+</head>
+<body>
+
+  
+<div id="block-popup">
+    <div class="box">กดทำควยไร</div>
+</div>
+
+
+  <header>
+    <div class="navbar">
+      <div class="logo">
+        <img src="https://img5.pic.in.th/file/secure-sv1/ChatGPT_Image_Sep_20_2025_02_07_49_AM.png" alt="LYFESTYLE Logo">
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="active"><i class="fas fa-house-chimney"></i> HOME</a></li>
+          <li><a href="members.html"><i class="fas fa-users"></i> GANG MEMBERS</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>
+  <span class="bounce1">LYFESTYLE</span>
+  <span class="highlight bounce2">LIST</span>
+</h1>
+    <a href="members.html" class="hero-button">MEMBER LIST</a>
+  </section>
+
+  <section class="latest-news">
+    <h2 class="section-title">LATEST NEWS</h2>
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="card-img" style="background-image:url('');"></div>
+        <div class="card-content">
+          <span class="card-category">coming soon</span>
+          <h3></h3>
+        </div>
+    </div>
+    <script>document.onkeydown = function(e) {
+    if (e.keyCode == 123 ||
+        (e.ctrlKey && e.shiftKey && e.keyCode == 73) ||
+        (e.ctrlKey && e.shiftKey && e.keyCode == 74) ||
+        (e.ctrlKey && e.keyCode == 85)) {
+
+        showBlockPopup();
+        return false;
+    }
+};
+
+document.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    showBlockPopup();
+});
+
+function showBlockPopup() {
+    let popup = document.getElementById("block-popup");
+    popup.style.display = "flex";
+
+    setTimeout(() => {
+        popup.style.opacity = "1";
+    }, 10);
+
+    setTimeout(() => {
+        popup.style.opacity = "0";
+        setTimeout(() => popup.style.display = "none", 400);
+    }, 2000);
+}
+</script>
+  </section>
+</body>
+</html>
