@@ -239,8 +239,9 @@
       <div class="logo">
         <img src="https://img5.pic.in.th/file/secure-sv1/ChatGPT_Image_Sep_20_2025_02_07_49_AM.png" alt="LYFESTYLE Logo">
       </div>
-      <nav class="nav-desktop">
-      <ul>
+
+      <nav>
+        <ul>
           <li><a href="index.html"><i class=""></i> HOME</a></li>
           <li><a href="members.html"><i class=""></i> GANG MEMBERS</a></li>
           <li><a href="membersrp.html" class=""><i class=""></i> MEMBERS ROLEPLAY</a></li>
@@ -331,8 +332,36 @@ function toggleMenu() {
     burger.classList.add("active");
   }
 }
+
+// ป้องกันคลิกขวา
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+
+// ป้องกัน F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+document.onkeydown = function(e) {
+  // F12
+  if (e.keyCode == 123) {
+    return false;
+  }
+  // Ctrl+Shift+I
+  if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+    return false;
+  }
+  // Ctrl+Shift+J
+  if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+    return false;
+  }
+  // Ctrl+U
+  if (e.ctrlKey && e.keyCode == 85) {
+    return false;
+  }
+  // Ctrl+Shift+C
+  if (e.ctrlKey && e.shiftKey && e.keyCode == 67) {
+    return false;
+  }
+};
 </script>
 
 </body>
 </html>
-
