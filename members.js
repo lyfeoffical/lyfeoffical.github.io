@@ -28,6 +28,7 @@ const members = [
     { name: "Gethight Lyfestyle", fb: "https://web.facebook.com/gethight.lyfestely#", img: IMG },
     { name: "Holly Lyfestyle", fb: "https://web.facebook.com/profile.php?id=100089718131944#", img: IMG },
     { name: "Icobinwza Lyfestyle", fb: "https://web.facebook.com/CobLorion#", img: IMG },
+    { name: "Jaypark Lyfestyle", fb: "https://web.facebook.com/lyfestyleneverbroke", img: IMG },
     { name: "Jaymo Lyfestyle", fb: "https://web.facebook.com/jaymo.quieroxic#", img: IMG },
     { name: "Jaythxr Lyfestyle", fb: "https://web.facebook.com/jaythxr.lifestylepro#", img: IMG },
     { name: "Jayz Lyfestyle", fb: "https://web.facebook.com/jz.Lyfestyle#", img: IMG },
@@ -66,4 +67,5 @@ const members = [
     { name: "Sun Lyfestyle", fb: "https://web.facebook.com/profile.php?id=61591541034330#", img: IMG },
     { name: "Yoohoo Lyfestyle", fb: "https://web.facebook.com/justcry.leonard", img: IMG },
     { name: "Dont Lyfestyle", fb: "https://web.facebook.com/DONTCRYLYFESTYLE#", img: IMG },
+    { name: "Cristz Lyfestyle", fb: "https://web.facebook.com/jasper.jasper.jasper.2024", img: IMG },    
 ];
