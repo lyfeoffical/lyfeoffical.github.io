@@ -4,146 +4,408 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ไลฟ์สไตล์.com</title>
-
+  <link rel="icon" type="image/png" href="https://img1.pic.in.th/images/3004g.png">
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&family=Bebas+Neue&family=Sarabun:wght@300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
     :root {
-      --bg-color: #080808;
-      --surface-color: rgba(255, 255, 255, 0.05);
+      --bg-color: #030303;
+      --surface-color: rgba(255, 255, 255, 0.02);
+      --surface-border: rgba(255, 255, 255, 0.05);
+      --surface-hover: rgba(255, 255, 255, 0.05);
       --accent: #ffffff;
-      --text: #ffffff;
-      --text-dim: #bbb;
+      --accent-glow: rgba(255, 255, 255, 0.25);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.4);
       --nav-font: 'Bebas Neue', sans-serif;
       --heading-font: 'Kanit', sans-serif;
+      --body-font: 'Sarabun', sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
       background: var(--bg-color);
-      color: var(--text);
-      font-family: 'Sarabun', sans-serif;
+      color: var(--text-primary);
+      font-family: var(--body-font);
       overflow-x: hidden;
       opacity: 0; /* สำหรับ Fade-in */
-      transition: opacity 0.6s ease-in-out;
+      transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     body.loaded { opacity: 1; }
 
     /* 🔹 Background System */
     .bg-animation { position: fixed; inset: 0; z-index: -3; background: url('background.gif') center/cover no-repeat; }
-    .bg-overlay { position: fixed; inset: 0; z-index: -2; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); }
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: rgba(3, 3, 3, 0.75);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+    .bg-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(circle at center, transparent 30%, rgba(3, 3, 3, 0.95) 100%);
+      pointer-events: none;
+    }
+
+    /* 🔹 Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #030303; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
 
     /* 🔹 Header & Navbar */
     header {
-      background: rgba(8, 8, 8, 0.5);
-      backdrop-filter: blur(20px);
-      padding: 15px 5%;
-      position: fixed; width: 100%; top: 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(3, 3, 3, 0.25);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      padding: 18px 5%;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      border-bottom: 1px solid var(--surface-border);
       z-index: 1000;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .navbar { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
-    .logo img { height: 40px; }
     
-    nav.nav-desktop ul { list-style: none; display: flex; gap: 35px; }
+    .logo img {
+      height: 42px;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.15));
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .logo a {
+      display: inline-block;
+      text-decoration: none;
+    }
+    .logo a:hover img {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.35));
+    }
+    
+    nav.nav-desktop ul { list-style: none; display: flex; gap: 40px; }
+    
     nav.nav-desktop a { 
-        color: var(--text-dim); text-decoration: none; font-family: var(--nav-font); 
-        font-size: 1.1rem; letter-spacing: 2px; transition: 0.3s; position: relative;
+        color: var(--text-secondary); text-decoration: none; font-family: var(--nav-font); 
+        font-size: 1.05rem; letter-spacing: 2px; transition: 0.3s; position: relative;
+        padding: 6px 0;
     }
     nav.nav-desktop a::after {
-        content: ''; position: absolute; bottom: -5px; left: 50%; width: 0; height: 2px;
-        background: #fff; transition: 0.3s; transform: translateX(-50%);
+        content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px;
+        background: #fff; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateX(-50%);
+        box-shadow: 0 0 12px rgba(255,255,255,0.8);
     }
     nav.nav-desktop a:hover::after, nav.nav-desktop a.active::after { width: 100%; }
-    nav.nav-desktop a:hover, nav.nav-desktop a.active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+    nav.nav-desktop a:hover, nav.nav-desktop a.active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
 
     /* 🔹 Hamburger Menu */
     .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 6px; z-index: 1100; }
-    .hamburger span { width: 30px; height: 2px; background: #fff; transition: 0.3s; }
+    .hamburger span { width: 28px; height: 2px; background: #fff; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
     .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
     .hamburger.active span:nth-child(2) { opacity: 0; }
     .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
 
     .mobile-menu {
       position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-      background: rgba(8, 8, 8, 0.98); backdrop-filter: blur(15px);
+      background: rgba(3, 3, 3, 0.98); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      gap: 30px; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1050;
+      gap: 40px; transition: right 0.6s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1050;
     }
     .mobile-menu.active { right: 0; }
-    .mobile-menu a { color: #fff; font-family: var(--nav-font); font-size: 2rem; text-decoration: none; letter-spacing: 5px; }
+    .mobile-menu a {
+      color: #fff; font-family: var(--nav-font); font-size: 2.2rem; text-decoration: none; letter-spacing: 5px;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .mobile-menu a:hover { transform: scale(1.08); text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
 
     /* 🔹 Official Content */
     .container { max-width: 1200px; margin: 150px auto 100px; padding: 0 30px; }
-    .title-section h1 { font-family: 'Bebas Neue'; font-size: clamp(3rem, 8vw, 4.5rem); letter-spacing: 15px; text-align: center; margin-bottom: 10px; }
+    
+    .title-section h1 {
+      font-family: var(--heading-font);
+      font-size: clamp(3rem, 8vw, 4.5rem);
+      letter-spacing: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 12px;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
     .underline-glow { width: 100px; height: 3px; background: #fff; margin: 0 auto 60px; box-shadow: 0 0 20px #fff; }
 
     .official-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
+      gap: 40px;
     }
 
     .official-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 40px;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 24px;
+      padding: 50px 35px;
       text-align: center;
-      transition: 0.4s ease;
-      backdrop-filter: blur(10px);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Shimmer outline on hover */
+    .official-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+      transform: skewX(-25deg);
+      transition: 0.75s;
+      pointer-events: none;
+    }
+
+    .official-card:hover::before {
+      left: 150%;
     }
 
     .official-card:hover {
-      transform: translateY(-10px);
-      background: rgba(255, 255, 255, 0.08);
-      border-color: #fff;
+      transform: translateY(-10px) scale(1.02);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.08);
     }
 
-    .official-card i { font-size: 3rem; margin-bottom: 20px; color: #fff; }
-    .official-card h3 { font-family: 'Kanit'; font-size: 1.5rem; margin-bottom: 20px; letter-spacing: 2px; }
+    .official-card i {
+      font-size: 3.5rem;
+      margin-bottom: 25px;
+      color: #fff;
+      transition: all 0.4s ease;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+    }
+
+    .official-card:hover i {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+    }
+
+    .official-card h3 {
+      font-family: var(--heading-font);
+      font-size: 1.4rem;
+      margin-bottom: 25px;
+      letter-spacing: 3px;
+      font-weight: 500;
+    }
     
     .official-link {
       display: inline-block;
       background: #fff;
       color: #000;
       text-decoration: none;
-      padding: 12px 30px;
+      padding: 12px 35px;
       border-radius: 50px;
       font-family: 'Bebas Neue';
-      font-size: 1.1rem;
-      transition: 0.3s;
+      font-size: 1.05rem;
+      letter-spacing: 2px;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
     }
 
     .official-link:hover {
       background: transparent;
       color: #fff;
-      box-shadow: inset 0 0 0 1px #fff;
+      box-shadow: inset 0 0 0 1.5px #fff, 0 0 20px rgba(255, 255, 255, 0.35);
+      transform: translateY(-2px);
     }
 
-    /* 🔹 Volume UI */
+    /* 🔹 Volume Container Main Style */
     .volume-container {
-        position: fixed; bottom: 30px; right: 30px; z-index: 1001;
-        display: flex; align-items: center; padding: 8px;
-        background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50px;
-        width: 50px; height: 50px; transition: 0.5s; overflow: hidden;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 50px;
+      width: 50px;
+      height: 50px;
+      transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s, border-color 0.3s;
+      overflow: hidden;
+      cursor: pointer;
     }
-    .volume-container:hover { width: 200px; }
-    .vol-icon-box { min-width: 34px; text-align: center; cursor: pointer; }
-    .volume-slider { -webkit-appearance: none; width: 100%; height: 4px; background: rgba(255,255,255,0.1); outline: none; margin: 0 15px; cursor: pointer; }
+
+    .volume-container:hover {
+      width: 200px;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 255, 255, 0.05);
+    }
+
+    .volume-content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .vol-icon-box {
+      min-width: 34px;
+      height: 34px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .vol-icon-box i {
+      color: #fff;
+      font-size: 1.05rem;
+      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+    }
+
+    .slider-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding-right: 15px;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      pointer-events: none;
+    }
+
+    .volume-container:hover .slider-wrapper {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+      transition: transform 0.2s;
+    }
+
+    .volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
 
     /* 🔹 Block Popup */
-    #block-popup { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; }
-    #block-popup .box { background: #fff; color: #000; padding: 20px 40px; font-family: 'Bebas Neue'; font-size: 1.5rem; }
+    #block-popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 3, 3, 0.85);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    #block-popup .box {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.02);
+      color: #fff;
+      padding: 35px 70px;
+      border-radius: 20px;
+      font-family: var(--nav-font);
+      font-size: 2.2rem;
+      letter-spacing: 6px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      animation: alertBlink 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes alertBlink {
+      0% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+      100% { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.15); }
+    }
 
     @media (max-width: 768px) {
       nav.nav-desktop { display: none; }
       .hamburger { display: flex; }
+      
+      .container {
+          margin: 100px auto 60px;
+          padding: 0 20px;
+      }
+      
+      .title-section h1 {
+          font-size: 2.8rem;
+          letter-spacing: 8px;
+      }
+      
+      .official-grid {
+          gap: 20px;
+      }
+      
+      .official-card {
+          padding: 30px 20px;
+      }
+      
+      .volume-container {
+          bottom: 20px;
+          right: 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .title-section h1 {
+          font-size: 2.2rem;
+          letter-spacing: 5px;
+      }
+      .official-card i {
+          font-size: 2.5rem;
+          margin-bottom: 15px;
+      }
+      .official-card h3 {
+          font-size: 1.3rem;
+          margin-bottom: 15px;
+      }
+      .official-link {
+          padding: 10px 25px;
+          font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -151,11 +413,12 @@
 
   <div class="bg-animation"></div>
   <div class="bg-overlay"></div>
-  <div id="block-popup"><div class="box">ACCESS DENIED</div></div>
+  <div class="bg-vignette"></div>
+  <div id="block-popup"><div class="box">SYSTEM PROTECTED</div></div>
 
-  <header>
+  <header id="mainHeader">
     <div class="navbar">
-      <div class="logo"><img src="https://img5.pic.in.th/file/secure-sv1/ChatGPT_Image_Sep_20_2025_02_07_49_AM.png" alt="Logo"></div>
+      <div class="logo"><a href="index.html"><img src="https://img1.pic.in.th/images/3004g.png" alt="Logo"></a></div>
       <nav class="nav-desktop">
         <ul>
           <li><a href="index.html">HOME</a></li>
@@ -202,14 +465,18 @@
     </div>
   </div>
 
-  <div class="volume-container">
+  <div class="volume-container" id="volumeContainer">
+    <div class="volume-content">
       <div class="vol-icon-box" id="muteBtn"><i class="fa-solid fa-volume-high" id="volIcon"></i></div>
-      <input type="range" class="volume-slider" id="volSlider" min="0" max="1" step="0.01" value="0.5">
+      <div class="slider-wrapper">
+        <input type="range" class="volume-slider" id="volSlider" min="0" max="1" step="0.01" value="0.5">
+      </div>
+    </div>
   </div>
 
   <audio id="bgMusic" loop src="music.mp3"></audio>
 
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
   <script>
     // 🔹 Mobile Menu Logic
     const hamburger = document.getElementById('hamburgerBtn');
@@ -224,17 +491,17 @@
     // 🔹 Smooth Page Transition
     document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.add("loaded");
-        const links = document.querySelectorAll('nav a, .mobile-menu a');
+        const links = document.querySelectorAll('nav a, .mobile-menu a, .logo a');
         
         links.forEach(link => {
-            link.onclick = function(e) {
+            link.addEventListener('click', function(e) {
                 if (this.hostname === window.location.hostname && !this.target) {
                     e.preventDefault();
                     const url = this.href;
                     document.body.style.opacity = '0';
                     setTimeout(() => { window.location.href = url; }, 500);
                 }
-            };
+            });
         });
     });
 
@@ -245,7 +512,7 @@
 
     function updateAudioUI(v) {
         const p = v * 100;
-        if(volSlider) {
+        if (volSlider) {
             volSlider.value = v;
             volSlider.style.background = `linear-gradient(90deg, #fff ${p}%, rgba(255,255,255,0.1) ${p}%)`;
         }
@@ -254,80 +521,101 @@
 
     window.addEventListener("load", () => {
         const savedTime = localStorage.getItem("musicTime");
-        const savedVol = localStorage.getItem("musicVol") || 0.5;
+        const savedVol = parseFloat(localStorage.getItem("musicVol") || "0.5");
         const isMuted = localStorage.getItem("musicMuted") === "true";
 
         if (savedTime) music.currentTime = parseFloat(savedTime);
-        music.volume = isMuted ? 0 : parseFloat(savedVol);
-        updateAudioUI(music.volume);
+        music.volume = isMuted ? 0 : savedVol;
+        updateAudioUI(isMuted ? 0 : savedVol);
 
         music.play().catch(() => {
             document.addEventListener('click', () => music.play(), { once: true });
         });
-
-        particlesJS("particles-js", {
-          "particles": { "number": { "value": 50 }, "color": { "value": "#ffffff" }, "opacity": { "value": 0.1 }, "size": { "value": 2 }, "line_linked": { "enable": true, "distance": 150, "opacity": 0.05 }, "move": { "enable": true, "speed": 1 } }
-        });
     });
 
-    setInterval(() => { if(!music.paused) localStorage.setItem("musicTime", music.currentTime); }, 1000);
+    setInterval(() => { if (!music.paused) localStorage.setItem("musicTime", music.currentTime); }, 1000);
 
     volSlider.oninput = (e) => {
-        music.volume = e.target.value;
-        localStorage.setItem("musicVol", music.volume);
-        updateAudioUI(music.volume);
+        const v = parseFloat(e.target.value);
+        music.volume = v;
+        localStorage.setItem("musicVol", v);
+        if (v > 0) localStorage.setItem("musicMuted", "false");
+        updateAudioUI(v);
     };
 
     document.getElementById('muteBtn').onclick = () => {
-        if (music.volume > 0) {
-            music.dataset.lastVol = music.volume;
-            music.volume = 0;
+        const isMuted = localStorage.getItem("musicMuted") === "true";
+        if (!isMuted) {
+            // Mute — save current vol, set to 0
             localStorage.setItem("musicMuted", "true");
+            music.volume = 0;
         } else {
-            music.volume = music.dataset.lastVol || 0.5;
+            // Unmute — restore saved vol
+            const savedVol = parseFloat(localStorage.getItem("musicVol") || "0.5");
+            music.volume = savedVol;
             localStorage.setItem("musicMuted", "false");
         }
         updateAudioUI(music.volume);
     };
 
-                    // ระบบป้องกันการเปิดดูโค้ดและเซฟหน้าเว็บ (อัปเดตใหม่)
-document.addEventListener('keydown', function(e) {
-    // 1. ป้องกัน Ctrl + S (Save Page)
-    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) {
-        e.preventDefault();
-        // showAlert("ไม่อนุญาตให้บันทึกหน้าเว็บ", "danger"); // เปิดใช้ถ้าต้องการให้แจ้งเตือน
-        return false;
+    // 🔹 Security: Anti-Devtools & Right Click
+    function showBlockPopup() {
+        const popup = document.getElementById("block-popup");
+        if (!popup) return;
+        popup.style.display = "flex";
+        setTimeout(() => popup.style.opacity = "1", 10);
+        setTimeout(() => {
+            popup.style.opacity = "0";
+            setTimeout(() => popup.style.display = "none", 300);
+        }, 1500);
     }
 
-    // 2. ป้องกัน F12 (DevTools)
-    if (e.key === 'F12' || e.keyCode === 123) {
+    document.addEventListener('contextmenu', e => {
         e.preventDefault();
-        return false;
-    }
+        showBlockPopup();
+    });
 
-    // 3. ป้องกัน Ctrl + Shift + I / J / C (Inspect/Console)
-    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-        e.preventDefault();
-        return false;
-    }
+    document.addEventListener('keydown', e => {
+        // 1. ป้องกัน Ctrl + S (Save Page)
+        if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+        // 2. ป้องกัน F12 (DevTools)
+        if (e.key === 'F12' || e.keyCode === 123) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+        // 3. ป้องกัน Ctrl + Shift + I / J / C (Inspect/Console)
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+        // 4. ป้องกัน Ctrl + U (View Source)
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+    }, false);
 
-    // 4. ป้องกัน Ctrl + U (View Source)
-    if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) {
-        e.preventDefault();
-        return false;
-    }
-}, false);
-
-// 5. ป้องกันการคลิกขวา (Context Menu)
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-}, false);
-
-    // Security
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.onkeydown = function(e) {
-      if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) return false;
-    };
+    // 🔹 Header Scroll Effect
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('mainHeader');
+        if (!header) return;
+        if (window.scrollY > 50) {
+            header.style.padding = '12px 5%';
+            header.style.background = 'rgba(3, 3, 3, 0.95)';
+            header.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+        } else {
+            header.style.padding = '18px 5%';
+            header.style.background = 'rgba(3, 3, 3, 0.25)';
+            header.style.borderBottomColor = 'rgba(255,255,255,0.05)';
+        }
+    });
   </script>
 </body>
 </html>

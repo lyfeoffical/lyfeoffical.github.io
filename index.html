@@ -4,138 +4,153 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ไลฟ์สไตล์.com</title>
-  <link rel="icon" type="image/png" href="https://media.discordapp.net/attachments/1096094177827225650/1305581275845074984/lyfe_white.png">
+  <link rel="icon" type="image/png" href="https://img1.pic.in.th/images/3004g.png">
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&family=Bebas+Neue&family=Sarabun:wght@300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script>
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-        "color": { "value": "#ffffff" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.5, "random": false },
-        "size": { "value": 3, "random": true },
-        "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.4, "width": 1 },
-        "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }
-      },
-      "retina_detect": true
-    });
-  </script>
   
   <style>
     :root {
-      --bg-color: #080808;
-      --surface-color: rgba(255, 255, 255, 0.05);
+      --bg-color: #030303;
+      --surface-color: rgba(255, 255, 255, 0.02);
+      --surface-border: rgba(255, 255, 255, 0.05);
+      --surface-hover: rgba(255, 255, 255, 0.05);
       --accent: #ffffff;
-      --accent-glow: rgba(255, 255, 255, 0.2);
-      --text: #ffffff;
-      --text-dim: #bbb;
+      --accent-glow: rgba(255, 255, 255, 0.25);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.4);
       --nav-font: 'Bebas Neue', sans-serif;
       --heading-font: 'Kanit', sans-serif;
+      --body-font: 'Sarabun', sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
       background: var(--bg-color);
-      color: var(--text);
-      font-family: 'Sarabun', sans-serif;
+      color: var(--text-primary);
+      font-family: var(--body-font);
       overflow-x: hidden;
       min-height: 100vh;
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    body.no-scroll {
+      overflow: hidden !important;
+    }
+
+    body.loaded {
+      opacity: 1;
     }
 
     /* 🔹 Background System (GIF + Blur) */
     .bg-animation {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       z-index: -3;
-      /* เปลี่ยน 'background.gif' เป็นชื่อไฟล์ GIF ของคุณ */
       background: url('background.gif') center/cover no-repeat;
     }
 
     .bg-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       z-index: -2;
-      background: rgba(0, 0, 0, 0.6); /* ปรับความมืด */
-      backdrop-filter: blur(6px); /* ปรับความเบลอตรงนี้ */
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(3, 3, 3, 0.75);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
     }
 
     .bg-vignette {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       z-index: -1;
-      background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+      background: radial-gradient(circle at center, transparent 30%, rgba(3, 3, 3, 0.95) 100%);
+      pointer-events: none;
     }
 
     /* 🔹 Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0e0e0e; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    ::-webkit-scrollbar-track { background: #030303; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
 
     /* 🔹 Navbar */
     header {
-      background: rgba(8, 8, 8, 0.3);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 15px 5%;
+      background: rgba(3, 3, 3, 0.25);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      padding: 18px 5%;
       position: fixed;
       width: 100%;
       top: 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid var(--surface-border);
       z-index: 1000;
-      transition: 0.3s;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .navbar { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
 
     .logo img {
-      height: 45px;
-      filter: drop-shadow(0 0 8px var(--accent-glow));
+      height: 42px;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.15));
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .logo a {
+      display: inline-block;
+      text-decoration: none;
+    }
+    .logo a:hover img {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.35));
     }
 
     nav.nav-desktop ul {
       list-style: none;
       display: flex;
-      gap: 35px;
+      gap: 40px;
     }
 
     nav a {
-      color: var(--text-dim);
+      color: var(--text-secondary);
       text-decoration: none;
       font-family: var(--nav-font);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       letter-spacing: 2px;
-      transition: 0.3s;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 8px;
+      position: relative;
+      padding: 6px 0;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transform: translateX(-50%);
+      box-shadow: 0 0 12px rgba(255,255,255,0.8);
+    }
+
+    nav a:hover::after, nav a.active::after {
+      width: 100%;
     }
 
     nav a:hover, nav a.active {
       color: var(--accent);
-      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
     /* 🔹 Hero Section */
     .hero {
-      height: 75vh;
+      height: 80vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -146,129 +161,133 @@
 
     .hero h1 {
       font-family: var(--heading-font);
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      letter-spacing: 10px;
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      letter-spacing: 12px;
       text-transform: uppercase;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
     .highlight {
       color: transparent;
-      -webkit-text-stroke: 1px #fff;
-      filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
+      -webkit-text-stroke: 1.5px #fff;
+      filter: drop-shadow(0 0 20px rgba(255,255,255,0.25));
     }
 
     .hero-button {
       font-family: var(--nav-font);
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: #000;
       background: #fff;
-      padding: 12px 45px;
+      padding: 14px 50px;
       text-decoration: none;
-      margin-top: 30px;
-      border-radius: 2px;
-      transition: 0.4s;
+      margin-top: 35px;
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
       letter-spacing: 3px;
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
     }
 
     .hero-button:hover {
       background: transparent;
       color: #fff;
-      box-shadow: 0 0 25px rgba(255,255,255,0.4);
-      outline: 1px solid #fff;
-      transform: translateY(-5px);
+      box-shadow: inset 0 0 0 1.5px #fff, 0 8px 30px rgba(255, 255, 255, 0.3);
+      transform: translateY(-4px);
     }
 
     /* 🔹 News Section */
     .latest-news {
-      max-width: 1200px;
-      margin: 50px auto 100px;
-      padding: 0 20px;
+      max-width: 1100px;
+      margin: 50px auto 120px;
+      padding: 0 24px;
     }
 
     .section-title {
       font-family: var(--heading-font);
-      font-size: 2rem;
-      letter-spacing: 4px;
-      margin-bottom: 50px;
+      font-size: 1.8rem;
+      letter-spacing: 5px;
+      margin-bottom: 45px;
       display: flex;
       align-items: center;
       gap: 20px;
+      font-weight: 600;
     }
 
     .section-title::after {
       content: "";
       height: 1px;
-      background: linear-gradient(90deg, var(--accent), transparent);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.15), transparent);
       flex-grow: 1;
     }
 
     .news-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 40px;
     }
 
     .news-card {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 15px;
+      background: var(--surface-color);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid var(--surface-border);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .news-card:hover {
-      border-color: rgba(255,255,255,0.3);
-      transform: translateY(-10px);
-      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.05);
     }
 
     .card-img {
       width: 100%;
-      height: 200px;
-      background: rgba(255,255,255,0.05) url('https://img2.pic.in.th/OVF.jpg') center/cover;
-      transition: 0.5s;
+      height: 220px;
+      background: rgba(255, 255, 255, 0.02) url('https://img2.pic.in.th/OVF.jpg') center/cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .news-card:hover .card-img {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
-        .card-img1 {
+    .card-img1 {
       width: 100%;
-      height: 200px;
-      background: rgba(255,255,255,0.05) url('https://img2.pic.in.th/588511780d269d1e7fa.jpg') center/cover;
-      transition: 0.5s;
+      height: 220px;
+      background: rgba(255, 255, 255, 0.02) url('https://img2.pic.in.th/588511780d269d1e7fa.jpg') center/cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .news-card:hover .card-img1 {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
-
     .card-content {
-      padding: 25px;
+      padding: 30px;
     }
 
     .card-category {
       display: inline-block;
       font-family: var(--nav-font);
-      background: rgba(255,255,255,0.1);
-      padding: 4px 12px;
-      border-radius: 4px;
-      font-size: 0.8rem;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px 14px;
+      border-radius: 40px;
+      font-size: 0.85rem;
       margin-bottom: 15px;
       color: var(--accent);
+      letter-spacing: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .card-content h3 {
       font-family: var(--heading-font);
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 500;
-      margin-bottom: 10px;
+      letter-spacing: 3px;
     }
 
     /* 🔹 Anti-Devtools Popup */
@@ -276,415 +295,317 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(15px);
+      background: rgba(3, 3, 3, 0.85);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       justify-content: center;
       align-items: center;
       z-index: 999999;
       opacity: 0;
-      transition: 0.3s;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     #block-popup .box {
-      border: 1px solid #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.02);
       color: #fff;
-      padding: 30px 60px;
-      border-radius: 0px;
+      padding: 35px 70px;
+      border-radius: 20px;
       font-family: var(--nav-font);
-      font-size: 2rem;
-      letter-spacing: 5px;
+      font-size: 2.2rem;
+      letter-spacing: 6px;
       text-align: center;
-      box-shadow: 0 0 50px rgba(255,255,255,0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      animation: alertBlink 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes alertBlink {
+      0% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+      100% { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.15); }
     }
 
     /* 🔹 Mobile Navigation */
     .hamburger {
       display: none;
-      cursor: pointer;
       flex-direction: column;
       gap: 6px;
+      cursor: pointer;
+      z-index: 1100;
     }
 
     .hamburger span {
-      width: 30px;
+      width: 28px;
       height: 2px;
       background: #fff;
-      transition: 0.3s;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
+    /* Animation ตอนกด Hamburger */
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
     .mobile-menu {
-      display: none;
       position: fixed;
       top: 0;
-      left: 0;
+      right: -100%;
       width: 100%;
       height: 100vh;
-      background: rgba(8,8,8,0.98);
-      backdrop-filter: blur(20px);
+      background: rgba(3, 3, 3, 0.98);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 30px;
-      z-index: 999;
+      gap: 40px;
+      transition: right 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 1050;
     }
+
+    .mobile-menu.active { right: 0; }
 
     .mobile-menu a {
       color: #fff;
       text-decoration: none;
       font-family: var(--nav-font);
-      font-size: 2rem;
+      font-size: 2.2rem;
       letter-spacing: 4px;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
+
+    .mobile-menu a:hover { transform: scale(1.08); text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
 
     @media (max-width: 768px) {
       nav.nav-desktop { display: none; }
-      .hamburger { display: flex; z-index: 1001; }
-      .hero h1 { font-size: 2.8rem; }
+      .hamburger { display: flex; }
+      .hero h1 { font-size: 3rem; }
     }
 
     /* 🔹 Animations */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(5px); }
+      to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
     }
 
-    .hero h1, .hero-button, .news-card {
-      animation: fadeInUp 0.8s ease backwards;
-    }
-
-    .particle-container {
+    /* 🔹 Intro Overlay */
+    .intro-overlay {
       position: fixed;
+      inset: 0;
+      background: #030303;
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
+    }
+
+    .intro-bg-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle at bottom, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      animation: pulseGlow 6s infinite alternate ease-in-out;
+    }
+
+    .intro-content {
+      position: relative;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      z-index: 2;
+    }
+
+    .intro-subtitle {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 8px;
+      color: var(--text-muted);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.3s;
+    }
+
+    .intro-title {
+      font-family: 'Kanit', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-weight: 700;
+      letter-spacing: 18px;
+      color: #fff;
+      margin: 10px 0;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: heroFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.6s;
+      text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+    }
+
+    .intro-line {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      margin: 15px auto 0;
+      animation: expandLine 1.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.8s;
+    }
+
+    @keyframes expandLine {
+      to { width: 120px; }
+    }
+
+    .enter-btn {
+      position: relative;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 16px 50px;
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: 4px;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 50px;
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+      opacity: 0;
+      animation: heroFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 1.2s;
+    }
+
+    .enter-btn:hover {
+      border-color: #fff;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+      transform: scale(1.05);
+    }
+
+    .btn-shine {
+      position: absolute;
       top: 0;
-      left: 0;
+      left: -100%;
       width: 100%;
       height: 100%;
-      z-index: -1;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+      animation: moveShine 4s infinite ease-in-out;
+    }
+
+    @keyframes moveShine {
+      0% { left: -100%; }
+      30%, 100% { left: 100%; }
+    }
+
+    .intro-overlay.fade-out {
+      transform: translateY(-100%);
+      opacity: 0;
       pointer-events: none;
     }
 
-    .dot {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.5);
+    /* 🔹 Unified Volume Container Style */
+    .volume-container {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 50px;
+      width: 50px;
+      height: 50px;
+      transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s, border-color 0.3s;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .volume-container:hover {
+      width: 200px;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 255, 255, 0.05);
+    }
+
+    .volume-content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .vol-icon-box {
+      min-width: 34px;
+      height: 34px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       border-radius: 50%;
-      filter: blur(1px);
-      animation: fly 10s linear infinite;
+      transition: 0.3s;
     }
 
-    @keyframes fly {
-      0% { transform: translateY(100vh) scale(0); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    .vol-icon-box i {
+      color: #fff;
+      font-size: 1.05rem;
+      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
     }
 
-.intro-overlay {
-    position: fixed;
-    inset: 0;
-    background: #050505;
-    z-index: 10000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
-}
+    .slider-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding-right: 15px;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      pointer-events: none;
+    }
 
-/* แสง Glow สีขาวจางๆ ตรงกลาง */
-.intro-bg-glow {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-    filter: blur(50px);
-    animation: pulseGlow 8s infinite alternate;
-}
+    .volume-container:hover .slider-wrapper {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
 
-@keyframes pulseGlow {
-    0% { transform: scale(1); opacity: 0.3; }
-    100% { transform: scale(1.3); opacity: 0.6; }
-}
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+      margin-left: 10px;
+    }
 
-.intro-content {
-    position: relative;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-}
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+      transition: transform 0.2s;
+    }
 
-/* 🔹 Text Animations */
-.intro-subtitle {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 8px;
-    color: #888;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 1s ease forwards 0.3s;
-}
-
-.intro-title {
-    font-family: 'Kanit', sans-serif;
-    font-size: 5rem;
-    font-weight: 700;
-    letter-spacing: 15px;
-    color: #fff;
-    margin: 10px 0;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1s ease forwards 0.6s;
-    text-shadow: 0 0 30px rgba(255,255,255,0.2);
-}
-
-.intro-line {
-    width: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #fff, transparent);
-    margin: 0 auto;
-    animation: expandLine 1.5s ease forwards 0.8s;
-}
-
-/* 🔹 Stylish Button */
-.enter-btn {
-    position: relative;
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.3);
-    padding: 18px 45px;
-    color: #fff;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 4px;
-    cursor: pointer;
-    overflow: hidden;
-    transition: 0.5s;
-    opacity: 0;
-    animation: fadeInUp 1s ease forwards 1.2s;
-}
-
-.enter-btn:hover {
-    border-color: #fff;
-    box-shadow: 0 0 40px rgba(255,255,255,0.1);
-    transform: scale(1.05);
-}
-
-/* แสงวิ่งผ่านปุ่ม */
-.btn-shine {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: 0.5s;
-    animation: moveShine 3s infinite;
-}
-
-@keyframes moveShine {
-    0% { left: -100%; }
-    50% { left: 100%; }
-    100% { left: 100%; }
-}
-
-/* 🔹 Keyframes */
-@keyframes fadeInUp {
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes expandLine {
-    to { width: 100%; }
-}
-
-/* เมื่อกดเข้าเว็บ ให้ Intro เลื่อนขึ้นด้านบน */
-.intro-overlay.fade-out {
-    transform: translateY(-100%);
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* 🔹 Volume Container Main Style */
-.volume-container {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50px;
-    width: 50px; /* ขนาดตอนเริ่มต้น */
-    height: 50px;
-    transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-/* เมื่อ Hover ให้ขยายออก */
-.volume-container:hover {
-    width: 200px; /* ความกว้างตอนขยาย */
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.volume-content {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-/* 🔹 Icon Section */
-.icon-box {
-    min-width: 34px;
-    height: 34px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    transition: 0.3s;
-}
-
-.icon-box i {
-    color: #fff;
-    font-size: 1.1rem;
-    filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
-}
-
-/* 🔹 Slider Section */
-.slider-wrapper {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    padding-right: 15px;
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: 0.4s ease;
-}
-
-.volume-container:hover .slider-wrapper {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* 🔹 Custom Range Input (The Slider) */
-.volume-slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    outline: none;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-/* ส่วนของแถบที่ถูกลาก (สำหรับ Webkit) */
-.volume-slider::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 4px;
-    border-radius: 10px;
-}
-
-/* ปุ่มกลมสำหรับลาก */
-.volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
-    background: #fff;
-    border-radius: 50%;
-    margin-top: -5px; /* จัดให้อยู่กึ่งกลาง track */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    transition: 0.2s;
-}
-
-.volume-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-    background: #f0f0f0;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-}
-
-/* สำหรับ Firefox */
-.volume-slider::-moz-range-thumb {
-    width: 14px;
-    height: 14px;
-    background: #fff;
-    border: none;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-/* เอฟเฟกต์ตอนโหลดหน้าจอ */
-body {
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
-}
-
-body.loaded {
-    opacity: 1;
-}
-
-/* Hover Effect ที่เมนูให้ดูสมูท */
-nav ul li a {
-    position: relative;
-    padding-bottom: 5px;
-    transition: color 0.3s ease;
-}
-
-nav ul li a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: #fff;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-    box-shadow: 0 0 10px rgba(255,255,255,0.8);
-}
-
-nav ul li a:hover::after, 
-nav ul li a.active::after {
-    width: 100%;
-}
-
-nav ul li a:hover {
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255,255,255,0.5);
-}
-#fire-particles canvas {
-    /* เพิ่มความสว่างและฟุ้งให้สะเก็ดไฟสีขาว */
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)) blur(0.5px);
-}
-
-/* ปรับ Background Glow ด้านล่างให้เป็นสีขาว-เทา */
-.intro-bg-glow {
-    background: radial-gradient(circle at bottom, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-/* เพิ่ม Effect ให้ตัวหนังสือดูเข้ากับไฟสีขาว */
-.intro-title {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 40px rgba(255, 255, 255, 0.2);
-    color: #fff;
-}
+    .volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
   </style>
 </head>
-<body>
+<body class="no-scroll">
 
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
 
 <div id="intro-overlay" class="intro-overlay">
-    <div id="fire-particles" style="position: absolute; inset: 0; z-index: 0;"></div>
     <div class="intro-bg-glow"></div>
     
     <div class="intro-content">
@@ -704,13 +625,7 @@ nav ul li a:hover {
   <div class="bg-overlay"></div>
   <div class="bg-vignette"></div>
 
-  <div class="particle-container">
-  <div class="dot" style="left: 10%; animation-delay: 0s;"></div>
-  <div class="dot" style="left: 30%; animation-delay: 2s;"></div>
-  <div class="dot" style="left: 50%; animation-delay: 5s;"></div>
-  <div class="dot" style="left: 70%; animation-delay: 1s;"></div>
-  <div class="dot" style="left: 90%; animation-delay: 7s;"></div>
-</div>
+
 
   <div id="block-popup">
     <div class="box">SYSTEM PROTECTED</div>
@@ -719,20 +634,18 @@ nav ul li a:hover {
   <header id="mainHeader">
     <div class="navbar">
       <div class="logo">
-        <img src="https://img5.pic.in.th/file/secure-sv1/ChatGPT_Image_Sep_20_2025_02_07_49_AM.png" alt="LYFESTYLE Logo">
+        <a href="index.html"><img src="https://img1.pic.in.th/images/3004g.png" alt="LYFESTYLE Logo"></a>
       </div>
       
       <nav class="nav-desktop">
         <ul>
-        <ul>
-          <li><a href="index.html"class="active" >HOME</a></li>
-          <li><a href="members.html" >MEMBERS</a></li>
+          <li><a href="index.html" class="active">HOME</a></li>
+          <li><a href="members.html">MEMBERS</a></li>
           <li><a href="official.html">OFFICIAL</a></li>
-        </ul>
         </ul>
       </nav>
 
-      <div class="hamburger" onclick="toggleMenu()">
+      <div class="hamburger" id="hamburgerBtn">
         <span></span>
         <span></span>
         <span></span>
@@ -741,9 +654,9 @@ nav ul li a:hover {
   </header>
 
   <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html" onclick="toggleMenu()">HOME</a>
-    <a href="members.html" onclick="toggleMenu()">MEMBERS</a>
-    <a href="official.html" onclick="toggleMenu()">OFFICIAL</a>
+    <a href="index.html">HOME</a>
+    <a href="members.html">MEMBERS</a>
+    <a href="official.html">OFFICIAL</a>
   </div>
 
   <section class="hero">
@@ -766,245 +679,205 @@ nav ul li a:hover {
   <section class="latest-news">
     <h2 class="section-title">PARTNER GANG</h2>
     <div class="news-grid">
-      <div class="news-card" style="animation-delay: 0.2s;">
+      <a href="https://ovf.ufsmp.com/" target="_blank" class="news-card" style="animation-delay: 0.2s; text-decoration: none; display: block; color: inherit;">
         <div class="card-img"></div>
         <div class="card-content">
           <span class="card-category">PARTNER</span>
           <h3>O V E R F R I E N D</h3>
           <p style="color: var(--text-dim); font-size: 0.85rem;"></p>
         </div>
-      </div>
-      <div class="news-card" style="animation-delay: 0.4s;">
+      </a>
+      <a href="http://588.mygstyle.com/index.php" target="_blank" class="news-card" style="animation-delay: 0.4s; text-decoration: none; display: block; color: inherit;">
         <div class="card-img1"></div>
         <div class="card-content">
           <span class="card-category">PARTNER</span>
           <h3>S A B U D B O B</h3>
           <p style="color: var(--text-dim); font-size: 0.85rem;"></p>
         </div>
-      </div>
-      </div>
+      </a>
     </div>
   </section>
 
   <script>
+    const music = document.getElementById("bgMusic");
+    const volSlider = document.getElementById("volSlider");
+    const volIcon = document.getElementById("volIcon");
 
-                    // ระบบป้องกันการเปิดดูโค้ดและเซฟหน้าเว็บ (อัปเดตใหม่)
-document.addEventListener('keydown', function(e) {
-    // 1. ป้องกัน Ctrl + S (Save Page)
-    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) {
+    // 🔹 Security: Anti-Devtools & Right Click
+    function showBlockPopup() {
+        const popup = document.getElementById("block-popup");
+        if (!popup) return;
+        popup.style.display = "flex";
+        setTimeout(() => popup.style.opacity = "1", 10);
+        setTimeout(() => {
+            popup.style.opacity = "0";
+            setTimeout(() => popup.style.display = "none", 300);
+        }, 1500);
+    }
+
+    document.addEventListener('contextmenu', e => {
         e.preventDefault();
-        // showAlert("ไม่อนุญาตให้บันทึกหน้าเว็บ", "danger"); // เปิดใช้ถ้าต้องการให้แจ้งเตือน
-        return false;
-    }
-
-    // 2. ป้องกัน F12 (DevTools)
-    if (e.key === 'F12' || e.keyCode === 123) {
-        e.preventDefault();
-        return false;
-    }
-
-    // 3. ป้องกัน Ctrl + Shift + I / J / C (Inspect/Console)
-    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-        e.preventDefault();
-        return false;
-    }
-
-    // 4. ป้องกัน Ctrl + U (View Source)
-    if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) {
-        e.preventDefault();
-        return false;
-    }
-}, false);
-
-// 5. ป้องกันการคลิกขวา (Context Menu)
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-}, false);
-const music = document.getElementById("bgMusic");
-const volSlider = document.getElementById("volSlider");
-const volIcon = document.getElementById("volIcon");
-
-// 🔹 ฟังก์ชันเริ่มต้นประสบการณ์ (กด ENTER)
-function startExperience() {
-    music.volume = 0.5;
-    music.play();
-    
-    // อัปเดตสีแถบเสียงเริ่มต้น
-    updateSliderBackground(0.5);
-
-    const intro = document.getElementById("intro-overlay");
-    intro.classList.add("fade-out");
-    
-    setTimeout(() => {
-        document.body.style.overflow = "auto";
-        const main = document.getElementById("main-wrapper");
-        if(main) main.style.opacity = "1";
-    }, 1000);
-}
-
-// 🔹 ระบบควบคุมเสียง (Volume Control)
-volSlider.addEventListener("input", (e) => {
-    const val = e.target.value;
-    music.volume = val;
-    updateIcon(val);
-    updateSliderBackground(val);
-});
-
-// อัปเดตไอคอนลำโพงตามระดับเสียง
-function updateIcon(val) {
-    if (val == 0) volIcon.className = "fa-solid fa-volume-xmark";
-    else if (val < 0.5) volIcon.className = "fa-solid fa-volume-low";
-    else volIcon.className = "fa-solid fa-volume-high";
-}
-
-// อัปเดตสี Background ของ Slider ให้วิ่งตามนิ้ว
-function updateSliderBackground(val) {
-    const percentage = val * 100;
-    volSlider.style.background = `linear-gradient(90deg, #fff ${percentage}%, rgba(255,255,255,0.1) ${percentage}%)`;
-}
-
-// เปิด-ปิดเสียง (Mute/Unmute)
-function toggleMute() {
-    if (music.volume > 0) {
-        music.dataset.oldVol = music.volume;
-        music.volume = 0;
-        volSlider.value = 0;
-    } else {
-        music.volume = music.dataset.oldVol || 0.5;
-        volSlider.value = music.volume;
-    }
-    updateIcon(music.volume);
-    updateSliderBackground(volSlider.value);
-}
-
-// 🔹 Mobile Menu Logic
-function toggleMenu() {
-    const menu = document.getElementById("mobileMenu");
-    const burgerSpans = document.querySelectorAll(".hamburger span");
-    
-    if (menu.style.display === "flex") {
-        menu.style.display = "none";
-        burgerSpans.forEach(span => span.style.transform = "none");
-        burgerSpans[1].style.opacity = "1";
-    } else {
-        menu.style.display = "flex";
-        burgerSpans[0].style.transform = "rotate(45deg) translate(5px, 6px)";
-        burgerSpans[1].style.opacity = "0";
-        burgerSpans[2].style.transform = "rotate(-45deg) translate(5px, -6px)";
-    }
-}
-
-// 🔹 Security: Anti-Devtools & Right Click
-document.addEventListener('contextmenu', e => {
-    e.preventDefault();
-    showBlockPopup();
-});
-
-particlesJS("fire-particles", {
-  "particles": {
-    "number": {
-      "value": 160, // เพิ่มจำนวนให้ดูแน่นขึ้น
-      "density": { "enable": true, "value_area": 800 }
-    },
-    "color": {
-      "value": ["#ffffff", "#e0e0e0", "#f5f5f5", "#ffffff"] // โทนสีขาวและเงิน
-    },
-    "shape": {
-      "type": "circle"
-    },
-    "opacity": {
-      "value": 0.9,
-      "random": true,
-      "anim": { "enable": true, "speed": 1, "opacity_min": 0.2, "sync": false }
-    },
-    "size": {
-      "value": 2.5, // ขนาดเม็ดเล็กลงแต่คมขึ้น
-      "random": true,
-      "anim": { "enable": true, "speed": 4, "size_min": 0.1, "sync": false }
-    },
-    "line_linked": {
-      "enable": false 
-    },
-    "move": {
-      "enable": true,
-      "speed": 8, // ความเร็วเพิ่มขึ้นเพื่อให้ดูเดือด
-      "direction": "top", // พุ่งขึ้นบน
-      "random": true,
-      "straight": false,
-      "out_mode": "out",
-      "bounce": false
-    }
-  },
-  "interactivity": {
-    "events": {
-      "onhover": { "enable": true, "mode": "bubble" }
-    },
-    "modes": {
-      "bubble": { "distance": 150, "size": 6, "duration": 0.3, "opacity": 1 }
-    }
-  },
-  "retina_detect": true
-});
-
-document.onkeydown = function(e) {
-    // Block F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-    if (e.keyCode == 123 || 
-        (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || 
-        (e.ctrlKey && e.keyCode == 85)) {
         showBlockPopup();
-        return false;
+    });
+
+    document.addEventListener('keydown', e => {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+        if (e.key === 'F12' || e.keyCode === 123) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+    }, false);
+
+    // 🔹 Start Experience (ENTER/CLICK)
+    function startExperience() {
+        localStorage.setItem("musicStarted", "true");
+
+        const savedVol = localStorage.getItem("musicVol");
+        const isMuted = localStorage.getItem("musicMuted") === "true";
+        let initialVol = savedVol ? parseFloat(savedVol) : 0.5;
+        
+        music.volume = isMuted ? 0 : initialVol;
+        music.play().catch(err => console.log("Play failed:", err));
+        
+        updateSliderUI(music.volume);
+
+        const intro = document.getElementById("intro-overlay");
+        if (intro) intro.classList.add("fade-out");
+        
+        document.body.classList.remove("no-scroll");
     }
-};
 
-function showBlockPopup() {
-    const popup = document.getElementById("block-popup");
-    if(!popup) return;
-    popup.style.display = "flex";
-    setTimeout(() => popup.style.opacity = "1", 10);
-    setTimeout(() => {
-        popup.style.opacity = "0";
-        setTimeout(() => popup.style.display = "none", 300);
-    }, 1500);
-}
+    // 🔹 Unified Volume Slider UI and Logic
+    function updateSliderUI(v) {
+        const p = v * 100;
+        if (volSlider) {
+            volSlider.value = v;
+            volSlider.style.background = `linear-gradient(90deg, #fff ${p}%, rgba(255,255,255,0.1) ${p}%)`;
+        }
+        if (volIcon) {
+            if (v == 0) volIcon.className = "fa-solid fa-volume-xmark";
+            else if (v < 0.5) volIcon.className = "fa-solid fa-volume-low";
+            else volIcon.className = "fa-solid fa-volume-high";
+        }
+    }
 
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. ทำให้หน้าจอค่อยๆ ปรากฏขึ้นเมื่อโหลดเสร็จ
-    document.body.classList.add("loaded");
+    if (volSlider) {
+        volSlider.addEventListener("input", (e) => {
+            const val = parseFloat(e.target.value);
+            music.volume = val;
+            localStorage.setItem("musicVol", val);
+            localStorage.setItem("musicMuted", val === 0 ? "true" : "false");
+            updateSliderUI(val);
+        });
+    }
 
-    // 2. ดักจับการคลิกที่ลิงก์ใน Navbar
-    const navLinks = document.querySelectorAll('nav a');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            // ตรวจสอบว่าเป็นลิงก์ภายในเว็บไซต์ และไม่ใช่การเปิด Tab ใหม่
-            if (this.hostname === window.location.hostname && !this.target) {
-                e.preventDefault(); // หยุดการไปหน้าใหม่ทันที
-                const targetUrl = this.href;
+    function toggleMute() {
+        const isMuted = localStorage.getItem("musicMuted") === "true";
+        const savedVol = localStorage.getItem("musicVol") || 0.5;
+        
+        if (!isMuted && music.volume > 0) {
+            music.dataset.oldVol = music.volume;
+            music.volume = 0;
+            localStorage.setItem("musicMuted", "true");
+            updateSliderUI(0);
+        } else {
+            const restoreVol = music.dataset.oldVol || parseFloat(savedVol) || 0.5;
+            music.volume = restoreVol;
+            localStorage.setItem("musicMuted", "false");
+            localStorage.setItem("musicVol", restoreVol);
+            updateSliderUI(restoreVol);
+        }
+    }
 
-                // ค่อยๆ จางหน้าจอออก
-                document.body.style.opacity = '0';
+    // Save playing position
+    setInterval(() => {
+        if (!music.paused) {
+            localStorage.setItem("musicTime", music.currentTime);
+        }
+    }, 1000);
 
-                // รอให้จางเสร็จ (0.5 วินาที) แล้วค่อยเปลี่ยนหน้า
-                setTimeout(() => {
-                    window.location.href = targetUrl;
-                }, 500);
-            }
+    // 🔹 Mobile Menu Logic
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+        hamburger.onclick = () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        };
+    }
+
+    // 🔹 Initialize on DOMContentLoaded
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add("loaded");
+
+        const savedTime = localStorage.getItem("musicTime");
+        const savedVol = localStorage.getItem("musicVol");
+        const isMuted = localStorage.getItem("musicMuted") === "true";
+        const musicStarted = localStorage.getItem("musicStarted") === "true";
+
+        if (savedTime) music.currentTime = parseFloat(savedTime);
+        
+        let initialVol = savedVol ? parseFloat(savedVol) : 0.5;
+        music.volume = isMuted ? 0 : initialVol;
+        updateSliderUI(music.volume);
+
+        if (musicStarted) {
+            const intro = document.getElementById("intro-overlay");
+            if (intro) intro.style.display = "none";
+            document.body.classList.remove("no-scroll");
+            
+            music.play().catch(() => {
+                console.log("Waiting for user interaction...");
+                document.addEventListener('click', () => {
+                    music.play();
+                }, { once: true });
+            });
+        }
+
+        // Smooth Page Transitions
+        const navLinks = document.querySelectorAll('nav a, .mobile-menu a, .logo a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.hostname === window.location.hostname && !this.target) {
+                    e.preventDefault();
+                    const targetUrl = this.href;
+                    document.body.style.opacity = '0';
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 500);
+                }
+            });
         });
     });
-});
 
-// 🔹 Header Scroll Effect
-window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
-    if(!header) return;
-    if (window.scrollY > 50) {
-        header.style.padding = '10px 5%';
-        header.style.background = 'rgba(8, 8, 8, 0.95)';
-    } else {
-        header.style.padding = '15px 5%';
-        header.style.background = 'rgba(8, 8, 8, 0.3)';
-    }
-});
+    // 🔹 Header Scroll Effect
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('mainHeader');
+        if (!header) return;
+        if (window.scrollY > 50) {
+            header.style.padding = '12px 5%';
+            header.style.background = 'rgba(3, 3, 3, 0.95)';
+        } else {
+            header.style.padding = '18px 5%';
+            header.style.background = 'rgba(3, 3, 3, 0.25)';
+        }
+    });
   </script>
 </body>
 </html>
