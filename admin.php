@@ -1,0 +1,4342 @@
+﻿<?php
+/**
+ * LYFESTYLE - ADMIN CONTROL PANEL (PHP Version)
+ */
+$membersJsonPath = __DIR__ . '/members_data.json';
+$serverMembers = [];
+if (file_exists($membersJsonPath)) {
+    $jsonRaw = file_get_contents($membersJsonPath);
+    $serverMembers = json_decode($jsonRaw, true) ?: [];
+}
+?>
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>ไลฟ์สไตล์.com</title>
+  <link rel="icon" type="image/png"
+    href="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Bebas+Neue&family=Sarabun:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-color: #030303;
+      --surface-card: rgba(18, 18, 18, 0.7);
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --surface-hover: rgba(255, 255, 255, 0.05);
+      --accent: #ffffff;
+      --accent-glow: rgba(255, 255, 255, 0.35);
+      --text-main: #ffffff;
+      --text-sub: rgba(255, 255, 255, 0.7);
+      --text-dim: rgba(255, 255, 255, 0.4);
+      --danger: #ff4757;
+      --danger-bg: rgba(255, 71, 87, 0.12);
+      --success: #2ed573;
+      --success-bg: rgba(46, 213, 115, 0.12);
+      --blue: #1e90ff;
+      --blue-bg: rgba(30, 144, 255, 0.12);
+      --gold: #ffa502;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body,
+    button,
+    input,
+    select,
+    textarea,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    a,
+    p,
+    span,
+    label,
+    td,
+    th,
+    div {
+      font-family: 'Kanit', sans-serif;
+    }
+
+    /* คืนค่าฟอนต์ไอคอน FontAwesome ไม่ให้กลายเป็นกล่องสี่เหลี่ยม */
+    .fa-solid,
+    .fas {
+      font-family: "Font Awesome 6 Free" !important;
+      font-weight: 900 !important;
+    }
+
+    .fa-brands,
+    .fab {
+      font-family: "Font Awesome 6 Brands" !important;
+      font-weight: 400 !important;
+    }
+
+    .fa-regular,
+    .far {
+      font-family: "Font Awesome 6 Free" !important;
+      font-weight: 400 !important;
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 60px;
+    }
+
+    /* Background layer */
+    .bg-animation {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background: url('background.gif') center/cover no-repeat;
+    }
+
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: rgba(3, 3, 3, 0.85);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+    }
+
+    .bg-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(circle at center, transparent 30%, rgba(3, 3, 3, 0.98) 100%);
+      pointer-events: none;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #030303;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Header Nav */
+    header {
+      background: rgba(6, 6, 6, 0.85);
+      border-bottom: 1px solid var(--surface-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    .nav-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-group img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+    }
+
+    .brand-title {
+      font-family: 'Kanit', sans-serif !important;
+      font-weight: 700;
+      font-size: 1.45rem;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+
+    .brand-badge {
+      font-family: 'Kanit', sans-serif !important;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--surface-border);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: 'Kanit', sans-serif;
+      border: 1px solid transparent;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-sub);
+      border-color: var(--surface-border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .btn-danger-outline {
+      background: transparent;
+      color: var(--danger);
+      border-color: rgba(255, 71, 87, 0.3);
+    }
+
+    .btn-danger-outline:hover {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    /* Container */
+    .admin-container {
+      max-width: 1400px;
+      margin: 30px auto 0;
+      padding: 0 24px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: #fff;
+    }
+
+    .stat-card.blue::after {
+      background: var(--blue);
+    }
+
+    .stat-card.green::after {
+      background: var(--success);
+    }
+
+    .stat-card.gold::after {
+      background: var(--gold);
+    }
+
+    .stat-info h3 {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .stat-info .stat-value {
+      font-family: 'Kanit', sans-serif !important;
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .stat-icon {
+      font-size: 2rem;
+      opacity: 0.2;
+    }
+
+    /* Banner Quick Card */
+    .banner-quick-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 22px 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .banner-quick-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 255, 255, 0.05);
+    }
+
+    .banner-quick-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .banner-quick-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .banner-quick-title i {
+      font-size: 1.5rem;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .banner-quick-title h3 {
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+    }
+
+    .banner-quick-title p {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    .banner-quick-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(46, 213, 115, 0.1);
+      border: 1px solid rgba(46, 213, 115, 0.3);
+      color: #2ed573;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .banner-quick-content {
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .banner-preview-box {
+      width: 100%;
+      height: 145px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: url('background.gif') center/cover no-repeat;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .banner-preview-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px 12px;
+    }
+
+    .preview-tag {
+      align-self: flex-start;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .preview-url-tag {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.75);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: rgba(0,0,0,0.55);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .banner-quick-form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .form-group-inline {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .input-with-icon {
+      position: relative;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .input-with-icon i.prefix-link-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+    }
+
+    .input-with-icon input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 12px 38px 12px 40px;
+      color: #fff;
+      font-family: 'Kanit', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .input-with-icon input:focus {
+      border-color: rgba(255, 255, 255, 0.45);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.65);
+    }
+
+    .btn-clear-input {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 0.85rem;
+      padding: 4px;
+      display: none;
+    }
+
+    .btn-clear-input:hover {
+      color: #fff;
+    }
+
+    .banner-preset-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .preset-label {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .preset-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      color: var(--text-sub);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-family: 'Kanit', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .preset-chip:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .preset-chip.active {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.4);
+      font-weight: 500;
+    }
+
+    @media (max-width: 900px) {
+      .banner-quick-content {
+        grid-template-columns: 1fr;
+      }
+      .banner-preview-box {
+        height: 120px;
+      }
+      .gang-controls-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* Toggle switch slider */
+    .switch-toggle input:checked + .slider-toggle {
+      background-color: #2ed573;
+    }
+    .slider-toggle:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+    .switch-toggle input:checked + .slider-toggle:before {
+      transform: translateX(24px);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       ADMIN LUXURY LIGHT THEME (Platinum Obsidian Glass)
+       ══════════════════════════════════════════════════════ */
+    body.light-theme {
+      color-scheme: light;
+      --bg-color: #f1f4f9;
+      --surface-card: rgba(255, 255, 255, 0.88);
+      --surface-border: rgba(0, 0, 0, 0.08);
+      --surface-hover: rgba(0, 0, 0, 0.04);
+      --accent: #0f172a;
+      --accent-glow: rgba(0, 0, 0, 0.15);
+      --text-main: #0f172a;
+      --text-sub: rgba(15, 23, 42, 0.72);
+      --text-dim: rgba(15, 23, 42, 0.45);
+      --danger: #ef4444;
+      --danger-bg: rgba(239, 68, 68, 0.1);
+      --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.1);
+      --blue: #3b82f6;
+      --blue-bg: rgba(59, 130, 246, 0.1);
+      --gold: #f59e0b;
+      background: #eef2f7;
+      color: #0f172a;
+    }
+
+    body.light-theme .bg-overlay {
+      background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.85) 0%, rgba(230, 236, 245, 0.92) 100%);
+    }
+
+    body.light-theme .bg-vignette {
+      background: radial-gradient(circle, transparent 50%, rgba(200, 210, 225, 0.4) 100%);
+    }
+
+    body.light-theme header {
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom-color: rgba(0, 0, 0, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    body.light-theme .brand-title {
+      color: #0f172a;
+    }
+
+    body.light-theme .btn-secondary {
+      background: rgba(0, 0, 0, 0.05);
+      color: #0f172a;
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+
+    body.light-theme .btn-secondary:hover {
+      background: rgba(0, 0, 0, 0.09);
+    }
+
+    body.light-theme .btn-main {
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    body.light-theme .btn-main:hover {
+      background: #1e293b;
+    }
+
+    body.light-theme .form-control {
+      background: #ffffff;
+      color: #0f172a;
+      border-color: rgba(0, 0, 0, 0.15);
+    }
+
+    body.light-theme .form-control:focus {
+      background: #ffffff;
+      border-color: #3b82f6;
+    }
+
+    body.light-theme .search-input-box input {
+      background: #ffffff;
+      color: #0f172a;
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+
+    body.light-theme .modal-card {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+    }
+
+    body.light-theme .modal-header,
+    body.light-theme .modal-footer {
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+
+    body.light-theme .stat-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-color: rgba(0, 0, 0, 0.06);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    }
+
+    body.light-theme .stat-value {
+      color: #0f172a;
+    }
+
+    body.light-theme .member-meta-name {
+      color: #0f172a;
+    }
+
+    body.light-theme tr:hover td {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    body.light-theme td {
+      border-bottom-color: rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-theme th {
+      background: rgba(0, 0, 0, 0.03);
+      color: rgba(15, 23, 42, 0.6);
+      border-bottom-color: rgba(0, 0, 0, 0.08);
+    }
+
+    /* ══════════════════════════════════════════════════════
+CYBER VISITOR RADAR & LIVE IP TRACKER STYLES
+       ══════════════════════════════════════════════════════ */
+    .radar-pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: #2ed573;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 10px #2ed573;
+      animation: radarPulse 1.8s infinite ease-in-out;
+    }
+
+    @keyframes radarPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.4; }
+    }
+
+    .ip-badge-cyber {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-family: 'Consolas', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .ip-copy-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: color 0.2s;
+      padding: 0 2px;
+    }
+    .ip-copy-btn:hover {
+      color: #fff;
+    }
+
+    .device-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+    }
+
+    .device-badge.mobile {
+      border-color: rgba(245, 158, 11, 0.3);
+      color: #f59e0b;
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .device-badge.desktop {
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    .device-badge.tablet {
+      border-color: rgba(168, 85, 247, 0.3);
+      color: #a855f7;
+      background: rgba(168, 85, 247, 0.08);
+    }
+
+    .filter-btn-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      color: var(--text-sub);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-family: 'Kanit', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-btn-chip:hover, .filter-btn-chip.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .filter-btn-chip.active {
+      font-weight: 500;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .page-tag {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      color: var(--text-sub);
+    }
+
+    .online-indicator-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(46, 213, 115, 0.12);
+      border: 1px solid rgba(46, 213, 115, 0.35);
+      color: #2ed573;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .offline-indicator-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-dim);
+      font-size: 0.72rem;
+    }
+
+    body.light-theme .ip-badge-cyber {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: #0284c7;
+    }
+    body.light-theme .device-badge {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #0f172a;
+    }
+    body.light-theme .filter-btn-chip {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #0f172a;
+    }
+    body.light-theme .filter-btn-chip.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    /* Admin Quick Navigation Tabs Bar */
+    .admin-nav-tabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .admin-tab-btn {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      color: var(--text-sub);
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-family: 'Kanit', sans-serif;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+      font-weight: 500;
+    }
+
+    .admin-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .admin-tab-btn.active {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.45);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    body.light-theme .admin-tab-btn {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #0f172a;
+    }
+
+    body.light-theme .admin-tab-btn:hover {
+      background: rgba(15, 23, 42, 0.08);
+      color: #0f172a;
+    }
+
+    body.light-theme .admin-tab-btn.active {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    /* Main Toolbar */
+    .toolbar-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .search-input-box {
+      position: relative;
+      flex: 1;
+      max-width: 400px;
+    }
+
+    .search-input-box i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+    }
+
+    .search-input-box input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 10px 14px 10px 40px;
+      color: #fff;
+      font-family: 'Kanit', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input-box input:focus {
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn-main {
+      background: #ffffff;
+      color: #030303;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      font-family: 'Kanit', sans-serif;
+    }
+
+    .btn-main:hover {
+      background: #e0e0e0;
+      transform: translateY(-1px);
+    }
+
+    .btn-accent {
+      background: rgba(46, 213, 115, 0.15);
+      color: #2ed573;
+      border: 1px solid rgba(46, 213, 115, 0.35);
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.92rem;
+      font-family: 'Kanit', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .btn-accent:hover {
+      background: var(--success);
+      color: #000;
+    }
+
+    /* Content Area */
+    .content-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 16px 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    td {
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.92rem;
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .member-cell {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .table-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      object-fit: cover;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .table-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .table-avatar-initial {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.08);
+      font-weight: 600;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+
+    .member-meta-name {
+      font-weight: 500;
+      color: #fff;
+    }
+
+    /* Role Quick Badges & Controls in Table */
+    .role-quick-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 8px;
+    }
+
+    .role-badge-select {
+      appearance: none;
+      -webkit-appearance: none;
+      padding: 3px 26px 3px 10px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      font-family: 'Kanit', sans-serif;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.25s ease;
+      background-position: right 8px center;
+      background-repeat: no-repeat;
+      background-size: 9px;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      color-scheme: dark !important;
+    }
+
+    .role-badge-select.role-owner {
+      background-color: rgba(56, 189, 248, 0.14);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+
+    .role-badge-select.role-leader {
+      background-color: rgba(255, 71, 87, 0.14);
+      color: #ff4757;
+      border: 1px solid rgba(255, 71, 87, 0.45);
+      box-shadow: 0 0 10px rgba(255, 71, 87, 0.2);
+    }
+
+    .role-badge-select.role-3004 {
+      background-color: rgba(250, 204, 21, 0.14);
+      color: #facc15;
+      border: 1px solid rgba(250, 204, 21, 0.45);
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
+    }
+
+    .role-badge-select.role-member {
+      background-color: rgba(148, 163, 184, 0.12);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    /* Universal Dark Theme Dropdown Menu Styling (Fixes White Dropdowns on Chromium/Windows) */
+    select,
+    select.form-control,
+    .role-badge-select {
+      color-scheme: dark !important;
+      background-color: #121215 !important;
+      color: #ffffff !important;
+    }
+
+    select.form-control {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 11px;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    /* All Option & Optgroup Styling across every select element */
+    select option,
+    select optgroup,
+    .form-control option,
+    .role-badge-select option {
+      color-scheme: dark !important;
+      background: #141418 !important;
+      background-color: #141418 !important;
+      color: #f8fafc !important;
+      padding: 10px 14px !important;
+      font-size: 0.92rem !important;
+      font-family: 'Kanit', sans-serif !important;
+      border: none !important;
+    }
+
+    select option:checked,
+    .form-control option:checked,
+    .role-badge-select option:checked {
+      background-color: #1e3a8a !important;
+      color: #ffffff !important;
+    }
+
+    select option:hover,
+    .form-control option:hover,
+    .role-badge-select option:hover {
+      background-color: #2563eb !important;
+      color: #ffffff !important;
+    }
+
+    /* Explicit Role-colored Options in Dropdown Menus */
+    select option[value="Owner"],
+    .role-badge-select option[value="Owner"] {
+      background-color: #0c1c2a !important;
+      color: #38bdf8 !important;
+      font-weight: 600 !important;
+    }
+
+    select option[value="Leader"],
+    .role-badge-select option[value="Leader"] {
+      background-color: #260e13 !important;
+      color: #ff4757 !important;
+      font-weight: 600 !important;
+    }
+
+    select option[value="3004"],
+    .role-badge-select option[value="3004"] {
+      background-color: #241e07 !important;
+      color: #facc15 !important;
+      font-weight: 600 !important;
+    }
+
+    select option[value="member"],
+    .role-badge-select option[value="member"] {
+      background-color: #16181f !important;
+      color: #94a3b8 !important;
+    }
+
+    .role-step-btns {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .btn-role-step {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-dim);
+      border-radius: 4px;
+      width: 18px;
+      height: 12px;
+      font-size: 0.55rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      padding: 0;
+    }
+
+    .btn-role-step:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .fb-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .fb-badge.active {
+      background: rgba(24, 119, 242, 0.15);
+      border: 1px solid rgba(24, 119, 242, 0.3);
+      color: #5da4ff;
+    }
+
+    .fb-badge.active:hover {
+      background: rgba(24, 119, 242, 0.35);
+      color: #fff;
+    }
+
+    .fb-badge.inactive {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-dim);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .ig-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .ig-badge.active {
+      background: rgba(225, 48, 108, 0.15);
+      border: 1px solid rgba(225, 48, 108, 0.35);
+      color: #ff7597;
+    }
+
+    .ig-badge.active:hover {
+      background: rgba(225, 48, 108, 0.35);
+      color: #fff;
+    }
+
+    .ig-badge.inactive {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-dim);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .quota-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: rgba(46, 213, 115, 0.12);
+      color: #2ed573;
+      border: 1px solid rgba(46, 213, 115, 0.25);
+      margin-left: 6px;
+    }
+
+    .quota-tag.locked {
+      background: rgba(255, 71, 87, 0.12);
+      color: #ff4757;
+      border-color: rgba(255, 71, 87, 0.3);
+    }
+
+    .action-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+      border: 1px solid var(--surface-border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-sub);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .btn-icon.delete:hover {
+      background: var(--danger);
+      color: #fff;
+      border-color: var(--danger);
+    }
+
+    /* Empty state */
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--text-dim);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 14px;
+      opacity: 0.4;
+    }
+
+    /* Modal System */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      animation: modalFade 0.25s ease;
+    }
+
+    @keyframes modalFade {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-card {
+      background: #0f0f0f;
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+      animation: modalZoom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalZoom {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--surface-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-header h3 {
+      font-family: 'Kanit', sans-serif !important;
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+
+    .btn-close {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .btn-close:hover {
+      color: #fff;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: #fff;
+      font-family: 'Kanit', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .form-help {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 5px;
+    }
+
+    .preview-box {
+      margin-top: 14px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed var(--surface-border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .preview-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .preview-info {
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--surface-border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: #111;
+      border: 1px solid var(--surface-border);
+      padding: 14px 20px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      animation: toastSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--success);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--danger);
+    }
+
+    .toast.info {
+      border-left: 4px solid var(--blue);
+    }
+
+    @keyframes toastSlide {
+      from {
+        transform: translateX(50px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Export Box / Code Area */
+    .export-area {
+      width: 100%;
+      height: 260px;
+      background: #080808;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 12px;
+      color: #a0ffa0;
+      font-family: 'Consolas', monospace;
+      font-size: 0.85rem;
+      resize: vertical;
+      outline: none;
+    }
+
+    @media (max-width: 768px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 12px 14px;
+      }
+
+      .brand-group {
+        justify-content: center;
+      }
+
+      .nav-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        width: 100%;
+      }
+
+      .nav-actions .nav-btn {
+        justify-content: center;
+        padding: 8px 10px;
+        font-size: 0.82rem;
+      }
+
+      .admin-container {
+        padding: 0 12px;
+        margin-top: 14px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .stat-card {
+        padding: 14px;
+      }
+
+      .stat-info .stat-value {
+        font-size: 1.6rem;
+      }
+
+      .toolbar-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 14px;
+        gap: 12px;
+      }
+
+      .toolbar-left,
+      .search-input-box {
+        max-width: 100%;
+        min-width: 100%;
+      }
+
+      .toolbar-right {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        width: 100%;
+      }
+
+      .toolbar-right button {
+        width: 100%;
+        justify-content: center;
+        padding: 9px 10px;
+        font-size: 0.82rem;
+      }
+
+      .content-card {
+        border-radius: 10px;
+      }
+
+      .table-responsive {
+        -webkit-overflow-scrolling: touch;
+      }
+
+      th,
+      td {
+        padding: 12px 14px;
+        font-size: 0.85rem;
+      }
+
+      .modal-overlay {
+        padding: 12px;
+      }
+
+      .modal-card {
+        max-width: 100%;
+        max-height: 92vh;
+      }
+
+      .modal-header {
+        padding: 14px 18px;
+      }
+
+      .modal-body {
+        padding: 16px;
+      }
+
+      .modal-footer {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+      }
+
+      .modal-footer button {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand-title {
+        font-size: 1.2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar-right {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bg-animation"></div>
+  <div class="bg-overlay"></div>
+  <div class="bg-vignette"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-inner">
+      <div class="brand-group">
+        <img
+          src="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png"
+          alt="LYFESTYLE">
+        <div>
+          <div class="brand-title">LYFESTYLE SYSTEM</div>
+          <span class="brand-badge">ADMIN CONTROL PANEL</span>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <button id="btnAdminTheme" class="nav-btn btn-secondary" title="สลับโหมดมืด / สว่าง">
+          <i class="fa-solid fa-moon" id="adminThemeIcon" style="color: #f1c40f;"></i>
+          <span id="adminThemeText">โหมดมืด</span>
+        </button>
+        <button id="btnRealtimeSync" class="nav-btn btn-secondary" title="ตั้งค่าระบบ Realtime บน GitHub Pages">
+          <i class="fa-solid fa-bolt" id="syncStatusIcon" style="color: #f1c40f;"></i>
+          <span id="syncStatusText">Cloud Realtime</span>
+        </button>
+        <a href="chat.php" target="_blank" class="nav-btn btn-secondary" title="เปิดหน้าห้องแชท AI & เกมงู 3004">
+          <i class="fa-solid fa-gamepad" style="color: #facc15;"></i>
+          <span>OpenChat & เกมงู</span>
+        </a>
+        <a href="members.php" target="_blank" class="nav-btn btn-secondary" title="เปิดดูหน้าสมาชิกแบบสด">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span>ดูหน้าเว็บสด</span>
+        </a>
+        <button id="btnSiteSettings" class="nav-btn btn-secondary" title="ตั้งค่าแบนเนอร์และเพลง">
+          <i class="fa-solid fa-sliders"></i>
+          <span>ตั้งค่าเว็บ & เพลง</span>
+        </button>
+        <button id="btnSettings" class="nav-btn btn-secondary" title="เปลี่ยนรหัสผ่าน">
+          <i class="fa-solid fa-key"></i>
+          <span>เปลี่ยนรหัส</span>
+        </button>
+        <button id="btnLogout" class="nav-btn btn-danger-outline" title="ออกจากระบบ">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>ออกจากระบบ</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Container -->
+  <div class="admin-container">
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3>สมาชิกทั้งหมด</h3>
+          <div class="stat-value" id="statTotal">0</div>
+        </div>
+        <i class="fa-solid fa-users stat-icon"></i>
+      </div>
+      <div class="stat-card green" style="border-color: rgba(46, 213, 115, 0.4); box-shadow: 0 0 20px rgba(46, 213, 115, 0.1);">
+        <div class="stat-info">
+          <h3><span class="radar-pulse-dot"></span> ออนไลน์ขณะนี้ (ACTIVE)</h3>
+          <div class="stat-value" id="statActiveNow" style="color: #2ed573;">1</div>
+        </div>
+        <i class="fa-solid fa-satellite-dish stat-icon" style="color: #2ed573;"></i>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-info">
+          <h3>ยอดเข้าชมทั้งหมด (VIEWS)</h3>
+          <div class="stat-value" id="statTotalViews">0</div>
+        </div>
+        <i class="fa-solid fa-eye stat-icon"></i>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-info">
+          <h3>ผู้เข้าชมไม่ซ้ำ (IPS)</h3>
+          <div class="stat-value" id="statUniqueIps">0</div>
+        </div>
+        <i class="fa-solid fa-network-wired stat-icon"></i>
+      </div>
+    </div>
+
+    <!-- Quick Navigation Tabs Bar -->
+    <div class="admin-nav-tabs-bar">
+      <button type="button" class="admin-tab-btn active" id="tabBtnMembers" onclick="scrollToSection('membersSection')">
+        <i class="fa-solid fa-users" style="color: #38bdf8;"></i> รายชื่อสมาชิกแก๊ง (<span id="quickStatMembers">0</span>)
+      </button>
+      <button type="button" class="admin-tab-btn" id="tabBtnRadar" onclick="scrollToSection('visitorRadarCard')">
+        <i class="fa-solid fa-satellite-dish" style="color: #2ed573;"></i> เรดาร์ตรวจจับ IP & อุปกรณ์
+      </button>
+      <button type="button" class="admin-tab-btn" id="tabBtnGang" onclick="scrollToSection('gangLiveControlsCard')">
+        <i class="fa-solid fa-shield-halved" style="color: #f1c40f;"></i> ควบคุมแก๊ง & รหัสลับ
+      </button>
+      <button type="button" class="admin-tab-btn" id="tabBtnBanner" onclick="scrollToSection('bannerQuickManager')">
+        <i class="fa-solid fa-image" style="color: #a855f7;"></i> จัดการแบนเนอร์
+      </button>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 1: GANG MEMBERS DIRECTORY (รายชื่อสมาชิกหลัก)
+         ══════════════════════════════════════════════════════ -->
+    <div id="membersSection" style="margin-bottom: 32px;">
+      <!-- Member Section Title Bar -->
+      <div class="banner-quick-header" style="background: var(--surface-card); border: 1px solid var(--surface-border); border-bottom: none; border-radius: 14px 14px 0 0; padding: 18px 24px;">
+        <div class="banner-quick-title">
+          <i class="fa-solid fa-users" style="color: #38bdf8; font-size: 1.5rem;"></i>
+          <div>
+            <h3 style="font-size: 1.25rem;">รายชื่อสมาชิกแก๊งทั้งหมด (GANG MEMBERS DIRECTORY)</h3>
+            <p>จัดการสมาชิก เลื่อนขั้นยศ (Theboss > Owner > Leader > 3004 > Member) ผูกลิงก์ Facebook / Instagram และซิงค์ Cloud ทันที</p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="banner-quick-badge" style="border-color: rgba(56, 189, 248, 0.4); color: #38bdf8;">
+            <i class="fa-solid fa-user-check"></i>
+            <span>สมาชิกทั้งหมด: <strong id="memberCountHeaderBadge">0</strong> คน</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar-card" style="border-radius: 0; margin-bottom: 0; border-top: none; border-bottom: 1px solid var(--surface-border);">
+        <div class="toolbar-left">
+          <div class="search-input-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="adminSearch" placeholder="ค้นหาชื่อสมาชิก..." autocomplete="off">
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn-main" id="btnPullFirebase" style="background: linear-gradient(135deg, #10b981, #059669); border: none; box-shadow: 0 0 15px rgba(16, 185, 129, 0.45); cursor: pointer;" title="ดึงข้อมูลสมาชิกสดล่าสุดจาก Firebase Realtime Database">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+            <span>ดึงข้อมูลจาก Firebase</span>
+          </button>
+          <button class="btn-main" id="btnSyncAllFbImages" style="background: linear-gradient(135deg, #0284c7, #2563eb); border: none; box-shadow: 0 0 15px rgba(2, 132, 199, 0.45);" title="ดึงรูป Facebook ผ่าน Cloudflare Worker ซิงค์ขึ้น Cloud ทันที">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>ดึงรูป Cloudflare ขึ้น Cloud ทุกคน</span>
+          </button>
+          <button class="btn-main" id="btnAddMember">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>เพิ่มสมาชิกใหม่</span>
+          </button>
+          <button class="btn-accent" id="btnExportCode">
+            <i class="fa-solid fa-code"></i>
+            <span>ส่งออกไฟล์ members.js</span>
+          </button>
+          <button class="nav-btn btn-secondary" id="btnResetDefault" title="กู้คืนข้อมูลเดิมจาก members.js">
+            <i class="fa-solid fa-rotate-left"></i>
+            <span>รีเซ็ตข้อมูลเดิม</span>
+          </button>
+          <button class="nav-btn btn-danger-outline" id="btnDeleteAll" title="ลบรายชื่อสมาชิกทั้งหมดออกจากระบบ">
+            <i class="fa-solid fa-trash-can"></i>
+            <span>ลบทั้งหมด</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Table Container -->
+      <div class="content-card" style="border-radius: 0 0 14px 14px; border-top: none;">
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 70px;">ลำดับ</th>
+                <th>สมาชิก (NAME / AVATAR)</th>
+                <th>FACEBOOK CONTACT</th>
+                <th>INSTAGRAM (โควตา CLOUD)</th>
+                <th style="width: 140px; text-align: center;">จัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="memberTableBody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="emptyNotice" class="empty-state" style="display: none;">
+          <i class="fa-solid fa-user-astronaut"></i>
+          <p>ไม่พบรายชื่อสมาชิก</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+SECTION 2: CYBER VISITOR RADAR & LIVE IP TRACKER
+         ══════════════════════════════════════════════════════ -->
+    <div class="banner-quick-card" id="visitorRadarCard" style="margin-bottom: 28px;">
+      <div class="banner-quick-header">
+        <div class="banner-quick-title">
+          <i class="fa-solid fa-satellite-dish" style="color: #2ed573;"></i>
+          <div>
+            <h3>CYBER VISITOR RADAR & LIVE IP TRACKER (ระบบตรวจจับผู้เข้าชม & IP เรียลไทม์)</h3>
+            <p>สแกนจับสัญญาณ IP ผู้เข้าชม, ระบุยี่ห้อและรุ่นอุปกรณ์ (Device / OS / Browser), หน้าที่เข้าชม และสถานะออนไลน์สด 24 ชม.</p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div class="banner-quick-badge" id="radarLiveStatusBadge" style="border-color: rgba(46, 213, 115, 0.4); color: #2ed573;">
+            <span class="radar-pulse-dot"></span>
+            <span id="radarLiveStatusText">RADAR ACTIVE: ตรวจจับสด</span>
+          </div>
+          <button type="button" class="nav-btn btn-secondary" id="btnRefreshVisitors" title="รีเฟรชข้อมูลผู้เข้าชม" style="padding: 6px 14px; font-size: 0.8rem;">
+            <i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Filter & Action Toolbar -->
+      <div style="padding: 16px 20px; border-bottom: 1px solid var(--surface-border); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; background: rgba(0, 0, 0, 0.2);">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="filter-btn-chip active" data-filter="all" id="filterChipAll">
+            <i class="fa-solid fa-list-ul"></i> ทั้งหมด (<span id="countAllVisitors">0</span>)
+          </button>
+          <button type="button" class="filter-btn-chip" data-filter="online" id="filterChipOnline">
+            <span class="radar-pulse-dot" style="width: 7px; height: 7px;"></span> กำลังออนไลน์ (<span id="countOnlineVisitors">0</span>)
+          </button>
+          <button type="button" class="filter-btn-chip" data-filter="mobile" id="filterChipMobile">
+            <i class="fa-solid fa-mobile-screen"></i> มือถือ (<span id="countMobileVisitors">0</span>)
+          </button>
+          <button type="button" class="filter-btn-chip" data-filter="desktop" id="filterChipDesktop">
+            <i class="fa-solid fa-laptop"></i> คอมพิวเตอร์ (<span id="countDesktopVisitors">0</span>)
+          </button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <div class="search-input-box" style="min-width: 240px; height: 36px;">
+            <i class="fa-solid fa-magnifying-glass" style="font-size: 0.85rem;"></i>
+            <input type="text" id="visitorSearchInput" placeholder="ค้นหา IP, อุปกรณ์, เบราว์เซอร์..." style="font-size: 0.84rem; padding: 6px 12px;" autocomplete="off">
+          </div>
+          <button type="button" id="btnExportVisitors" class="nav-btn btn-secondary" title="ส่งออกข้อมูลผู้เข้าชมเป็น JSON" style="padding: 6px 12px; font-size: 0.8rem;">
+            <i class="fa-solid fa-file-arrow-down"></i> Export Logs
+          </button>
+          <button type="button" id="btnClearVisitorLogs" class="nav-btn btn-danger-outline" title="ล้างประวัติผู้เข้าชม" style="padding: 6px 12px; font-size: 0.8rem;">
+            <i class="fa-solid fa-trash"></i> ล้างประวัติ
+          </button>
+        </div>
+      </div>
+
+      <!-- Visitors Table -->
+      <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+        <table id="visitorLogsTable">
+          <thead>
+            <tr>
+              <th style="width: 110px;">สถานะ</th>
+              <th style="min-width: 170px;">IP ADDRESS</th>
+              <th style="min-width: 220px;">ชื่ออุปกรณ์ / OS</th>
+              <th style="min-width: 140px;">เบราว์เซอร์</th>
+              <th style="min-width: 130px;">หน้าที่เปิด</th>
+              <th style="min-width: 150px;">ประเทศ / พื้นที่</th>
+              <th style="min-width: 140px; text-align: right;">เวลาเข้าชม</th>
+            </tr>
+          </thead>
+          <tbody id="visitorLogsTableBody">
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 36px; color: var(--text-dim);">
+                <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 1.6rem; color: #38bdf8; margin-bottom: 8px;"></i><br>
+                กำลังสแกนและดึงข้อมูลเรดาร์ผู้เข้าชม...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+SECTION 3: LIVE GANG & IG CLAIM CONTROL
+         ══════════════════════════════════════════════════════ -->
+    <div class="banner-quick-card" id="gangLiveControlsCard" style="margin-bottom: 28px;">
+      <div class="banner-quick-header">
+        <div class="banner-quick-title">
+          <i class="fa-solid fa-shield-halved" style="color: #f1c40f;"></i>
+          <div>
+            <h3>ควบคุมระบบแก๊ง REALTIME (GANG & IG CLAIM CONTROL)</h3>
+            <p>เปิด-ปิดระบบให้สมาชิกใส่ IG ของตัวเอง และกำหนดรหัสลับแก๊งได้เต็มที่ อัปเดตขึ้น Cloud ทันที</p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="banner-quick-badge" id="igClaimStatusBadge" style="border-color: rgba(46, 213, 115, 0.4); color: #2ed573;">
+            <i class="fa-solid fa-circle-check" id="igClaimStatusIcon"></i>
+            <span id="igClaimStatusBadgeText">ระบบผูก IG: เปิดรับ (ON)</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px;" class="gang-controls-grid">
+        <!-- 1. Master Toggle IG Claiming -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--surface-border); border-radius: 12px; padding: 18px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+            <span style="font-weight: 600; font-size: 0.95rem; color: #fff;">
+              <i class="fa-brands fa-instagram" style="color: #e1306c; margin-right: 6px;"></i> เปิด-ปิด ที่กดใส่ลิงก์ IG สมาชิก
+            </span>
+            <label class="switch-toggle" style="position: relative; display: inline-block; width: 52px; height: 28px; cursor: pointer;">
+              <input type="checkbox" id="toggleAllowIgClaim" checked style="opacity: 0; width: 0; height: 0;">
+              <span class="slider-toggle" style="position: absolute; cursor: pointer; inset: 0; background-color: #333; transition: .3s; border-radius: 34px; border: 1px solid var(--surface-border);"></span>
+            </label>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 12px;">
+            เมื่อเปิด: สมาชิกทั่วไปสามารถกด <code>+ ใส่ IG</code> บนหน้าเว็บได้คนละ 1 ครั้ง<br>
+            เมื่อปิด: ปุ่มจะถูกปิดกั้น ป้องกันไม่ให้ใครมากรอกหรือผูก IG ใหม่
+          </p>
+          <div id="igToggleStatusText" style="font-size: 0.85rem; font-weight: 500; color: #2ed573;">
+            <i class="fa-solid fa-bolt"></i> สถานะ: เปิดรับให้สมาชิกผูก IG ได้ปกติ
+          </div>
+        </div>
+
+        <!-- 2. Gang Secret Code Editor -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--surface-border); border-radius: 12px; padding: 18px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+            <span style="font-weight: 600; font-size: 0.95rem; color: #fff;">
+              <i class="fa-solid fa-key" style="color: #f1c40f; margin-right: 6px;"></i> รหัสลับแก๊ง (GANG SECRET CODE)
+            </span>
+            <span class="preview-tag" id="currentGangCodeBadge">รหัสปัจจุบัน: 3004</span>
+          </div>
+          <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+            <input type="text" id="quickGangCodeInput" class="form-control" placeholder="กรอกรหัสลับแก๊งใหม่..." value="3004" style="margin-bottom: 0; flex: 1;">
+            <button type="button" id="btnSaveQuickGangCode" class="btn-main" style="white-space: nowrap;">
+              <i class="fa-solid fa-floppy-disk"></i> บันทึกรหัสลับ
+            </button>
+            <button type="button" id="btnResetQuickGangCode" class="nav-btn btn-secondary" title="คืนค่าเป็น 3004" style="white-space: nowrap;">
+              <i class="fa-solid fa-rotate-left"></i> คืนค่า
+            </button>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">
+            สมาชิกต้องกรอกรหัสนี้เพื่อยืนยันตัวตนก่อนใส่ IG แอดมินสามารถเปลี่ยนรหัสได้ตลอดเวลาแบบ Realtime
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+SECTION 4: LIVE BANNER MANAGER
+         ══════════════════════════════════════════════════════ -->
+    <div class="banner-quick-card" id="bannerQuickManager" style="margin-bottom: 28px;">
+      <div class="banner-quick-header">
+        <div class="banner-quick-title">
+          <i class="fa-solid fa-image"></i>
+          <div>
+            <h3>จัดการแบนเนอร์ / พื้นหลังเว็บไซต์ (LIVE BANNER MANAGER)</h3>
+            <p>เปลี่ยนภาพหรือ .gif พื้นหลังเว็บได้ทันทีด้วยลิงก์รูปภาพ อัปเดตพร้อมกันแบบ Realtime ทั่วโลก</p>
+          </div>
+        </div>
+        <div class="banner-quick-badge" id="bannerSyncBadge">
+          <i class="fa-solid fa-bolt" id="bannerSyncIcon"></i>
+          <span id="bannerSyncBadgeText">ซิงค์สด Realtime</span>
+        </div>
+      </div>
+
+      <div class="banner-quick-content">
+        <!-- Live Preview Box -->
+        <div class="banner-preview-box" id="quickBannerPreviewBox">
+          <div class="banner-preview-overlay">
+            <span class="preview-tag"><i class="fa-solid fa-eye"></i> ภาพตัวอย่างปัจจุบัน</span>
+            <span class="preview-url-tag" id="quickBannerCurrentTag">background.gif (ค่าเริ่มต้น)</span>
+          </div>
+        </div>
+
+        <!-- Input & Controls -->
+        <div class="banner-quick-form">
+          <div class="form-group-inline">
+            <div class="input-with-icon">
+              <i class="fa-solid fa-link prefix-link-icon"></i>
+              <input type="url" id="quickBannerUrlInput" placeholder="วางลิงก์รูปภาพ เช่น https://img2.pic.in.th/... หรือ .gif / .png / .jpg" autocomplete="off">
+              <button type="button" class="btn-clear-input" id="btnClearBannerInput" title="ล้างข้อความ"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <button type="button" id="btnApplyBannerUrl" class="btn-main" style="white-space: nowrap;">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>อัปเดตแบนเนอร์ทันที</span>
+            </button>
+            <button type="button" id="btnResetQuickBanner" class="nav-btn btn-secondary" title="กลับไปใช้ background.gif เดิม" style="white-space: nowrap;">
+              <i class="fa-solid fa-rotate-left"></i>
+              <span>คืนค่าเริ่มต้น</span>
+            </button>
+          </div>
+
+          <!-- Quick Presets -->
+          <div class="banner-preset-row">
+            <span class="preset-label"><i class="fa-solid fa-wand-magic-sparkles"></i> สไตล์ด่วน:</span>
+            <button type="button" class="preset-chip active" data-url="">ค่าเริ่มต้น (background.gif)</button>
+            <button type="button" class="preset-chip" data-url="https://img2.pic.in.th/OVF.jpg">OVERFRIEND</button>
+            <button type="button" class="preset-chip" data-url="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1920&auto=format&fit=crop">Cyber Grid</button>
+            <button type="button" class="preset-chip" data-url="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1920&auto=format&fit=crop">Midnight Dark</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add / Edit Member -->
+  <div class="modal-overlay" id="memberModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">เพิ่มสมาชิกใหม่</h3>
+        <button class="btn-close" onclick="closeModal('memberModal')">&times;</button>
+      </div>
+      <form id="memberForm">
+        <input type="hidden" id="editIndex" value="-1">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="memberName">ชื่อสมาชิก (Gang Name) *</label>
+            <input type="text" id="memberName" class="form-control" placeholder="เช่น Theboss Lyfestyle" required>
+          </div>
+          <div class="form-group">
+            <label for="memberRoleSelect">ยศ / ตำแหน่งในแก๊ง (Role) *</label>
+            <select id="memberRoleSelect" class="form-control" style="cursor: pointer;">
+              <option value="Owner">Owner (ยศสูงสุด)</option>
+              <option value="Leader">Leader</option>
+              <option value="3004">3004</option>
+              <option value="member" selected>Member</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="memberFb">ลิงก์ Facebook (หรือโปรไฟล์เฟซบุ๊ก)</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="url" id="memberFb" class="form-control" placeholder="https://web.facebook.com/..."
+                style="flex: 1; margin-bottom: 0;">
+              <button type="button" id="btnAutoFetchFb" class="nav-btn btn-secondary"
+                style="white-space: nowrap; padding: 0 14px;" title="ดึงรูปจากเฟซบุ๊กอัตโนมัติ">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> ดึงรูปอัตโนมัติ
+              </button>
+            </div>
+            <div class="form-help">ใส่ URL เฟซบุ๊ก แล้วกดปุ่ม "ดึงรูปอัตโนมัติ" หรือกดวาง (Ctrl+V) ได้ทันที</div>
+          </div>
+          <div class="form-group">
+            <label for="memberIg">ลิงก์ Instagram (IG Account)</label>
+            <input type="text" id="memberIg" class="form-control" placeholder="@username หรือ https://instagram.com/..." style="margin-bottom: 4px;">
+            <div class="form-help">ใส่ @username หรือ URL Instagram เพื่อผูกช่องทางติดต่อ</div>
+          </div>
+          <!-- Quota Control for Member IG -->
+          <div class="form-group" style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--surface-border); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 0.84rem; color: var(--text-dim);">สถานะการผูก IG ของสมาชิกบนหน้าเว็บ (สิทธิ์ 1 ครั้ง):</span>
+                <div style="font-weight: 600; font-size: 0.95rem; color: #fff; margin-top: 2px;">
+                  สถานะ: <span id="memberIgEditCountText" style="color: #5da4ff;">ยังไม่ได้ใส่</span> 
+                  <span id="memberQuotaStatusBadge" class="quota-tag">สิทธิ์ว่าง</span>
+                </div>
+              </div>
+              <button type="button" id="btnResetIgQuota" class="nav-btn btn-secondary" style="font-size: 0.8rem; padding: 6px 12px; color: #2ed573; border-color: rgba(46, 213, 115, 0.3);" title="รีเซ็ตให้สมาชิกสามารถใส่ IG ใหม่จากหน้าเว็บได้">
+                <i class="fa-solid fa-unlock"></i> ปลดล็อกสิทธิ์ให้สมาชิกใส่ใหม่
+              </button>
+            </div>
+            <input type="hidden" id="memberIgEditCount" value="0">
+          </div>
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="memberImg">ลิงก์รูปโปรไฟล์ (Image URL หรือวางรูปภาพ)</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="memberImg" class="form-control" placeholder="วางลิงก์รูป หรือเว้นว่างไว้ได้"
+                style="flex: 1; margin-bottom: 0;">
+              <button type="button" id="btnClearImg" class="nav-btn btn-secondary" style="white-space: nowrap;"
+                title="ล้างรูปภาพ">
+                <i class="fa-solid fa-xmark"></i> ล้างรูป
+              </button>
+              <button type="button" id="btnPasteClipboard" class="nav-btn btn-secondary"
+                style="white-space: nowrap; color: #5da4ff;" title="วางรูปที่คัดลอกไว้จาก Facebook ทันที">
+                <i class="fa-solid fa-clipboard"></i> วางรูปที่ก๊อปมา
+              </button>
+            </div>
+          </div>
+
+          <!-- Avatar drop/paste box -->
+          <div class="preview-box" id="avatarDropZone" style="cursor: pointer; position: relative;"
+            title="คลิกเพื่อเลือกไฟล์รูปภาพ หรือกด Ctrl+V เพื่อวางรูปภาพได้เลย">
+            <input type="file" id="localFileInput" accept="image/*" style="display: none;">
+            <div style="position: relative;">
+              <div id="modalAvatarBox" class="preview-avatar"
+                style="overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--surface-border); border-radius: 50%; width: 50px; height: 50px;">
+                <i class="fa-solid fa-user" id="modalAvatarIcon"
+                  style="font-size: 1.25rem; color: var(--text-dim);"></i>
+                <img id="modalAvatarPreview" src="" alt="Preview"
+                  style="display: none; width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <span
+                style="position: absolute; bottom: -2px; right: -2px; background: rgba(0,0,0,0.8); border: 1px solid var(--surface-border); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #fff;">
+                <i class="fa-solid fa-camera"></i>
+              </span>
+            </div>
+            <div class="preview-info">
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <div id="modalNamePreview" style="font-weight: 500; font-size: 0.95rem;">ตัวอย่างชื่อ</div>
+                <span id="modalRolePreview" class="role-badge-select role-member" style="font-size: 0.72rem; padding: 2px 10px; cursor: default;">member</span>
+              </div>
+              <div id="modalFbPreview" style="font-size: 0.8rem; color: var(--text-dim); margin-top: 2px;">ไม่มี Facebook</div>
+              <div style="font-size: 0.75rem; color: #5da4ff; margin-top: 4px;">
+                <i class="fa-solid fa-paste"></i> ใน Facebook: คลิกขวาที่รูปโปรไฟล์ &gt; <strong>"คัดลอกรูปภาพ"</strong>
+                แล้วกดปุ่ม <strong>"วางรูปที่ก๊อปมา"</strong> หรือกด <strong>Ctrl+V</strong> ได้ทันที!
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="nav-btn btn-secondary" onclick="closeModal('memberModal')">ยกเลิก</button>
+          <button type="submit" class="btn-main" id="btnSaveMember">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>บันทึกข้อมูล</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Export Code -->
+  <div class="modal-overlay" id="exportModal">
+    <div class="modal-card" style="max-width: 640px;">
+      <div class="modal-header">
+        <h3>ส่งออกโค้ด MEMBERS.JS</h3>
+        <button class="btn-close" onclick="closeModal('exportModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">
+          คัดลอกโค้ดด้านล่างนี้ไปวางทับไฟล์ <code>members.js</code> ในโปรเจกต์ของคุณ เพื่ออัปเดตลง GitHub ถาวร
+          หรือกดดาวน์โหลดไฟล์ทันที
+        </p>
+        <textarea id="exportTextarea" class="export-area" readonly></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="nav-btn btn-secondary" onclick="downloadMembersJs()">
+          <i class="fa-solid fa-download"></i> ดาวน์โหลด members.js
+        </button>
+        <button type="button" class="btn-main" onclick="copyExportCode()">
+          <i class="fa-solid fa-copy"></i> คัดลอกโค้ด
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Cloud Realtime Settings (Firebase) -->
+  <div class="modal-overlay" id="cloudSyncModal">
+    <div class="modal-card" style="max-width: 620px;">
+      <div class="modal-header">
+        <h3 style="display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-bolt" style="color: #f1c40f;"></i>
+          <span>ตั้งค่า Cloud Realtime (GitHub Pages)</span>
+        </h3>
+        <button class="btn-close" onclick="closeModal('cloudSyncModal')">&times;</button>
+      </div>
+      <form id="cloudSyncForm">
+        <div class="modal-body" style="max-height: 72vh; overflow-y: auto;">
+          <div
+            style="background: rgba(241, 196, 15, 0.08); border: 1px solid rgba(241, 196, 15, 0.25); border-radius: 8px; padding: 12px 14px; margin-bottom: 16px; font-size: 0.86rem; color: #f1f2f6; line-height: 1.5;">
+            <div
+              style="font-weight: 600; color: #f1c40f; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-circle-info"></i> ทำไมโฮสต์บน GitHub Pages ถึงต้องเปิด Cloud Realtime?
+            </div>
+            เพราะ GitHub Pages เป็นเว็บประเภท Static Web (ไม่มี Database ในตัว)
+            ข้อมูลที่เพิ่มปกติจะบันทึกลงในเครื่องแอดมินเท่านั้น
+            การเปิดใช้ <strong>Firebase Realtime Database (ฟรี 100%)</strong> จะทำให้เมื่อแอดมินพิมพ์ชื่อแล้วกดบันทึก
+            ข้อมูลจะวิ่งไปอัปเดตหน้าเว็บของทุกคนทั่วโลกสดๆ ทันที ไม่ต้องรอรีเฟรช!
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label style="font-weight: 500; font-size: 0.88rem; color: #fff;">
+              สถานะการเชื่อมต่อปัจจุบัน:
+            </label>
+            <div id="cloudConnectionBadge"
+              style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; background: rgba(255,255,255,0.06); margin-top: 4px;">
+              <i class="fa-solid fa-circle-dot" id="cloudBadgeDot" style="color: #ffa502;"></i>
+              <span id="cloudBadgeText">กำลังตรวจสอบสถานะ...</span>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label for="firebaseDbUrl" style="font-weight: 500; font-size: 0.88rem; color: #fff;">
+              Firebase Realtime Database URL
+            </label>
+            <input type="text" id="firebaseDbUrl" class="form-control"
+              placeholder="https://xxxx-default-rtdb.asia-southeast1.firebasedatabase.app"
+              style="font-family: monospace; font-size: 0.85rem;">
+            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px;">
+              คัดลอกจาก Firebase Console &gt; เมนู Realtime Database (URL ที่ขึ้นต้นด้วย https://)
+            </div>
+          </div>
+
+          <!-- Quick instructions -->
+          <div
+            style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--surface-border); border-radius: 8px; padding: 12px; font-size: 0.8rem; color: var(--text-sub); line-height: 1.6;">
+            <strong style="color: #fff;">วิธีสร้าง Firebase Realtime ฟรี 3 ขั้นตอน:</strong><br>
+            1. เข้า <a href="https://console.firebase.google.com" target="_blank"
+              style="color: #5da4ff;">console.firebase.google.com</a> แล้วกด "สร้างโปรเจกต์" (ฟรี ไม่ต้องผูกบัตร)<br>
+            2. เมนูด้านซ้ายเลือก <strong>"Realtime Database"</strong> &gt; กด <strong>"Create Database"</strong> &gt;
+            เลือก <strong>"Start in test mode"</strong><br>
+            3. นำ URL ที่ได้มาวางในช่องด้านบน หรือนำไปวางในไฟล์ <code>firebase-config.js</code> บน GitHub ได้เลย!
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="nav-btn btn-secondary" onclick="closeModal('cloudSyncModal')">ปิด</button>
+          <button type="button" class="nav-btn btn-secondary" id="btnTestCloudSync" style="color: #5da4ff;">
+            <i class="fa-solid fa-arrows-rotate"></i> ทดสอบการเชื่อมต่อ
+          </button>
+          <button type="submit" class="btn-main">
+            <i class="fa-solid fa-floppy-disk"></i> บันทึกคอนฟิก
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Change Password -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>เปลี่ยนรหัสผ่านผู้ดูแล</h3>
+        <button class="btn-close" onclick="closeModal('settingsModal')">&times;</button>
+      </div>
+      <form id="settingsForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="newUsername">ชื่อผู้ใช้ (Username)</label>
+            <input type="text" id="newUsername" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="newPassword">รหัสผ่านใหม่ (New Password)</label>
+            <input type="password" id="newPassword" class="form-control" placeholder="กรอกรหัสผ่านใหม่..." required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="nav-btn btn-secondary" onclick="closeModal('settingsModal')">ยกเลิก</button>
+          <button type="submit" class="btn-main">บันทึกรหัสผ่านใหม่</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Site Settings (Banner, Music, Anti-AI, Cookie) -->
+  <div class="modal-overlay" id="siteSettingsModal">
+    <div class="modal-card" style="max-width: 620px;">
+      <div class="modal-header">
+        <h3>ตั้งค่าเว็บไซต์ & เพลง & ความปลอดภัย</h3>
+        <button class="btn-close" onclick="closeModal('siteSettingsModal')">&times;</button>
+      </div>
+      <form id="siteSettingsForm">
+        <div class="modal-body" style="max-height: 72vh; overflow-y: auto;">
+          <!-- Section 1: Background Banner -->
+          <div style="border-bottom: 1px solid var(--surface-border); padding-bottom: 18px; margin-bottom: 18px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+              <label style="font-weight: 600; font-size: 0.92rem; color: #fff;">
+                <i class="fa-solid fa-image" style="color: #1e90ff; margin-right: 6px;"></i> รูปภาพพื้นหลัง / แบนเนอร์
+                (GIF / Image)
+              </label>
+              <button type="button" id="btnResetBg" class="nav-btn btn-secondary"
+                style="font-size: 0.78rem; padding: 4px 10px;">
+                <i class="fa-solid fa-rotate-left"></i> ใช้ background.gif เดิม
+              </button>
+            </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+              <input type="text" id="siteBgInput" class="form-control" placeholder="ใส่ URL รูปภาพ หรือ .gif..."
+                style="margin-bottom: 0;">
+              <input type="file" id="localBgFileInput" accept="image/*" style="display: none;">
+              <button type="button" id="btnBrowseBgFile" class="nav-btn btn-secondary" style="white-space: nowrap;">
+                <i class="fa-solid fa-folder-open"></i> เลือกไฟล์
+              </button>
+            </div>
+            <!-- Banner Preview -->
+            <div id="bgPreviewBox"
+              style="width: 100%; height: 110px; border-radius: 8px; border: 1px dashed var(--surface-border); background: url('background.gif') center/cover no-repeat; position: relative; overflow: hidden;">
+              <span
+                style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; color: #fff;">ตัวอย่างพื้นหลัง</span>
+            </div>
+          </div>
+
+          <!-- Section 2: Background Music -->
+          <div style="border-bottom: 1px solid var(--surface-border); padding-bottom: 18px; margin-bottom: 18px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+              <label style="font-weight: 600; font-size: 0.92rem; color: #fff;">
+                <i class="fa-solid fa-music" style="color: #2ed573; margin-right: 6px;"></i> เพลงประกอบเว็บไซต์
+                (Background Music)
+              </label>
+              <button type="button" id="btnResetMusic" class="nav-btn btn-secondary"
+                style="font-size: 0.78rem; padding: 4px 10px;">
+                <i class="fa-solid fa-rotate-left"></i> ใช้ music.mp3 เดิม
+              </button>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+              <label
+                style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px; display: block;">เลือกเพลงในระบบ:</label>
+              <select id="presetMusicSelect" class="form-control" style="margin-bottom: 10px;">
+                <option value="music.mp3">เพลงที่ 1 (music.mp3 - ค่าเริ่มต้น)</option>
+                <option value="music2.mp3">เพลงที่ 2 (music2.mp3)</option>
+                <option value="music3.mp3">เพลงที่ 3 (music3.mp3)</option>
+                <option value="custom">กำหนดเอง (URL หรือไฟล์ในเครื่อง)</option>
+              </select>
+            </div>
+
+            <div id="customMusicGroup" style="display: none; margin-bottom: 12px;">
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="siteMusicInput" class="form-control"
+                  placeholder="ใส่ URL ไฟล์เสียง เช่น https://.../song.mp3" style="margin-bottom: 0;">
+                <input type="file" id="localMusicFileInput" accept="audio/*" style="display: none;">
+                <button type="button" id="btnBrowseMusicFile" class="nav-btn btn-secondary"
+                  style="white-space: nowrap;">
+                  <i class="fa-solid fa-folder-open"></i> เลือกไฟล์เพลง
+                </button>
+              </div>
+            </div>
+
+            <!-- Audio Preview Player -->
+            <div
+              style="display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--surface-border); border-radius: 8px; padding: 10px 14px;">
+              <audio id="adminAudioPreview" src="music.mp3"></audio>
+              <button type="button" id="btnPlayPreviewAudio" class="nav-btn btn-secondary" style="padding: 6px 14px;">
+                <i class="fa-solid fa-play" id="audioPreviewIcon"></i> <span id="audioPlayText">ทดลองฟัง</span>
+              </button>
+              <span id="audioTrackName"
+                style="font-size: 0.82rem; color: var(--text-sub); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">music.mp3</span>
+            </div>
+          </div>
+
+          <!-- Section 2.5: Gang Secret Code for Member IG Claiming -->
+          <div style="border-bottom: 1px solid var(--surface-border); padding-bottom: 18px; margin-bottom: 18px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <label style="font-weight: 600; font-size: 0.92rem; color: #fff;">
+                <i class="fa-solid fa-key" style="color: #f1c40f; margin-right: 6px;"></i> รหัสลับแก๊งสำหรับแก้ไข IG (Gang Secret Code)
+              </label>
+              <button type="button" id="btnResetGangCodeDefault" class="nav-btn btn-secondary" style="font-size: 0.78rem; padding: 4px 10px;">
+                <i class="fa-solid fa-rotate-left"></i> ใช้รหัส 3004 เดิม
+              </button>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="siteGangCodeInput" class="form-control" placeholder="เช่น 3004" value="3004" style="margin-bottom: 0;">
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 6px;">
+              รหัสนี้ใช้เพื่อให้สมาชิกในแก๊งยืนยันตัวตนก่อนใส่หรือแก้ไข Instagram ของตนเอง ป้องกันคนนอกเข้ามากดแก้เล่น (บันทึกบน Cloud และแก้ไขได้ตลอดเวลา)
+            </div>
+          </div>
+
+          <!-- Section 3: Cookie & Anti-AI Shield Status -->
+          <div>
+            <label style="font-weight: 600; font-size: 0.92rem; color: #fff; margin-bottom: 10px; display: block;">
+              <i class="fa-solid fa-shield-halved" style="color: #ffa502; margin-right: 6px;"></i> ความปลอดภัย &
+              นโยบายคุกกี้ (Privacy & Security)
+            </label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+              <div
+                style="background: rgba(255,255,255,0.03); border: 1px solid var(--surface-border); border-radius: 8px; padding: 12px;">
+                <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 4px;">ระบบป้องกัน AI Scraper</div>
+                <div
+                  style="display: flex; align-items: center; gap: 6px; color: var(--success); font-weight: 500; font-size: 0.88rem;">
+                  <i class="fa-solid fa-circle-check"></i> ทำงานอยู่ (Active)
+                </div>
+              </div>
+              <div
+                style="background: rgba(255,255,255,0.03); border: 1px solid var(--surface-border); border-radius: 8px; padding: 12px;">
+                <div style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 4px;">ระบบยืนยันคุกกี้ (Cookie)
+                </div>
+                <div
+                  style="display: flex; align-items: center; gap: 6px; color: var(--success); font-weight: 500; font-size: 0.88rem;">
+                  <i class="fa-solid fa-circle-check"></i> ทำงานอยู่ (Active)
+                </div>
+              </div>
+            </div>
+            <button type="button" id="btnResetCookieConsent" class="nav-btn btn-secondary"
+              style="font-size: 0.82rem; width: 100%; justify-content: center;">
+              <i class="fa-solid fa-cookie"></i> รีเซ็ตการยินยอมคุกกี้ (เพื่อทดสอบแบนเนอร์คุกกี้ใหม่)
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="nav-btn btn-secondary" onclick="closeModal('siteSettingsModal')">ยกเลิก</button>
+          <button type="submit" class="btn-main">
+            <i class="fa-solid fa-floppy-disk"></i> บันทึกการตั้งค่า
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Import Firebase & Baseline Data -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="firebase-sync.js"></script>
+  <script src="members.js"></script>
+  <script>
+    // Server-side loaded members baseline (PHP)
+    window.SERVER_MEMBERS = <?php echo json_encode($serverMembers, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
+    if (typeof members === 'undefined' || !Array.isArray(members) || members.length === 0) {
+      window.members = window.SERVER_MEMBERS;
+    }
+  </script>
+
+  <script>
+    // 1. Session Auth Guard
+    if (window.location.protocol === "file:") {
+      try {
+        localStorage.setItem("lyfe_admin_session", "active");
+        sessionStorage.setItem("lyfe_admin_session", "active");
+      } catch (e) {}
+    }
+    const authSession = sessionStorage.getItem("lyfe_admin_session") || localStorage.getItem("lyfe_admin_session");
+    if (authSession !== "active") {
+      window.location.replace("login.php");
+    }
+
+    const DEFAULT_IMG = "";
+
+    const ROLE_WEIGHT = {
+      "Owner": 4,
+      "Leader": 3,
+      "3004": 2,
+      "member": 1
+    };
+
+    function normalizeRole(role, name = "") {
+      if (!role || typeof role !== "string" || role.trim() === "") {
+        if (name && name.toLowerCase().includes("theboss")) return "Owner";
+        return "member";
+      }
+      const r = role.trim();
+      if (r.toLowerCase() === "owner") return "Owner";
+      if (r.toLowerCase() === "leader") return "Leader";
+      if (r === "3004") return "3004";
+      return "member";
+    }
+
+    function sortMembersByRole(list) {
+      if (!Array.isArray(list)) return [];
+      return [...list].sort((a, b) => {
+        // 1. Theboss Lyfestyle อยู่บนสุดอันดับ 1 เสมอ
+        const aBoss = a.name && a.name.toLowerCase().includes("theboss");
+        const bBoss = b.name && b.name.toLowerCase().includes("theboss");
+        if (aBoss && !bBoss) return -1;
+        if (!aBoss && bBoss) return 1;
+
+        const roleA = normalizeRole(a.role, a.name);
+        const roleB = normalizeRole(b.role, b.name);
+
+        // 2. ยศ Owner อยู่บนสุดต่อจาก Theboss
+        const aIsOwner = roleA === "Owner";
+        const bIsOwner = roleB === "Owner";
+        if (aIsOwner && !bIsOwner) return -1;
+        if (!aIsOwner && bIsOwner) return 1;
+        if (aIsOwner && bIsOwner) {
+          return (a.name || "").localeCompare(b.name || "", 'en', { sensitivity: 'base' });
+        }
+
+        // 3. จัดตามลำดับชั้น Role: Leader > 3004 > member
+        const wA = ROLE_WEIGHT[roleA] || 1;
+        const wB = ROLE_WEIGHT[roleB] || 1;
+        if (wA !== wB) {
+          return wB - wA;
+        }
+
+        // 4. เรียงตามชื่อตัวอักษร a-Z
+        return (a.name || "").localeCompare(b.name || "", 'en', { sensitivity: 'base' });
+      });
+    }
+
+    function ensureThebossFirst(list) {
+      return sortMembersByRole(list);
+    }
+
+    // Cloudflare Worker Proxy URL
+    const FB_PROXY_BASE = "https://fb-pic-proxy.lyfestyleofficalwebsite.workers.dev";
+
+    function resolveMemberImg(m) {
+      if (!m) return "";
+      let img = (m.img && typeof m.img === "string" && !m.img.includes("3004g.png")) ? m.img.trim() : "";
+      if (img.includes("graph.facebook.com")) {
+        img = img.replace("https://graph.facebook.com", FB_PROXY_BASE);
+      }
+      if (!img && m.fb && m.fb.trim() !== "") {
+        const idMatch = m.fb.match(/[?&]id=(\d+)/);
+        if (idMatch) {
+          img = `${FB_PROXY_BASE}/?id=${idMatch[1]}&type=large`;
+        } else {
+          const userMatch = m.fb.match(/facebook\.com\/([^/?#]+)/);
+          if (userMatch && userMatch[1] !== "profile.php" && userMatch[1] !== "people") {
+            img = `${FB_PROXY_BASE}/?id=${userMatch[1]}&type=large`;
+          }
+        }
+      }
+      return img;
+    }
+
+    // 2. Load members from localStorage or baseline members.js and sync with Cloud
+    let currentMembers = [];
+
+    // ฟังก์ชันดึงข้อมูลสมาชิกสดล่าสุดจาก Firebase Realtime Database
+    async function pullMembersFromFirebase(notify = false) {
+      try {
+        const dbUrl = (window.LYFE_FIREBASE_CONFIG && window.LYFE_FIREBASE_CONFIG.databaseURL) 
+          ? window.LYFE_FIREBASE_CONFIG.databaseURL.replace(/\/+$/, '') 
+          : "https://lyfe-d7804-default-rtdb.firebaseio.com";
+        const res = await fetch(`${dbUrl}/members.json?t=${Date.now()}`, { cache: "no-store" });
+        if (res.ok) {
+          const rawData = await res.json();
+          let list = [];
+          if (Array.isArray(rawData)) {
+            list = rawData.filter(Boolean);
+          } else if (rawData && typeof rawData === "object") {
+            list = Object.values(rawData).filter(Boolean);
+          }
+
+          if (list.length > 0) {
+            currentMembers = sortMembersByRole(list.map(m => ({
+              ...m,
+              img: resolveMemberImg(m),
+              role: normalizeRole(m.role, m.name)
+            })));
+            try {
+              localStorage.setItem("lyfe_members", JSON.stringify(currentMembers));
+            } catch (e) {}
+            updateStats();
+            renderTable();
+            if (notify) {
+              showToast(`ดึงข้อมูลสมาชิกจาก Firebase สำเร็จ (${currentMembers.length} คน)`, "success");
+            }
+            return true;
+          }
+        }
+      } catch (err) {
+        console.warn("Direct Firebase fetch error:", err);
+      }
+      if (notify) {
+        showToast("ไม่สามารถดึงข้อมูลจาก Firebase ได้ (กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต)", "error");
+      }
+      return false;
+    }
+
+    async function loadMembersData() {
+      const stored = localStorage.getItem("lyfe_members");
+      const baseline = (typeof members !== "undefined" && Array.isArray(members)) ? members : [];
+      let loadedFromLocal = false;
+
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            currentMembers = sortMembersByRole(parsed.map(m => ({
+              ...m,
+              img: resolveMemberImg(m),
+              role: normalizeRole(m.role, m.name)
+            })));
+            loadedFromLocal = true;
+          }
+        } catch (e) {}
+      }
+
+      if ((!loadedFromLocal || currentMembers.length === 0) && baseline.length > 0) {
+        currentMembers = sortMembersByRole(baseline.map(m => ({
+          ...m,
+          img: resolveMemberImg(m),
+          role: normalizeRole(m.role, m.name)
+        })));
+      }
+
+      updateStats();
+      renderTable();
+
+      // ดึงข้อมูลสดล่าสุดจาก Firebase Realtime Database ทันที
+      await pullMembersFromFirebase(false);
+
+      if (window.LyfeSync && window.LyfeSync.isReady()) {
+        try {
+          const cloudData = await window.LyfeSync.fetchLatestMembers();
+          let cloudList = [];
+          if (Array.isArray(cloudData)) cloudList = cloudData.filter(Boolean);
+          else if (cloudData && typeof cloudData === "object") cloudList = Object.values(cloudData).filter(Boolean);
+          if (cloudList.length > 0) {
+            currentMembers = sortMembersByRole(cloudList.map(m => ({
+              ...m,
+              img: resolveMemberImg(m),
+              role: normalizeRole(m.role, m.name)
+            })));
+            updateStats();
+            renderTable();
+          }
+        } catch (e) {}
+      }
+    }
+
+    // รับฟังการเปลี่ยนแปลงสมาชิกสดๆ จาก Cloud Realtime
+    if (window.LyfeSync) {
+      window.LyfeSync.onMembersChange((data) => {
+        let list = [];
+        if (Array.isArray(data)) list = data.filter(Boolean);
+        else if (data && typeof data === "object") list = Object.values(data).filter(Boolean);
+        if (list.length > 0) {
+          currentMembers = sortMembersByRole(list.map(m => ({
+            ...m,
+            img: resolveMemberImg(m),
+            role: normalizeRole(m.role, m.name)
+          })));
+          updateStats();
+          renderTable();
+          if (typeof updateCloudSyncUI === "function") updateCloudSyncUI();
+        }
+      });
+    }
+
+    async function saveMembersData(notify = true) {
+      currentMembers = ensureThebossFirst(currentMembers);
+      localStorage.setItem("lyfe_members", JSON.stringify(currentMembers));
+      updateStats();
+      renderTable();
+
+      // ซิงค์ขึ้น Cloud Realtime ไปยังผู้เข้าชมทุกคนทันที
+      if (window.LyfeSync) {
+        window.LyfeSync.saveMembers(currentMembers);
+      }
+
+      if (notify) {
+        showToast("บันทึกการเปลี่ยนแปลงและอัปเดตหน้าเว็บสดแล้ว", "success");
+      }
+    }
+
+    // 3. UI Stats & Table Render
+    const tableBody = document.getElementById("memberTableBody");
+    const emptyNotice = document.getElementById("emptyNotice");
+    const searchInput = document.getElementById("adminSearch");
+
+    function updateStats() {
+      const total = currentMembers.length;
+      const statTotal = document.getElementById("statTotal");
+      if (statTotal) statTotal.innerText = total;
+
+      const memberBadge = document.getElementById("memberCountHeaderBadge");
+      if (memberBadge) memberBadge.innerText = total;
+
+      const quickStat = document.getElementById("quickStatMembers");
+      if (quickStat) quickStat.innerText = total;
+
+      const hasFb = currentMembers.filter(m => m.fb && m.fb.trim() !== "").length;
+      const statHasFb = document.getElementById("statHasFb");
+      if (statHasFb) statHasFb.innerText = hasFb;
+
+      const statNoFb = document.getElementById("statNoFb");
+      if (statNoFb) statNoFb.innerText = total - hasFb;
+    }
+
+    // Smooth Scroll & Active Tab Switcher
+    window.scrollToSection = function(sectionId) {
+      const target = document.getElementById(sectionId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.classList.remove('active'));
+      if (sectionId === 'membersSection') document.getElementById('tabBtnMembers')?.classList.add('active');
+      else if (sectionId === 'visitorRadarCard') document.getElementById('tabBtnRadar')?.classList.add('active');
+      else if (sectionId === 'gangLiveControlsCard') document.getElementById('tabBtnGang')?.classList.add('active');
+      else if (sectionId === 'bannerQuickManager') document.getElementById('tabBtnBanner')?.classList.add('active');
+    };
+
+    function renderTable() {
+      const keyword = searchInput.value.toLowerCase().trim();
+      const filtered = currentMembers.map((m, idx) => ({ ...m, originalIndex: idx }))
+        .filter(m => m.name.toLowerCase().includes(keyword));
+
+      tableBody.innerHTML = "";
+      if (filtered.length === 0) {
+        emptyNotice.style.display = "block";
+      } else {
+        emptyNotice.style.display = "none";
+        filtered.forEach((item, displayIdx) => {
+          const effectiveImg = resolveMemberImg(item);
+          const hasImg = effectiveImg && effectiveImg.trim() !== "";
+          const initialChar = item.name ? escapeHtml(item.name.charAt(0).toUpperCase()) : '<i class="fa-solid fa-user"></i>';
+          const avatarHtml = hasImg
+            ? `<img src="${effectiveImg}" alt="${escapeHtml(item.name)}" onerror="if(this.src!=='https://static.xx.fbcdn.net/rsrc.php/v4/yL/r/HsTZSDw4avx.gif'){this.src='https://static.xx.fbcdn.net/rsrc.php/v4/yL/r/HsTZSDw4avx.gif';}else{this.outerHTML='<div class=\\'table-avatar-initial\\'>${initialChar}</div>';}">`
+            : `<img src="https://static.xx.fbcdn.net/rsrc.php/v4/yL/r/HsTZSDw4avx.gif" alt="${escapeHtml(item.name)}" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover;">`;
+          const tr = document.createElement("tr");
+
+          const fbBadge = item.fb && item.fb.trim() !== ""
+            ? `<a href="${item.fb}" target="_blank" class="fb-badge active"><i class="fa-brands fa-facebook"></i> เปิดลิงก์</a>`
+            : `<span class="fb-badge inactive"><i class="fa-solid fa-minus"></i> ไม่มีข้อมูล</span>`;
+
+          const editCount = typeof item.igEditCount === "number" ? item.igEditCount : 0;
+          const isClaimed = (item.ig && item.ig.trim() !== "") || editCount >= 1;
+
+          let igBadge = "";
+          if (item.ig && item.ig.trim() !== "") {
+            const igHandle = item.ig.replace(/^https?:\/\/(www\.)?instagram\.com\//i, '@').replace(/\/$/, '');
+            igBadge = `
+              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                <a href="${item.ig}" target="_blank" class="ig-badge active" title="${item.ig}"><i class="fa-brands fa-instagram"></i> ${escapeHtml(igHandle)}</a>
+                <span class="quota-tag ${isClaimed ? 'locked' : ''}" title="${isClaimed ? 'ผูกแล้ว (สิทธิ์ 1 ครั้ง)' : 'สิทธิ์ว่าง'}">${isClaimed ? 'ผูกแล้ว' : 'สิทธิ์ว่าง'}</span>
+              </div>
+            `;
+          } else {
+            igBadge = `<span class="ig-badge inactive"><i class="fa-solid fa-minus"></i> ยังไม่ผูก</span>`;
+          }
+
+          const itemRole = normalizeRole(item.role, item.name);
+          const roleClass = itemRole.toLowerCase();
+          const canPromote = itemRole !== "Owner";
+          const canDemote = itemRole !== "member";
+
+          tr.innerHTML = `
+            <td style="color: var(--text-dim); font-family: 'Kanit'; font-weight: 500; font-size: 0.95rem;">#${displayIdx + 1}</td>
+            <td>
+              <div class="member-cell">
+                <div class="table-avatar">
+                  ${avatarHtml}
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                  <span class="member-meta-name">${escapeHtml(item.name)}</span>
+                  <div class="role-quick-control">
+                    <select class="role-badge-select role-${roleClass}" onchange="changeMemberRole(${item.originalIndex}, this.value)" title="ปรับเปลี่ยนยศ (จัดลำดับอัตโนมัติ)">
+                      <option value="Owner" ${itemRole === "Owner" ? "selected" : ""}>Owner</option>
+                      <option value="Leader" ${itemRole === "Leader" ? "selected" : ""}>Leader</option>
+                      <option value="3004" ${itemRole === "3004" ? "selected" : ""}>3004</option>
+                      <option value="member" ${itemRole === "member" ? "selected" : ""}>member</option>
+                    </select>
+                    <div class="role-step-btns">
+                      <button type="button" class="btn-role-step" onclick="promoteRole(${item.originalIndex})" title="เลื่อนขั้นยศ (เพิ่ม Role)" ${canPromote ? "" : "disabled style='opacity:0.25;cursor:not-allowed;'"}>
+                        <i class="fa-solid fa-chevron-up"></i>
+                      </button>
+                      <button type="button" class="btn-role-step" onclick="demoteRole(${item.originalIndex})" title="ลดขั้นยศ (ลด Role)" ${canDemote ? "" : "disabled style='opacity:0.25;cursor:not-allowed;'"}>
+                        <i class="fa-solid fa-chevron-down"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>${fbBadge}</td>
+            <td>${igBadge}</td>
+            <td style="text-align: center;">
+              <div class="action-btns" style="justify-content: center;">
+                <button class="btn-icon" onclick="openEditModal(${item.originalIndex})" title="แก้ไข">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn-icon delete" onclick="confirmDelete(${item.originalIndex})" title="ลบสมาชิก">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </td>
+          `;
+          tableBody.appendChild(tr);
+        });
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return "";
+      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    // 4. Modal Handlers
+    function openModal(id) {
+      const el = typeof id === "string" ? document.getElementById(id) : id;
+      if (el) el.classList.add("active");
+    }
+    function closeModal(id) {
+      const el = typeof id === "string" ? document.getElementById(id) : id;
+      if (el) el.classList.remove("active");
+    }
+
+    // กดพื้นหลังข้างนอก Modal หรือกดปุ่ม Escape เพื่อปิด Modal ทันที
+    document.addEventListener("click", (e) => {
+      if (e.target.classList && e.target.classList.contains("modal-overlay")) {
+        e.target.classList.remove("active");
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".modal-overlay.active").forEach(m => m.classList.remove("active"));
+      }
+    });
+
+    // Live preview in modal
+    const memberNameInput = document.getElementById("memberName");
+    const memberFbInput = document.getElementById("memberFb");
+    const memberImgInput = document.getElementById("memberImg");
+    const modalAvatarPreview = document.getElementById("modalAvatarPreview");
+    const modalNamePreview = document.getElementById("modalNamePreview");
+    const modalFbPreview = document.getElementById("modalFbPreview");
+
+    function updateModalPreview() {
+      const name = memberNameInput.value.trim() || "ตัวอย่างชื่อ";
+      let img = memberImgInput.value.trim();
+      if (img.includes("3004g.png")) img = "";
+      const fb = memberFbInput.value.trim();
+
+      modalNamePreview.innerText = name;
+      const avatarImg = document.getElementById("modalAvatarPreview");
+      const avatarIcon = document.getElementById("modalAvatarIcon");
+      if (img && img !== "") {
+        avatarImg.src = img;
+        avatarImg.style.display = "block";
+        avatarIcon.style.display = "none";
+        avatarImg.onerror = () => {
+          avatarImg.style.display = "none";
+          avatarIcon.style.display = "block";
+        };
+      } else {
+        avatarImg.style.display = "none";
+        avatarIcon.style.display = "block";
+      }
+      modalFbPreview.innerText = fb ? fb : "ไม่มี Facebook";
+
+      const roleSelectEl = document.getElementById("memberRoleSelect");
+      const currentRole = roleSelectEl ? normalizeRole(roleSelectEl.value, name) : "member";
+      const modalRolePreview = document.getElementById("modalRolePreview");
+      if (modalRolePreview) {
+        modalRolePreview.className = `role-badge-select role-${currentRole.toLowerCase()}`;
+        modalRolePreview.innerText = currentRole;
+      }
+    }
+
+    memberNameInput.addEventListener("input", updateModalPreview);
+    memberFbInput.addEventListener("input", updateModalPreview);
+    memberImgInput.addEventListener("input", updateModalPreview);
+    const memberRoleSelectEl = document.getElementById("memberRoleSelect");
+    if (memberRoleSelectEl) memberRoleSelectEl.addEventListener("change", updateModalPreview);
+
+    // ปุ่มล้างรูปภาพ
+    document.getElementById("btnClearImg").addEventListener("click", () => {
+      memberImgInput.value = "";
+      updateModalPreview();
+      showToast("ล้างรูปโปรไฟล์เรียบร้อยแล้ว", "info");
+    });
+
+    // ฟังก์ชันดึงรูปจาก Facebook อัตโนมัติ
+    function extractFbIdOrUsername(url) {
+      if (!url) return null;
+      try {
+        const u = new URL(url.startsWith("http") ? url : "https://" + url);
+        const idParam = u.searchParams.get("id");
+        if (idParam) return idParam;
+        const parts = u.pathname.split("/").filter(p => p && p !== "profile.php" && p !== "people");
+        if (parts.length > 0) return parts[0];
+      } catch (e) {
+        const idMatch = url.match(/[?&]id=(\d+)/);
+        if (idMatch) return idMatch[1];
+        const match = url.match(/facebook\.com\/([a-zA-Z0-9\._\-]+)/);
+        if (match) return match[1];
+      }
+      return null;
+    }
+
+    // Cloudflare Worker Proxy URL — ดึงรูปเฟสผ่าน Proxy ไม่ถูก CORS Block (ประกาศไว้ด้านบนแล้ว)
+
+    document.getElementById("btnAutoFetchFb").addEventListener("click", () => {
+      const fbUrl = memberFbInput.value.trim();
+      if (!fbUrl) {
+        showToast("กรุณากรอกลิงก์ Facebook ก่อนกดดึงรูป", "error");
+        memberFbInput.focus();
+        return;
+      }
+
+      const target = extractFbIdOrUsername(fbUrl);
+      if (!target) {
+        showToast("ไม่สามารถตรวจหารหัสหรือชื่อเฟซบุ๊กได้", "error");
+        return;
+      }
+
+      showToast("กำลังดึงรูปโปรไฟล์ Facebook...", "info");
+
+      // ใช้ Cloudflare Worker Proxy แทน direct Graph API (แก้ปัญหา CORS + ไม่ต้อง token)
+      const proxyUrl = `${FB_PROXY_BASE}/?id=${encodeURIComponent(target)}&type=large`;
+
+      const testImg = new Image();
+      testImg.onload = () => {
+        memberImgInput.value = proxyUrl;
+        updateModalPreview();
+        showToast("ดึงรูปโปรไฟล์ Facebook เรียบร้อยแล้ว!", "success");
+      };
+      testImg.onerror = () => {
+        showToast("โปรไฟล์นี้ตั้งค่าส่วนตัวไว้ กรุณากด Ctrl+V วางรูปจากเฟซบุ๊กได้เลย!", "info");
+      };
+      testImg.src = proxyUrl;
+    });
+
+    // ระบบวางรูปภาพจากคลิปบอร์ด (Ctrl+V) ทันที
+    document.addEventListener("paste", (e) => {
+      const modal = document.getElementById("memberModal");
+      if (!modal.classList.contains("active")) return;
+
+      const items = (e.clipboardData || window.clipboardData)?.items;
+      if (!items) return;
+
+      for (let item of items) {
+        if (item.type.indexOf("image") !== -1) {
+          const blob = item.getAsFile();
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            memberImgInput.value = event.target.result;
+            updateModalPreview();
+            showToast("วางรูปโปรไฟล์จากคลิปบอร์ดเรียบร้อย!", "success");
+          };
+          reader.readAsDataURL(blob);
+          e.preventDefault();
+          break;
+        }
+      }
+    });
+
+    // ปุ่มกดวางรูปภาพจากคลิปบอร์ดทันที
+    document.getElementById("btnPasteClipboard").addEventListener("click", async () => {
+      try {
+        if (!navigator.clipboard || !navigator.clipboard.read) {
+          showToast("เบราว์เซอร์ไม่รองรับการอ่านคลิปบอร์ดโดยตรง กรุณากด Ctrl+V เพื่อวางรูปภาพได้เลย!", "info");
+          return;
+        }
+        const clipboardItems = await navigator.clipboard.read();
+        let found = false;
+        for (const item of clipboardItems) {
+          for (const type of item.types) {
+            if (type.startsWith("image/")) {
+              const blob = await item.getType(type);
+              const reader = new FileReader();
+              reader.onload = (event) => {
+                memberImgInput.value = event.target.result;
+                updateModalPreview();
+                showToast("วางรูปภาพจากคลิปบอร์ดเรียบร้อยแล้ว!", "success");
+              };
+              reader.readAsDataURL(blob);
+              found = true;
+              break;
+            }
+          }
+          if (found) break;
+        }
+        if (!found) {
+          // ถ้าในคลิปบอร์ดเป็นข้อความลิงก์รูปภาพ
+          const text = await navigator.clipboard.readText();
+          if (text && (text.startsWith("http://") || text.startsWith("https://"))) {
+            memberImgInput.value = text.trim();
+            updateModalPreview();
+            showToast("วางลิงก์รูปภาพเรียบร้อยแล้ว!", "success");
+          } else {
+            showToast("ไม่พบรูปภาพในคลิปบอร์ด (กรุณาคลิกขวาที่รูปใน Facebook แล้วเลือก 'คัดลอกรูปภาพ' ก่อน)", "info");
+          }
+        }
+      } catch (err) {
+        showToast("กดปุ่มลัด Ctrl+V เพื่อวางรูปภาพลงในหน้านี้ได้ทันที!", "info");
+      }
+    });
+
+    // ตรวจจับอัตโนมัติหากวางลิงก์รูปภาพลงในช่อง Facebook URL
+    memberFbInput.addEventListener("change", () => {
+      const val = memberFbInput.value.trim();
+      if (val.includes("fbcdn.net") || val.match(/\.(jpeg|jpg|gif|png|webp)($|\?)/i)) {
+        memberImgInput.value = val;
+        updateModalPreview();
+        showToast("ตรวจพบคลิปหรือลิงก์รูปภาพ Facebook! ปรับเป็นรูปโปรไฟล์ให้อัตโนมัติ", "success");
+      }
+    });
+
+    // ระบบเลือกไฟล์รูปภาพจากเครื่อง
+    const dropZone = document.getElementById("avatarDropZone");
+    const localFileInput = document.getElementById("localFileInput");
+    dropZone.addEventListener("click", () => {
+      localFileInput.click();
+    });
+    localFileInput.addEventListener("change", (e) => {
+      if (e.target.files && e.target.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          memberImgInput.value = event.target.result;
+          updateModalPreview();
+          showToast("อัปโหลดรูปภาพสำเร็จ!", "success");
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    });
+
+    // Drag & Drop รูปภาพ
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = "var(--success)";
+    });
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.style.borderColor = "var(--surface-border)";
+    });
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.style.borderColor = "var(--surface-border)";
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          memberImgInput.value = event.target.result;
+          updateModalPreview();
+          showToast("โหลดรูปภาพสำเร็จ!", "success");
+        };
+        reader.readAsDataURL(e.dataTransfer.files[0]);
+      }
+    });
+
+    // Role Ordering Progression: member (1) -> 3004 (2) -> Leader (3) -> Owner (4)
+    const ROLES_ORDER = ["member", "3004", "Leader", "Owner"];
+
+    // ปรับเปลี่ยน Role ผ่าน Dropdown ด้านหลังชื่อ
+    window.changeMemberRole = function (index, newRole) {
+      const item = currentMembers[index];
+      if (!item) return;
+      const validRole = normalizeRole(newRole, item.name);
+      item.role = validRole;
+      currentMembers = sortMembersByRole(currentMembers);
+      saveMembersData(true);
+      showToast(`เปลี่ยนยศของ "${item.name}" เป็น "${validRole}" สำเร็จ (จัดอันดับอัตโนมัติ)`, "success");
+    };
+
+    // เลื่อนขั้น Role (เพิ่มยศ)
+    window.promoteRole = function (index) {
+      const item = currentMembers[index];
+      if (!item) return;
+      const current = normalizeRole(item.role, item.name);
+      const currentIdx = ROLES_ORDER.indexOf(current);
+      if (currentIdx < ROLES_ORDER.length - 1) {
+        const nextRole = ROLES_ORDER[currentIdx + 1];
+        item.role = nextRole;
+        currentMembers = sortMembersByRole(currentMembers);
+        saveMembersData(true);
+        showToast(`เลื่อนขั้นยศ "${item.name}" เป็น "${nextRole}" เรียบร้อย!`, "success");
+      } else {
+        showToast(`"${item.name}" เป็นยศสูงสุด (Owner) อยู่แล้ว`, "info");
+      }
+    };
+
+    // ลดขั้น Role (ลดยศ)
+    window.demoteRole = function (index) {
+      const item = currentMembers[index];
+      if (!item) return;
+      const current = normalizeRole(item.role, item.name);
+      const currentIdx = ROLES_ORDER.indexOf(current);
+      if (currentIdx > 0) {
+        const prevRole = ROLES_ORDER[currentIdx - 1];
+        item.role = prevRole;
+        currentMembers = sortMembersByRole(currentMembers);
+        saveMembersData(true);
+        showToast(`ลดขั้นยศ "${item.name}" เป็น "${prevRole}" เรียบร้อย`, "info");
+      } else {
+        showToast(`"${item.name}" เป็นยศเริ่มต้น (member) อยู่แล้ว`, "info");
+      }
+    };
+
+    // Add Member
+    document.getElementById("btnAddMember").addEventListener("click", () => {
+      document.getElementById("editIndex").value = "-1";
+      document.getElementById("modalTitle").innerText = "เพิ่มสมาชิกใหม่";
+      memberNameInput.value = "";
+      memberFbInput.value = "";
+      memberImgInput.value = "";
+      const memberIgInput = document.getElementById("memberIg");
+      if (memberIgInput) memberIgInput.value = "";
+      const memberIgEditCount = document.getElementById("memberIgEditCount");
+      if (memberIgEditCount) memberIgEditCount.value = "0";
+      const memberIgEditCountText = document.getElementById("memberIgEditCountText");
+      if (memberIgEditCountText) memberIgEditCountText.innerText = "ยังไม่ได้ใส่ (สิทธิ์ว่าง)";
+      const badge = document.getElementById("memberQuotaStatusBadge");
+      if (badge) {
+        badge.className = "quota-tag";
+        badge.innerText = "สิทธิ์ว่าง";
+      }
+      const roleSel = document.getElementById("memberRoleSelect");
+      if (roleSel) roleSel.value = "member";
+      updateModalPreview();
+      openModal("memberModal");
+    });
+
+    // Edit Member
+    window.openEditModal = function (index) {
+      const item = currentMembers[index];
+      if (!item) return;
+      document.getElementById("editIndex").value = index;
+      document.getElementById("modalTitle").innerText = "แก้ไขข้อมูลสมาชิก";
+      memberNameInput.value = item.name || "";
+      const roleSel = document.getElementById("memberRoleSelect");
+      if (roleSel) roleSel.value = normalizeRole(item.role, item.name);
+      memberFbInput.value = item.fb || "";
+      memberImgInput.value = (item.img && !item.img.includes("3004g.png")) ? item.img : "";
+      
+      const memberIgInput = document.getElementById("memberIg");
+      if (memberIgInput) memberIgInput.value = item.ig || "";
+      const editCount = typeof item.igEditCount === "number" ? item.igEditCount : 0;
+      const isClaimed = (item.ig && item.ig.trim() !== "") || editCount >= 1;
+      const memberIgEditCount = document.getElementById("memberIgEditCount");
+      if (memberIgEditCount) memberIgEditCount.value = editCount;
+      const memberIgEditCountText = document.getElementById("memberIgEditCountText");
+      if (memberIgEditCountText) memberIgEditCountText.innerText = isClaimed ? "ผูกเรียบร้อยแล้ว" : "ยังไม่ได้ผูก";
+      const badge = document.getElementById("memberQuotaStatusBadge");
+      if (badge) {
+        if (isClaimed) {
+          badge.className = "quota-tag locked";
+          badge.innerText = "ล็อกสิทธิ์แล้ว";
+        } else {
+          badge.className = "quota-tag";
+          badge.innerText = "สิทธิ์ว่าง (1 ครั้ง)";
+        }
+      }
+
+      updateModalPreview();
+      openModal("memberModal");
+    };
+
+    // ปุ่มปลดล็อกสิทธิ์ให้สมาชิกใส่ IG ใหม่ (รีเซ็ตโควตาเป็น 0 ครั้ง)
+    const btnResetIgQuota = document.getElementById("btnResetIgQuota");
+    if (btnResetIgQuota) {
+      btnResetIgQuota.addEventListener("click", () => {
+        const memberIgEditCount = document.getElementById("memberIgEditCount");
+        if (memberIgEditCount) memberIgEditCount.value = "0";
+        const memberIgEditCountText = document.getElementById("memberIgEditCountText");
+        if (memberIgEditCountText) memberIgEditCountText.innerText = "ปลดล็อกแล้ว (สิทธิ์ว่าง)";
+        const badge = document.getElementById("memberQuotaStatusBadge");
+        if (badge) {
+          badge.className = "quota-tag";
+          badge.innerText = "ปลดล็อกแล้ว";
+        }
+        showToast("ปลดล็อกสิทธิ์ให้สมาชิกผูก IG ใหม่ได้แล้ว (อย่าลืมกดปุ่มบันทึกข้อมูล)", "success");
+      });
+    }
+
+
+    // Save Member Form
+    document.getElementById("memberForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const editIdx = parseInt(document.getElementById("editIndex").value);
+      const name = memberNameInput.value.trim();
+      const fb = memberFbInput.value.trim();
+      let img = memberImgInput.value.trim();
+      if (img.includes("3004g.png")) img = "";
+      const roleSel = document.getElementById("memberRoleSelect");
+      const role = roleSel ? normalizeRole(roleSel.value, name) : normalizeRole("member", name);
+
+      const memberIgInput = document.getElementById("memberIg");
+      let ig = memberIgInput ? memberIgInput.value.trim() : "";
+      if (ig && !ig.startsWith("http://") && !ig.startsWith("https://")) {
+        ig = "https://instagram.com/" + ig.replace(/^@/, '');
+      }
+      const memberIgEditCount = document.getElementById("memberIgEditCount");
+      const igEditCount = memberIgEditCount ? (parseInt(memberIgEditCount.value) || 0) : 0;
+
+      if (!name) {
+        showToast("กรุณากรอกชื่อสมาชิก", "error");
+        return;
+      }
+
+      if (editIdx >= 0 && editIdx < currentMembers.length) {
+        currentMembers[editIdx] = {
+          ...currentMembers[editIdx],
+          name,
+          fb,
+          img,
+          role,
+          ig,
+          igEditCount
+        };
+        showToast(`แก้ไขข้อมูล ${name} สำเร็จ`, "success");
+      } else {
+        currentMembers.unshift({ name, fb, img, role, ig, igEditCount: 0 });
+        showToast(`เพิ่มสมาชิกใหม่ ${name} เรียบร้อย`, "success");
+      }
+
+      currentMembers = sortMembersByRole(currentMembers);
+      closeModal("memberModal");
+      saveMembersData(true);
+    });
+
+    // Delete Member
+    window.confirmDelete = function (index) {
+      const item = currentMembers[index];
+      if (!item) return;
+      if (confirm(`คุณต้องการลบ "${item.name}" ออกจากรายชื่อสมาชิกหรือไม่?`)) {
+        currentMembers.splice(index, 1);
+        saveMembersData(true);
+        showToast(`ลบสมาชิกเรียบร้อยแล้ว`, "info");
+      }
+    };
+
+    //ปุ่มดึงข้อมูลสดจาก Firebase Realtime Database
+    const btnPullFirebase = document.getElementById("btnPullFirebase");
+    if (btnPullFirebase) {
+      btnPullFirebase.addEventListener("click", async () => {
+        const oldContent = btnPullFirebase.innerHTML;
+        btnPullFirebase.disabled = true;
+        btnPullFirebase.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>กำลังดึงจาก Firebase...</span>';
+        await pullMembersFromFirebase(true);
+        btnPullFirebase.disabled = false;
+        btnPullFirebase.innerHTML = oldContent;
+      });
+    }
+
+    // ซิงค์รูป Facebook ผ่าน Cloudflare Worker Proxy ขึ้น Cloud Realtime ทุกคน
+    const btnSyncAllFb = document.getElementById("btnSyncAllFbImages");
+    if (btnSyncAllFb) {
+      btnSyncAllFb.addEventListener("click", () => {
+        let count = 0;
+        currentMembers = currentMembers.map(m => {
+          const resolved = resolveMemberImg(m);
+          if (resolved) {
+            m.img = resolved;
+            count++;
+          }
+          return m;
+        });
+        saveMembersData(true);
+        showToast(`ดึงรูป Facebook ผ่าน Cloudflare Worker สำเร็จ ${count} คน และบันทึกขึ้น Cloud Realtime เรียบร้อยแล้ว!`, "success");
+      });
+    }
+
+    // Reset Default
+    document.getElementById("btnResetDefault").addEventListener("click", () => {
+      if (confirm("คุณแน่ใจหรือไม่ว่าต้องการรีเซ็ตข้อมูลสมาชิกทั้งหมดกลับเป็นค่าเริ่มต้นจาก members.js?")) {
+        currentMembers = sortMembersByRole(members.map(m => ({
+          ...m,
+          role: normalizeRole(m.role, m.name)
+        })));
+        saveMembersData(true);
+        showToast("รีเซ็ตรายชื่อเป็นค่าเริ่มต้นแล้ว", "info");
+      }
+    });
+
+    // Delete All Members
+    document.getElementById("btnDeleteAll").addEventListener("click", () => {
+      if (currentMembers.length === 0) {
+        showToast("ไม่มีรายชื่อสมาชิกให้ลบในระบบ", "info");
+        return;
+      }
+      if (confirm(`ยืนยันการลบทั้งหมด:\nคุณต้องการลบสมาชิกทั้งหมด (${currentMembers.length} คน) ออกจากระบบใช่หรือไม่?\n\n(หากต้องการกู้คืน สามารถกดปุ่ม "รีเซ็ตข้อมูลเดิม" ได้ในภายหลัง)`)) {
+        currentMembers = [];
+        saveMembersData(true);
+        showToast("ลบรายชื่อสมาชิกทั้งหมดออกจากระบบเรียบร้อยแล้ว", "error");
+      }
+    });
+
+    // Search input
+    searchInput.addEventListener("input", renderTable);
+
+    // 5. Export code generator
+    function generateCodeString() {
+      let code = `const IMG = "";\n\n`;
+      code += `const members = [\n`;
+      currentMembers.forEach(m => {
+        const hasImg = m.img && m.img.trim() !== "" && !m.img.includes("3004g.png");
+        const imgVal = hasImg ? JSON.stringify(m.img) : `""`;
+        const roleVal = JSON.stringify(normalizeRole(m.role, m.name));
+        const igVal = m.ig ? JSON.stringify(m.ig) : `""`;
+        const countVal = typeof m.igEditCount === "number" ? m.igEditCount : 0;
+        code += `    { name: ${JSON.stringify(m.name)}, fb: ${JSON.stringify(m.fb || "")}, img: ${imgVal}, role: ${roleVal}, ig: ${igVal}, igEditCount: ${countVal} },\n`;
+      });
+      code += `];\n`;
+      return code;
+    }
+
+    document.getElementById("btnExportCode").addEventListener("click", () => {
+      document.getElementById("exportTextarea").value = generateCodeString();
+      openModal("exportModal");
+    });
+
+    window.copyExportCode = function () {
+      const txt = document.getElementById("exportTextarea");
+      txt.select();
+      navigator.clipboard.writeText(txt.value).then(() => {
+        showToast("คัดลอกโค้ดไปยังคลิปบอร์ดแล้ว!", "success");
+      });
+    };
+
+    window.downloadMembersJs = function () {
+      const content = generateCodeString();
+      const blob = new Blob([content], { type: "text/javascript;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "members.js";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("ดาวน์โหลดไฟล์ members.js สำเร็จ", "success");
+    };
+
+    // 6. Settings (Change Password)
+    document.getElementById("btnSettings").addEventListener("click", () => {
+      document.getElementById("newUsername").value = localStorage.getItem("lyfe_admin_user") || "admin";
+      document.getElementById("newPassword").value = "";
+      openModal("settingsModal");
+    });
+
+    document.getElementById("settingsForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const u = document.getElementById("newUsername").value.trim();
+      const p = document.getElementById("newPassword").value;
+      if (!u || !p) return;
+      localStorage.setItem("lyfe_admin_user", u);
+      localStorage.setItem("lyfe_admin_pass", p);
+      closeModal("settingsModal");
+      showToast("บันทึกชื่อผู้ใช้และรหัสผ่านใหม่เรียบร้อย", "success");
+    });
+
+    // 6.5 Live Banner Quick Manager Controller
+    const quickBannerUrlInput = document.getElementById("quickBannerUrlInput");
+    const btnClearBannerInput = document.getElementById("btnClearBannerInput");
+    const btnApplyBannerUrl = document.getElementById("btnApplyBannerUrl");
+    const btnResetQuickBanner = document.getElementById("btnResetQuickBanner");
+    const quickBannerPreviewBox = document.getElementById("quickBannerPreviewBox");
+    const quickBannerCurrentTag = document.getElementById("quickBannerCurrentTag");
+    const bannerSyncBadge = document.getElementById("bannerSyncBadge");
+    const bannerSyncBadgeText = document.getElementById("bannerSyncBadgeText");
+    const bannerSyncIcon = document.getElementById("bannerSyncIcon");
+    const presetChips = document.querySelectorAll(".banner-preset-row .preset-chip");
+
+    function renderBannerPreview(url) {
+      const clean = (url || "").trim();
+      if (clean) {
+        if (quickBannerPreviewBox) quickBannerPreviewBox.style.backgroundImage = `url('${clean}')`;
+        if (quickBannerCurrentTag) quickBannerCurrentTag.innerText = clean.length > 40 ? clean.substring(0, 37) + "..." : clean;
+      } else {
+        if (quickBannerPreviewBox) quickBannerPreviewBox.style.backgroundImage = `url('background.gif')`;
+        if (quickBannerCurrentTag) quickBannerCurrentTag.innerText = "background.gif (ค่าเริ่มต้น)";
+      }
+      presetChips.forEach(chip => {
+        const chipUrl = chip.getAttribute("data-url") || "";
+        if (chipUrl === clean) {
+          chip.classList.add("active");
+        } else {
+          chip.classList.remove("active");
+        }
+      });
+      const modalBgInput = document.getElementById("siteBgInput");
+      const modalBgPreviewBox = document.getElementById("bgPreviewBox");
+      if (modalBgInput) modalBgInput.value = clean;
+      if (modalBgPreviewBox) {
+        modalBgPreviewBox.style.backgroundImage = clean ? `url('${clean}')` : `url('background.gif')`;
+      }
+    }
+
+    const initialBanner = localStorage.getItem("lyfe_site_bg") || "";
+    if (quickBannerUrlInput) {
+      quickBannerUrlInput.value = initialBanner;
+      renderBannerPreview(initialBanner);
+      if (initialBanner && btnClearBannerInput) btnClearBannerInput.style.display = "block";
+    }
+
+    if (quickBannerUrlInput) {
+      quickBannerUrlInput.addEventListener("input", () => {
+        const val = quickBannerUrlInput.value.trim();
+        if (btnClearBannerInput) btnClearBannerInput.style.display = val ? "block" : "none";
+        renderBannerPreview(val);
+      });
+    }
+
+    if (btnClearBannerInput) {
+      btnClearBannerInput.addEventListener("click", () => {
+        quickBannerUrlInput.value = "";
+        btnClearBannerInput.style.display = "none";
+        renderBannerPreview("");
+        quickBannerUrlInput.focus();
+      });
+    }
+
+    presetChips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        const url = chip.getAttribute("data-url") || "";
+        if (quickBannerUrlInput) quickBannerUrlInput.value = url;
+        if (btnClearBannerInput) btnClearBannerInput.style.display = url ? "block" : "none";
+        renderBannerPreview(url);
+      });
+    });
+
+    if (btnApplyBannerUrl) {
+      btnApplyBannerUrl.addEventListener("click", async () => {
+        const url = quickBannerUrlInput ? quickBannerUrlInput.value.trim() : "";
+        btnApplyBannerUrl.disabled = true;
+        btnApplyBannerUrl.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>กำลังอัปเดต...</span>`;
+
+        try {
+          if (window.LyfeSync && window.LyfeSync.saveBanner) {
+            await window.LyfeSync.saveBanner(url);
+          } else if (window.LyfeSite && window.LyfeSite.setBackground) {
+            await window.LyfeSite.setBackground(url);
+          } else {
+            if (url) localStorage.setItem("lyfe_site_bg", url);
+            else localStorage.removeItem("lyfe_site_bg");
+          }
+
+          const bgEls = document.querySelectorAll(".bg-animation");
+          bgEls.forEach(el => {
+            el.style.background = url ? `url('${url}') center/cover no-repeat` : `url('background.gif') center/cover no-repeat`;
+          });
+
+          renderBannerPreview(url);
+
+          if (bannerSyncBadge && bannerSyncBadgeText && bannerSyncIcon) {
+            bannerSyncBadge.style.borderColor = "rgba(46, 213, 115, 0.4)";
+            bannerSyncBadge.style.color = "#2ed573";
+            bannerSyncIcon.className = "fa-solid fa-circle-check";
+            bannerSyncBadgeText.innerText = "อัปเดตสำเร็จ & ซิงค์แล้ว";
+          }
+
+          showToast("อัปเดตแบนเนอร์สำเร็จ! หน้าเว็บทั้งหมดเปลี่ยนภาพทันทีแล้ว", "success");
+        } catch (err) {
+          showToast("เกิดข้อผิดพลาดในการบันทึก: " + err.message, "error");
+        } finally {
+          btnApplyBannerUrl.disabled = false;
+          btnApplyBannerUrl.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> <span>อัปเดตแบนเนอร์ทันที</span>`;
+        }
+      });
+    }
+
+    if (btnResetQuickBanner) {
+      btnResetQuickBanner.addEventListener("click", async () => {
+        if (quickBannerUrlInput) quickBannerUrlInput.value = "";
+        if (btnClearBannerInput) btnClearBannerInput.style.display = "none";
+        renderBannerPreview("");
+        if (window.LyfeSync && window.LyfeSync.saveBanner) {
+          await window.LyfeSync.saveBanner("");
+        } else if (window.LyfeSite && window.LyfeSite.setBackground) {
+          await window.LyfeSite.setBackground("");
+        } else {
+          localStorage.removeItem("lyfe_site_bg");
+        }
+        const bgEls = document.querySelectorAll(".bg-animation");
+        bgEls.forEach(el => {
+          el.style.background = `url('background.gif') center/cover no-repeat`;
+        });
+        showToast("คืนค่าแบนเนอร์เริ่มต้น (background.gif) เรียบร้อย", "info");
+      });
+    }
+
+    window.onLyfeBannerChange = function (newBanner) {
+      if (quickBannerUrlInput && document.activeElement !== quickBannerUrlInput) {
+        quickBannerUrlInput.value = newBanner || "";
+        renderBannerPreview(newBanner || "");
+      }
+    };
+
+    // 7. Site Settings (Banner, Music, Anti-AI & Cookie)
+    const btnSiteSettings = document.getElementById("btnSiteSettings");
+    const siteSettingsModal = "siteSettingsModal";
+    const siteBgInput = document.getElementById("siteBgInput");
+    const localBgFileInput = document.getElementById("localBgFileInput");
+    const btnBrowseBgFile = document.getElementById("btnBrowseBgFile");
+    const bgPreviewBox = document.getElementById("bgPreviewBox");
+    const btnResetBg = document.getElementById("btnResetBg");
+
+    const presetMusicSelect = document.getElementById("presetMusicSelect");
+    const customMusicGroup = document.getElementById("customMusicGroup");
+    const siteMusicInput = document.getElementById("siteMusicInput");
+    const localMusicFileInput = document.getElementById("localMusicFileInput");
+    const btnBrowseMusicFile = document.getElementById("btnBrowseMusicFile");
+    const btnResetMusic = document.getElementById("btnResetMusic");
+
+    const adminAudioPreview = document.getElementById("adminAudioPreview");
+    const btnPlayPreviewAudio = document.getElementById("btnPlayPreviewAudio");
+    const audioPreviewIcon = document.getElementById("audioPreviewIcon");
+    const audioPlayText = document.getElementById("audioPlayText");
+    const audioTrackName = document.getElementById("audioTrackName");
+    const btnResetCookieConsent = document.getElementById("btnResetCookieConsent");
+
+    function updateBgPreview(url) {
+      if (url && url.trim() !== "") {
+        bgPreviewBox.style.backgroundImage = `url('${url.trim()}')`;
+      } else {
+        bgPreviewBox.style.backgroundImage = `url('background.gif')`;
+      }
+    }
+
+    function setAudioPreview(src, name) {
+      adminAudioPreview.pause();
+      adminAudioPreview.currentTime = 0;
+      audioPreviewIcon.className = "fa-solid fa-play";
+      audioPlayText.innerText = "ทดลองฟัง";
+      adminAudioPreview.src = src;
+      audioTrackName.innerText = name || src;
+    }
+
+    btnSiteSettings.addEventListener("click", () => {
+      // Load current site BG
+      const currentBg = localStorage.getItem("lyfe_site_bg") || "";
+      siteBgInput.value = currentBg;
+      updateBgPreview(currentBg);
+
+      // Load current site Music
+      const currentMusic = localStorage.getItem("lyfe_site_music") || "music.mp3";
+      if (currentMusic === "music.mp3" || currentMusic === "music2.mp3" || currentMusic === "music3.mp3") {
+        presetMusicSelect.value = currentMusic;
+        customMusicGroup.style.display = "none";
+        siteMusicInput.value = "";
+        setAudioPreview(currentMusic, currentMusic);
+      } else {
+        presetMusicSelect.value = "custom";
+        customMusicGroup.style.display = "block";
+        siteMusicInput.value = currentMusic;
+        setAudioPreview(currentMusic, "กำหนดเอง (ไฟล์/URL)");
+      }
+
+      // Load current Gang Secret Code
+      const siteGangCodeInput = document.getElementById("siteGangCodeInput");
+      if (siteGangCodeInput) {
+        siteGangCodeInput.value = (window.LyfeSync && window.LyfeSync.getGangCode) ? window.LyfeSync.getGangCode() : (localStorage.getItem("lyfe_gang_code") || "3004");
+      }
+
+      openModal("siteSettingsModal");
+    });
+
+    siteBgInput.addEventListener("input", () => {
+      updateBgPreview(siteBgInput.value);
+    });
+
+    btnBrowseBgFile.addEventListener("click", () => localBgFileInput.click());
+    localBgFileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 8 * 1024 * 1024) {
+        alert("ไฟล์ขนาดใหญ่เกินไป (ไม่ควรเกิน 8MB)");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        siteBgInput.value = evt.target.result;
+        updateBgPreview(evt.target.result);
+        showToast("เลือกไฟล์รูปภาพพื้นหลังแล้ว", "info");
+      };
+      reader.readAsDataURL(file);
+    });
+
+    btnResetBg.addEventListener("click", () => {
+      siteBgInput.value = "";
+      updateBgPreview("");
+      showToast("รีเซ็ตเป็นพื้นหลังเริ่มต้น (background.gif)", "info");
+    });
+
+    // Music Selector
+    presetMusicSelect.addEventListener("change", () => {
+      const val = presetMusicSelect.value;
+      if (val === "custom") {
+        customMusicGroup.style.display = "block";
+        const customVal = siteMusicInput.value.trim();
+        setAudioPreview(customVal || "music.mp3", customVal ? "กำหนดเอง" : "ยังไม่ได้ระบุ");
+      } else {
+        customMusicGroup.style.display = "none";
+        setAudioPreview(val, val);
+      }
+    });
+
+    siteMusicInput.addEventListener("input", () => {
+      const val = siteMusicInput.value.trim();
+      if (val) {
+        setAudioPreview(val, val);
+      }
+    });
+
+    btnBrowseMusicFile.addEventListener("click", () => localMusicFileInput.click());
+    localMusicFileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 12 * 1024 * 1024) {
+        alert("ไฟล์เพลงมีขนาดใหญ่เกินไป (ไม่ควรเกิน 12MB สำหรับ LocalStorage)");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        siteMusicInput.value = evt.target.result;
+        setAudioPreview(evt.target.result, file.name);
+        showToast(`เลือกไฟล์เพลง ${file.name} เรียบร้อย`, "info");
+      };
+      reader.readAsDataURL(file);
+    });
+
+    btnPlayPreviewAudio.addEventListener("click", () => {
+      if (adminAudioPreview.paused) {
+        adminAudioPreview.play().then(() => {
+          audioPreviewIcon.className = "fa-solid fa-pause";
+          audioPlayText.innerText = "หยุดเล่น";
+        }).catch(err => {
+          showToast("ไม่สามารถเล่นไฟล์เสียงนี้ได้: " + err.message, "error");
+        });
+      } else {
+        adminAudioPreview.pause();
+        audioPreviewIcon.className = "fa-solid fa-play";
+        audioPlayText.innerText = "ทดลองฟัง";
+      }
+    });
+
+    adminAudioPreview.addEventListener("ended", () => {
+      audioPreviewIcon.className = "fa-solid fa-play";
+      audioPlayText.innerText = "ทดลองฟัง";
+    });
+
+    btnResetMusic.addEventListener("click", () => {
+      presetMusicSelect.value = "music.mp3";
+      customMusicGroup.style.display = "none";
+      siteMusicInput.value = "";
+      setAudioPreview("music.mp3", "music.mp3 (ค่าเริ่มต้น)");
+      showToast("รีเซ็ตเป็นเพลงเริ่มต้น (music.mp3)", "info");
+    });
+
+    // Reset Cookie Consent
+    btnResetCookieConsent.addEventListener("click", () => {
+      localStorage.removeItem("lyfe_cookie_consent");
+      showToast("รีเซ็ตสถานะคุกกี้แล้ว (เมื่อเปิดหน้าเว็บจะมีแถบยินยอมขึ้นอีกครั้ง)", "success");
+    });
+
+    // Reset Gang Code to default 3004
+    const btnResetGangCodeDefault = document.getElementById("btnResetGangCodeDefault");
+    if (btnResetGangCodeDefault) {
+      btnResetGangCodeDefault.addEventListener("click", () => {
+        const siteGangCodeInput = document.getElementById("siteGangCodeInput");
+        if (siteGangCodeInput) siteGangCodeInput.value = "3004";
+        showToast("รีเซ็ตรหัสลับแก๊งกลับเป็น 3004 (อย่าลืมกดบันทึกการตั้งค่า)", "info");
+      });
+    }
+
+    // Save Site Settings
+    document.getElementById("siteSettingsForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Save Background
+      const bgVal = siteBgInput.value.trim();
+      if (bgVal) {
+        localStorage.setItem("lyfe_site_bg", bgVal);
+      } else {
+        localStorage.removeItem("lyfe_site_bg");
+      }
+      if (typeof renderBannerPreview === "function") renderBannerPreview(bgVal);
+      const qInput = document.getElementById("quickBannerUrlInput");
+      if (qInput) qInput.value = bgVal;
+      if (window.LyfeSync && window.LyfeSync.saveBanner) {
+        window.LyfeSync.saveBanner(bgVal);
+      }
+
+      // Save Music
+      const musicChoice = presetMusicSelect.value;
+      if (musicChoice === "custom") {
+        const customUrl = siteMusicInput.value.trim();
+        if (customUrl) {
+          localStorage.setItem("lyfe_site_music", customUrl);
+        } else {
+          localStorage.setItem("lyfe_site_music", "music.mp3");
+        }
+      } else {
+        localStorage.setItem("lyfe_site_music", musicChoice);
+      }
+
+      // Save Gang Secret Code
+      const siteGangCodeInput = document.getElementById("siteGangCodeInput");
+      if (siteGangCodeInput) {
+        const newCode = siteGangCodeInput.value.trim() || "3004";
+        if (window.LyfeSync && window.LyfeSync.saveGangCode) {
+          window.LyfeSync.saveGangCode(newCode);
+        } else {
+          localStorage.setItem("lyfe_gang_code", newCode);
+        }
+        if (quickGangCodeInput) quickGangCodeInput.value = newCode;
+        if (currentGangCodeBadge) currentGangCodeBadge.innerText = `รหัสปัจจุบัน: ${newCode}`;
+      }
+
+      // Stop audio preview
+      adminAudioPreview.pause();
+      audioPreviewIcon.className = "fa-solid fa-play";
+      audioPlayText.innerText = "ทดลองฟัง";
+
+      closeModal("siteSettingsModal");
+      showToast("บันทึกการตั้งค่าเว็บไซต์และรหัสแก๊งเรียบร้อยแล้ว!", "success");
+    });
+
+    // 8. Logout
+    document.getElementById("btnLogout").addEventListener("click", () => {
+      if (confirm("ต้องการออกจากระบบหลังบ้านใช่หรือไม่?")) {
+        sessionStorage.removeItem("lyfe_admin_session");
+        localStorage.removeItem("lyfe_admin_session");
+        window.location.replace("login.php");
+      }
+    });
+
+    // Toast helper
+    function showToast(msg, type = "info") {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = `toast ${type}`;
+      let icon = "fa-circle-info";
+      if (type === "success") icon = "fa-circle-check";
+      if (type === "error") icon = "fa-circle-xmark";
+      toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateX(50px)";
+        toast.style.transition = "all 0.3s ease";
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // 9. Cloud Realtime Sync Controller
+    const btnRealtimeSync = document.getElementById("btnRealtimeSync");
+    const cloudSyncModal = document.getElementById("cloudSyncModal");
+    const cloudSyncForm = document.getElementById("cloudSyncForm");
+    const firebaseDbUrlInput = document.getElementById("firebaseDbUrl");
+    const btnTestCloudSync = document.getElementById("btnTestCloudSync");
+    const syncStatusIcon = document.getElementById("syncStatusIcon");
+    const syncStatusText = document.getElementById("syncStatusText");
+    const cloudBadgeDot = document.getElementById("cloudBadgeDot");
+    const cloudBadgeText = document.getElementById("cloudBadgeText");
+
+    function updateCloudSyncUI() {
+      const isReady = window.LyfeSync && window.LyfeSync.isReady();
+      const hasConf = window.LyfeSync && window.LyfeSync.hasConfig();
+
+      if (isReady) {
+        if (syncStatusIcon) syncStatusIcon.style.color = "#2ed573";
+        if (syncStatusText) syncStatusText.innerText = "Cloud Online";
+        if (cloudBadgeDot) cloudBadgeDot.style.color = "#2ed573";
+        if (cloudBadgeText) cloudBadgeText.innerText = "เชื่อมต่อ Cloud Realtime สำเร็จ (ออนไลน์)";
+      } else if (hasConf) {
+        if (syncStatusIcon) syncStatusIcon.style.color = "#ffa502";
+        if (syncStatusText) syncStatusText.innerText = "กำลังเชื่อมต่อ...";
+        if (cloudBadgeDot) cloudBadgeDot.style.color = "#ffa502";
+        if (cloudBadgeText) cloudBadgeText.innerText = "มีคอนฟิกแล้ว กำลังเชื่อมต่อฐานข้อมูล...";
+      } else {
+        if (syncStatusIcon) syncStatusIcon.style.color = "#888";
+        if (syncStatusText) syncStatusText.innerText = "ออฟไลน์ (Local)";
+        if (cloudBadgeDot) cloudBadgeDot.style.color = "#ff4757";
+        if (cloudBadgeText) cloudBadgeText.innerText = "ยังไม่ได้เชื่อมต่อ (บันทึกเฉพาะในเครื่องนี้)";
+      }
+
+      if (firebaseDbUrlInput && window.LyfeSync) {
+        const conf = window.LyfeSync.getConfig();
+        if (conf && conf.databaseURL) {
+          firebaseDbUrlInput.value = conf.databaseURL;
+        }
+      }
+    }
+
+    if (btnRealtimeSync) {
+      btnRealtimeSync.addEventListener("click", () => {
+        updateCloudSyncUI();
+        openModal("cloudSyncModal");
+      });
+    }
+
+    if (cloudSyncForm) {
+      cloudSyncForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const url = firebaseDbUrlInput.value.trim();
+        if (!url) {
+          localStorage.removeItem("lyfe_firebase_config");
+          showToast("ล้างการตั้งค่า Cloud แล้ว (กลับไปใช้ออฟไลน์)", "info");
+          setTimeout(() => location.reload(), 600);
+          return;
+        }
+        if (!url.startsWith("https://")) {
+          alert("Firebase Database URL ต้องขึ้นต้นด้วย https://");
+          return;
+        }
+        window.LyfeSync.saveConfig({ databaseURL: url });
+        showToast("บันทึกการตั้งค่า Cloud เรียบร้อย กำลังรีสตาร์ทระบบ...", "success");
+      });
+    }
+
+    if (btnTestCloudSync) {
+      btnTestCloudSync.addEventListener("click", async () => {
+        const url = firebaseDbUrlInput.value.trim();
+        if (!url) {
+          showToast("กรุณากรอก Database URL ก่อนทดสอบ", "error");
+          return;
+        }
+        btnTestCloudSync.disabled = true;
+        btnTestCloudSync.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> กำลังทดสอบ...`;
+        try {
+          const testRes = await fetch(url.replace(/\/$/, "") + "/.json?shallow=true");
+          if (testRes.ok || testRes.status === 401 || testRes.status === 403 || testRes.status === 200) {
+            showToast("เชื่อมต่อไปยังเซิร์ฟเวอร์ Firebase สำเร็จ!", "success");
+          } else {
+            showToast(`การเชื่อมต่อตอบกลับสถานะ HTTP ${testRes.status}`, "info");
+          }
+        } catch (err) {
+          showToast("ไม่สามารถเข้าถึง URL นี้ได้ โปรดตรวจสอบ URL อีกครั้ง", "error");
+        } finally {
+          btnTestCloudSync.disabled = false;
+          btnTestCloudSync.innerHTML = `<i class="fa-solid fa-arrows-rotate"></i> ทดสอบการเชื่อมต่อ`;
+        }
+      });
+    }
+
+    // 10. Live Gang Controls Controller (IG Claim Master Toggle & Gang Secret Code)
+    const toggleAllowIgClaim = document.getElementById("toggleAllowIgClaim");
+    const igClaimStatusBadge = document.getElementById("igClaimStatusBadge");
+    const igClaimStatusBadgeText = document.getElementById("igClaimStatusBadgeText");
+    const igClaimStatusIcon = document.getElementById("igClaimStatusIcon");
+    const igToggleStatusText = document.getElementById("igToggleStatusText");
+    const quickGangCodeInput = document.getElementById("quickGangCodeInput");
+    const currentGangCodeBadge = document.getElementById("currentGangCodeBadge");
+    const btnSaveQuickGangCode = document.getElementById("btnSaveQuickGangCode");
+    const btnResetQuickGangCode = document.getElementById("btnResetQuickGangCode");
+
+    function updateIgClaimUI(allowed) {
+      if (toggleAllowIgClaim) toggleAllowIgClaim.checked = allowed;
+      if (igClaimStatusBadge && igClaimStatusBadgeText && igClaimStatusIcon) {
+        if (allowed) {
+          igClaimStatusBadge.style.borderColor = "rgba(46, 213, 115, 0.4)";
+          igClaimStatusBadge.style.color = "#2ed573";
+          igClaimStatusIcon.className = "fa-solid fa-circle-check";
+          igClaimStatusBadgeText.innerText = "ระบบผูก IG: เปิดรับ (ON)";
+          if (igToggleStatusText) {
+            igToggleStatusText.style.color = "#2ed573";
+            igToggleStatusText.innerHTML = '<i class="fa-solid fa-bolt"></i> สถานะ: เปิดรับให้สมาชิกผูก IG ได้ปกติ';
+          }
+        } else {
+          igClaimStatusBadge.style.borderColor = "rgba(255, 71, 87, 0.4)";
+          igClaimStatusBadge.style.color = "#ff4757";
+          igClaimStatusIcon.className = "fa-solid fa-circle-xmark";
+          igClaimStatusBadgeText.innerText = "ระบบผูก IG: ปิดชั่วคราว (OFF)";
+          if (igToggleStatusText) {
+            igToggleStatusText.style.color = "#ff4757";
+            igToggleStatusText.innerHTML = '<i class="fa-solid fa-lock"></i> สถานะ: ปิดรับผูก IG ชั่วคราว (หน้าเว็บถูกล็อก)';
+          }
+        }
+      }
+    }
+
+    if (toggleAllowIgClaim) {
+      toggleAllowIgClaim.addEventListener("change", async () => {
+        const allowed = toggleAllowIgClaim.checked;
+        updateIgClaimUI(allowed);
+        if (window.LyfeSync && window.LyfeSync.setIgClaimAllowed) {
+          await window.LyfeSync.setIgClaimAllowed(allowed);
+        } else {
+          localStorage.setItem("lyfe_allow_ig_claim", allowed ? "true" : "false");
+        }
+        showToast(allowed ? "เปิดรับการผูก IG ของสมาชิกแล้ว (อัปเดต Realtime)" : "ปิดรับการผูก IG ของสมาชิกชั่วคราวแล้ว", allowed ? "success" : "info");
+      });
+    }
+
+    // โหลดค่าเริ่มต้นของ Gang Controls
+    (async function initGangControls() {
+      let allowed = true;
+      if (window.LyfeSync && window.LyfeSync.fetchLatestIgClaimAllowed) {
+        allowed = await window.LyfeSync.fetchLatestIgClaimAllowed();
+      } else {
+        allowed = localStorage.getItem("lyfe_allow_ig_claim") !== "false";
+      }
+      updateIgClaimUI(allowed);
+
+      let code = "3004";
+      if (window.LyfeSync && window.LyfeSync.fetchLatestGangCode) {
+        code = await window.LyfeSync.fetchLatestGangCode();
+      } else {
+        code = localStorage.getItem("lyfe_gang_code") || "3004";
+      }
+      if (quickGangCodeInput) quickGangCodeInput.value = code;
+      if (currentGangCodeBadge) currentGangCodeBadge.innerText = `รหัสปัจจุบัน: ${code}`;
+    })();
+
+    if (btnSaveQuickGangCode) {
+      btnSaveQuickGangCode.addEventListener("click", async () => {
+        const newCode = (quickGangCodeInput ? quickGangCodeInput.value.trim() : "") || "3004";
+        btnSaveQuickGangCode.disabled = true;
+        btnSaveQuickGangCode.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึก...';
+        try {
+          if (window.LyfeSync && window.LyfeSync.saveGangCode) {
+            await window.LyfeSync.saveGangCode(newCode);
+          } else {
+            localStorage.setItem("lyfe_gang_code", newCode);
+          }
+          if (currentGangCodeBadge) currentGangCodeBadge.innerText = `รหัสปัจจุบัน: ${newCode}`;
+          const modalCodeInput = document.getElementById("siteGangCodeInput");
+          if (modalCodeInput) modalCodeInput.value = newCode;
+          showToast(`บันทึกรหัสลับแก๊ง "${newCode}" สำเร็จ! อัปเดตขึ้น Cloud เรียบร้อย`, "success");
+        } catch (err) {
+          showToast("เกิดข้อผิดพลาดในการบันทึกรหัสลับ: " + err.message, "error");
+        } finally {
+          btnSaveQuickGangCode.disabled = false;
+          btnSaveQuickGangCode.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> บันทึกรหัสลับ';
+        }
+      });
+    }
+
+    if (btnResetQuickGangCode) {
+      btnResetQuickGangCode.addEventListener("click", async () => {
+        if (quickGangCodeInput) quickGangCodeInput.value = "3004";
+        if (window.LyfeSync && window.LyfeSync.saveGangCode) {
+          await window.LyfeSync.saveGangCode("3004");
+        } else {
+          localStorage.setItem("lyfe_gang_code", "3004");
+        }
+        if (currentGangCodeBadge) currentGangCodeBadge.innerText = `รหัสปัจจุบัน: 3004`;
+        const modalCodeInput = document.getElementById("siteGangCodeInput");
+        if (modalCodeInput) modalCodeInput.value = "3004";
+        showToast("คืนค่ารหัสลับแก๊งเริ่มต้นเป็น 3004 สำเร็จ", "info");
+      });
+    }
+
+    // 11. Theme Switcher Controller
+    const btnAdminTheme = document.getElementById("btnAdminTheme");
+    const adminThemeIcon = document.getElementById("adminThemeIcon");
+    const adminThemeText = document.getElementById("adminThemeText");
+
+    function applyAdminTheme(theme) {
+      if (window.LyfeTheme && window.LyfeTheme.apply) {
+        window.LyfeTheme.apply(theme);
+      } else {
+        if (theme === "light") {
+          document.body.classList.add("light-theme");
+          if (adminThemeIcon) adminThemeIcon.className = "fa-solid fa-sun";
+          if (adminThemeText) adminThemeText.innerText = "โหมดสว่าง";
+        } else {
+          document.body.classList.remove("light-theme");
+          if (adminThemeIcon) adminThemeIcon.className = "fa-solid fa-moon";
+          if (adminThemeText) adminThemeText.innerText = "โหมดมืด";
+        }
+        localStorage.setItem("lyfe_theme", theme);
+      }
+    }
+
+    if (btnAdminTheme) {
+      btnAdminTheme.addEventListener("click", () => {
+        if (window.LyfeTheme && window.LyfeTheme.toggle) {
+          window.LyfeTheme.toggle();
+        } else {
+          const isLight = document.body.classList.contains("light-theme");
+          applyAdminTheme(isLight ? "dark" : "light");
+        }
+      });
+    }
+    applyAdminTheme(localStorage.getItem("lyfe_theme") || "dark");
+
+    // ══════════════════════════════════════════════════════
+    //CYBER VISITOR RADAR & LIVE IP TRACKER CONTROLLER
+    // ══════════════════════════════════════════════════════
+    let allVisitorLogs = [];
+    let currentVisitorFilter = "all";
+    let visitorSearchKeyword = "";
+
+    async function fetchVisitorRadarData() {
+      const dbUrl = (window.LYFE_FIREBASE_CONFIG && window.LYFE_FIREBASE_CONFIG.databaseURL)
+        ? window.LYFE_FIREBASE_CONFIG.databaseURL.replace(/\/+$/, '')
+        : 'https://lyfe-d7804-default-rtdb.firebaseio.com';
+
+      let cloudVisitors = {};
+      let cloudActive = {};
+
+      // 1. Fetch Cloud Realtime Telemetry
+      try {
+        const resp = await fetch(`${dbUrl}/analytics.json?t=${Date.now()}`);
+        if (resp.ok) {
+          const analyticsData = await resp.json();
+          if (analyticsData) {
+            cloudVisitors = analyticsData.visitors || {};
+            cloudActive = analyticsData.active || {};
+          }
+        }
+      } catch (err) {
+        console.warn("Visitor Radar: Could not fetch Firebase analytics, fallback to local cache", err);
+      }
+
+      // 2. Fetch Local Storage Cache
+      let localLogs = [];
+      try {
+        const cached = localStorage.getItem("lyfe_visitor_telemetry_logs");
+        if (cached) localLogs = JSON.parse(cached);
+      } catch (e) {}
+
+      // 3. Merge & Deduplicate by Session ID or IP + Device
+      const logsMap = new Map();
+
+      // Load local logs first
+      if (Array.isArray(localLogs)) {
+        localLogs.forEach(log => {
+          if (log && (log.sessionId || log.ip)) {
+            const key = log.sessionId || `${log.ip}_${log.device || ''}`;
+            logsMap.set(key, log);
+          }
+        });
+      }
+
+      // Merge Cloud Visitors
+      Object.keys(cloudVisitors).forEach(key => {
+        const item = cloudVisitors[key];
+        if (item) {
+          const id = item.sessionId || key;
+          const existing = logsMap.get(id) || {};
+          logsMap.set(id, { ...existing, ...item });
+        }
+      });
+
+      // Merge Cloud Active Heartbeats
+      const now = Date.now();
+      Object.keys(cloudActive).forEach(key => {
+        const activeItem = cloudActive[key];
+        if (activeItem) {
+          const id = activeItem.sessionId || key;
+          const existing = logsMap.get(id) || {};
+          logsMap.set(id, {
+            ...existing,
+            ...activeItem,
+            lastActive: activeItem.timestamp || activeItem.lastActive || now
+          });
+        }
+      });
+
+      // Convert to array and sort by lastActive / timestamp descending
+      allVisitorLogs = Array.from(logsMap.values()).map(log => {
+        const lastActiveTime = log.lastActive || log.timestamp || 0;
+        const isOnline = (now - lastActiveTime) < 65000; // active within 65s
+        return {
+          ...log,
+          isOnline: isOnline
+        };
+      }).sort((a, b) => {
+        const tA = a.lastActive || a.timestamp || 0;
+        const tB = b.lastActive || b.timestamp || 0;
+        return tB - tA;
+      });
+
+      // Update counters & UI
+      updateVisitorRadarUI();
+    }
+
+    function updateVisitorRadarUI() {
+      const now = Date.now();
+      const onlineLogs = allVisitorLogs.filter(v => (now - (v.lastActive || v.timestamp || 0)) < 65000);
+      const mobileLogs = allVisitorLogs.filter(v => (v.deviceType || '').toLowerCase() === 'mobile');
+      const desktopLogs = allVisitorLogs.filter(v => (v.deviceType || '').toLowerCase() === 'desktop');
+
+      // Unique IPs calculation
+      const uniqueIpsSet = new Set(allVisitorLogs.map(v => v.ip).filter(ip => ip && ip !== "Unknown" && ip !== "127.0.0.1"));
+
+      // Update Top Stats
+      const statActiveNow = document.getElementById("statActiveNow");
+      const statTotalViews = document.getElementById("statTotalViews");
+      const statUniqueIps = document.getElementById("statUniqueIps");
+      if (statActiveNow) statActiveNow.innerText = Math.max(1, onlineLogs.length);
+      if (statTotalViews) statTotalViews.innerText = allVisitorLogs.length;
+      if (statUniqueIps) statUniqueIps.innerText = uniqueIpsSet.size;
+
+      // Update Filter Chips Count
+      const countAll = document.getElementById("countAllVisitors");
+      const countOnline = document.getElementById("countOnlineVisitors");
+      const countMobile = document.getElementById("countMobileVisitors");
+      const countDesktop = document.getElementById("countDesktopVisitors");
+      if (countAll) countAll.innerText = allVisitorLogs.length;
+      if (countOnline) countOnline.innerText = onlineLogs.length;
+      if (countMobile) countMobile.innerText = mobileLogs.length;
+      if (countDesktop) countDesktop.innerText = desktopLogs.length;
+
+      // Filter logs based on chip and search keyword
+      let filtered = allVisitorLogs.filter(item => {
+        if (currentVisitorFilter === "online" && !item.isOnline) return false;
+        if (currentVisitorFilter === "mobile" && (item.deviceType || '').toLowerCase() !== 'mobile') return false;
+        if (currentVisitorFilter === "desktop" && (item.deviceType || '').toLowerCase() !== 'desktop') return false;
+
+        if (visitorSearchKeyword) {
+          const q = visitorSearchKeyword.toLowerCase();
+          const ipStr = (item.ip || '').toLowerCase();
+          const devStr = (item.deviceName || item.device || '').toLowerCase();
+          const osStr = (item.os || '').toLowerCase();
+          const browserStr = (item.browser || '').toLowerCase();
+          const pageStr = (item.page || '').toLowerCase();
+          const locStr = (item.country || '' + ' ' + (item.city || '')).toLowerCase();
+          return ipStr.includes(q) || devStr.includes(q) || osStr.includes(q) || browserStr.includes(q) || pageStr.includes(q) || locStr.includes(q);
+        }
+        return true;
+      });
+
+      renderVisitorTableRows(filtered);
+    }
+
+    function renderVisitorTableRows(logs) {
+      const tbody = document.getElementById("visitorLogsTableBody");
+      if (!tbody) return;
+
+      if (!logs || logs.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 36px; color: var(--text-dim);">
+              <i class="fa-solid fa-satellite-dish" style="font-size: 2rem; opacity: 0.3; margin-bottom: 8px;"></i><br>
+              ไม่พบประวัติผู้เข้าชมตามเงื่อนไขที่เลือก
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = logs.map(item => {
+        const isOnline = item.isOnline;
+        const statusHtml = isOnline
+          ? `<span class="online-indicator-pill"><span class="radar-pulse-dot" style="width: 7px; height: 7px;"></span> ONLINE</span>`
+          : `<span class="offline-indicator-pill"><i class="fa-regular fa-clock"></i> OFFLINE</span>`;
+
+        const deviceTypeClass = (item.deviceType || 'desktop').toLowerCase();
+        const deviceIcon = deviceTypeClass === 'mobile'
+          ? 'fa-mobile-screen'
+          : (deviceTypeClass === 'tablet' ? 'fa-tablet-screen-button' : 'fa-laptop');
+
+        const safeIp = escapeHtml(item.ip || '127.0.0.1');
+        const safeDevice = escapeHtml(item.deviceName || item.device || 'Unknown Device');
+        const safeOs = escapeHtml(item.os || 'Unknown OS');
+        const safeBrowser = escapeHtml(item.browser || 'Unknown Browser');
+        const safePage = escapeHtml(item.page || '/');
+        const loc = item.country ? `${item.country}${item.city ? ` (${item.city})` : ''}` : 'สแกนเครือข่าย';
+
+        // Time format
+        const timestamp = item.lastActive || item.timestamp || Date.now();
+        const dateObj = new Date(timestamp);
+        const timeStr = dateObj.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const dateStr = dateObj.toLocaleDateString('th-TH', { day: '2-digit', month: 'short' });
+
+        return `
+          <tr>
+            <td>${statusHtml}</td>
+            <td>
+              <div class="ip-badge-cyber">
+                <i class="fa-solid fa-network-wired" style="font-size: 0.72rem;"></i>
+                <span>${safeIp}</span>
+                <button type="button" class="ip-copy-btn" onclick="copyIpAddress('${safeIp}')" title="คัดลอก IP">
+                  <i class="fa-regular fa-copy"></i>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="device-badge ${deviceTypeClass}">
+                <i class="fa-solid ${deviceIcon}"></i>
+                <span><strong>${safeDevice}</strong> <span style="opacity: 0.7; font-size: 0.75rem;">(${safeOs})</span></span>
+              </div>
+            </td>
+            <td>
+              <span style="font-size: 0.82rem; color: var(--text-sub); display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-globe" style="color: #38bdf8;"></i> ${safeBrowser}
+              </span>
+            </td>
+            <td>
+              <span class="page-tag">
+                <i class="fa-solid fa-file-code"></i> ${safePage}
+              </span>
+            </td>
+            <td>
+              <span style="font-size: 0.8rem; color: var(--text-dim); display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> ${escapeHtml(loc)}
+              </span>
+            </td>
+            <td style="text-align: right; font-size: 0.78rem; color: var(--text-dim); font-family: 'Consolas', monospace;">
+              <div>${timeStr}</div>
+              <div style="font-size: 0.7rem; opacity: 0.6;">${dateStr}</div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Global helper for copying IP
+    window.copyIpAddress = function(ip) {
+      if (!ip) return;
+      navigator.clipboard.writeText(ip).then(() => {
+        showToast(`คัดลอก IP: ${ip} สำเร็จ!`, "success");
+      }).catch(() => {
+        showToast(`IP: ${ip}`, "info");
+      });
+    };
+
+    // Filter Chips Event Listeners
+    document.querySelectorAll(".filter-btn-chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn-chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        currentVisitorFilter = chip.getAttribute("data-filter") || "all";
+        updateVisitorRadarUI();
+      });
+    });
+
+    // Search Input Listener
+    const visitorSearchInput = document.getElementById("visitorSearchInput");
+    if (visitorSearchInput) {
+      visitorSearchInput.addEventListener("input", (e) => {
+        visitorSearchKeyword = e.target.value.trim();
+        updateVisitorRadarUI();
+      });
+    }
+
+    // Refresh Button Listener
+    const btnRefreshVisitors = document.getElementById("btnRefreshVisitors");
+    if (btnRefreshVisitors) {
+      btnRefreshVisitors.addEventListener("click", async () => {
+        btnRefreshVisitors.innerHTML = '<i class="fa-solid fa-rotate fa-spin"></i> กำลังสแกน...';
+        await fetchVisitorRadarData();
+        showToast("รีเฟรชข้อมูลเรดาร์ผู้เข้าชมสดเรียบร้อย", "info");
+        btnRefreshVisitors.innerHTML = '<i class="fa-solid fa-rotate"></i> รีเฟรชข้อมูล';
+      });
+    }
+
+    // Clear Logs Button Listener
+    const btnClearVisitorLogs = document.getElementById("btnClearVisitorLogs");
+    if (btnClearVisitorLogs) {
+      btnClearVisitorLogs.addEventListener("click", async () => {
+        if (!confirm("คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติผู้เข้าชมทั้งหมด?")) return;
+        localStorage.removeItem("lyfe_visitor_telemetry_logs");
+        const dbUrl = (window.LYFE_FIREBASE_CONFIG && window.LYFE_FIREBASE_CONFIG.databaseURL)
+          ? window.LYFE_FIREBASE_CONFIG.databaseURL.replace(/\/+$/, '')
+          : 'https://lyfe-d7804-default-rtdb.firebaseio.com';
+        try {
+          await fetch(`${dbUrl}/analytics/visitors.json`, { method: "DELETE" });
+        } catch (e) {}
+        allVisitorLogs = [];
+        updateVisitorRadarUI();
+        showToast("ล้างประวัติเรดาร์ผู้เข้าชมเรียบร้อยแล้ว", "success");
+      });
+    }
+
+    // Export Logs Button Listener
+    const btnExportVisitors = document.getElementById("btnExportVisitors");
+    if (btnExportVisitors) {
+      btnExportVisitors.addEventListener("click", () => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allVisitorLogs, null, 2));
+        const dlAnchor = document.createElement('a');
+        dlAnchor.setAttribute("href", dataStr);
+        dlAnchor.setAttribute("download", `visitor_telemetry_${Date.now()}.json`);
+        document.body.appendChild(dlAnchor);
+        dlAnchor.click();
+        dlAnchor.remove();
+        showToast("ส่งออกข้อมูลประวัติผู้เข้าชมเรียบร้อย", "success");
+      });
+    }
+
+    // Auto Refresh Radar Every 12 Seconds
+    setInterval(() => {
+      fetchVisitorRadarData();
+    }, 12000);
+
+    // Initial Telemetry Scan
+    setTimeout(() => {
+      fetchVisitorRadarData();
+    }, 500);
+
+    // Init
+    loadMembersData();
+    updateStats();
+    renderTable();
+    setTimeout(updateCloudSyncUI, 400);
+  </script>
+  <script src="site-features.js"></script>
+</body>
+
+</html>
