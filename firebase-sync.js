@@ -49,16 +49,22 @@
       const membersRef = db.ref("members");
       membersRef.on("value", (snapshot) => {
         const val = snapshot.val();
-        if (val && Array.isArray(val)) {
+        let list = null;
+        if (Array.isArray(val)) {
+          list = val.filter(Boolean);
+        } else if (val && typeof val === "object") {
+          list = Object.values(val).filter(Boolean);
+        }
+        if (list && list.length > 0) {
           // อัปเดตลง LocalStorage เพื่อเป็นแคชออฟไลน์
           try {
-            localStorage.setItem(STORAGE_KEY_MEMBERS, JSON.stringify(val));
+            localStorage.setItem(STORAGE_KEY_MEMBERS, JSON.stringify(list));
           } catch (e) {}
 
           // แจ้งเตือนไปยังทุกหน้าเพจที่เปิดฟังอยู่
           listeners.forEach((callback) => {
             try {
-              callback(val);
+              callback(list);
             } catch (err) {
               console.error("Error in realtime listener:", err);
             }
@@ -227,9 +233,15 @@
         try {
           const snapshot = await db.ref("members").once("value");
           const val = snapshot.val();
-          if (val && Array.isArray(val)) {
-            localStorage.setItem(STORAGE_KEY_MEMBERS, JSON.stringify(val));
-            return val;
+          let list = null;
+          if (Array.isArray(val)) {
+            list = val.filter(Boolean);
+          } else if (val && typeof val === "object") {
+            list = Object.values(val).filter(Boolean);
+          }
+          if (list && list.length > 0) {
+            localStorage.setItem(STORAGE_KEY_MEMBERS, JSON.stringify(list));
+            return list;
           }
         } catch (e) {
           console.warn("Could not fetch latest from Firebase:", e);

@@ -95,7 +95,7 @@ const members = [
   { "fb": "https://web.facebook.com/profile.php?id=61594371911929#", "img": "https://fb-pic-proxy.lyfestyleofficalwebsite.workers.dev/?id=61594371911929&type=large", "name": "Phakin Lyfestyle" },
   { "fb": "https://web.facebook.com/phet.lyfestyle#", "img": "https://fb-pic-proxy.lyfestyleofficalwebsite.workers.dev/?id=phet.lyfestyle&type=large", "name": "Phet Lyfestyle" },
   { "fb": "https://web.facebook.com/pryx.lyfestyle#", "img": "https://fb-pic-proxy.lyfestyleofficalwebsite.workers.dev/?id=pryx.lyfestyle&type=large", "name": "Pryx Lyfestyle", "role": "Owner" },
-  { "fb": "https://web.facebook.com/shesayshelove#", "img": "https://fb-pic-proxy.lyfestyleofficalwebsite.workers.dev/?id=shesayshelove&type=large", "name": "Shesayshelove Lyfestyle", "role": "Owner" },
+  { "fb": "", "img": "https://fb-pic-proxy.lyfestyleofficalwebsite.workers.dev/?id=shesayshelove&type=large", "name": "Shesayshelove Lyfestyle", "role": "Owner" },
   { "fb": "https://web.facebook.com/profile.php?id=61590494481026#", "img": "https://fb-pic-proxy.lyfestyleofficalwebsite.workers.dev/?id=61590494481026&type=large", "name": "Sin Lyfestyle" },
   { "fb": "https://web.facebook.com/sun.lyfestyle#", "img": "https://fb-pic-proxy.lyfestyleofficalwebsite.workers.dev/?id=sun.lyfestyle&type=large", "name": "Sun Lyfestyle" },
   { "fb": "https://web.facebook.com/profile.php?id=61594008779956#", "img": "https://fb-pic-proxy.lyfestyleofficalwebsite.workers.dev/?id=61594008779956&type=large", "name": "Tae Lyfestyle" },

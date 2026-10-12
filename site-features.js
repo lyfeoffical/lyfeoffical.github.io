@@ -702,7 +702,7 @@
     }
   }
 
-  // 🔹 Universal Theme Controller (Dark & Light Mode Engine)
+  // Universal Theme Controller (Dark & Light Mode Engine)
   const THEME_STORAGE_KEY = "lyfe_theme";
 
   function getStoredTheme() {
@@ -907,49 +907,59 @@
       .theme-switch-btn {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.08);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.16);
         border-radius: 50px;
-        padding: 7px 16px;
+        padding: 7px 18px;
         color: #ffffff;
         font-size: 0.82rem;
         font-family: 'Kanit', sans-serif;
         font-weight: 500;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
         cursor: pointer;
+        outline: none;
+        -webkit-appearance: none;
+        appearance: none;
         transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
         text-decoration: none;
+        user-select: none;
+        line-height: 1.2;
       }
       .theme-switch-btn:hover {
         transform: translateY(-2px) scale(1.03);
-        background: rgba(255, 255, 255, 0.14);
-        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.35);
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      }
+      .theme-switch-btn:active {
+        transform: translateY(0) scale(0.97);
       }
       .theme-switch-icon {
         font-size: 0.92rem;
         transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         color: #f1c40f;
+        display: inline-block;
       }
       .theme-switch-btn:hover .theme-switch-icon {
-        transform: rotate(30deg);
+        transform: rotate(25deg) scale(1.1);
       }
 
       /* Light Mode Variations for Generic Elements */
       body.light-theme .theme-switch-btn {
         background: rgba(0, 0, 0, 0.06);
-        border-color: rgba(0, 0, 0, 0.12);
+        border-color: rgba(0, 0, 0, 0.14);
         color: #0f172a;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
       }
       body.light-theme .theme-switch-btn:hover {
-        background: rgba(0, 0, 0, 0.1);
-        border-color: rgba(0, 0, 0, 0.2);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        background: rgba(0, 0, 0, 0.12);
+        border-color: rgba(0, 0, 0, 0.25);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       }
       body.light-theme .theme-switch-icon {
         color: #ffa502;
@@ -1010,7 +1020,7 @@
   }
 
   // ══════════════════════════════════════════════════════
-  // 🛰️ 5. CYBER VISITOR TELEMETRY & LIVE IP ENGINE
+  // 5. CYBER VISITOR TELEMETRY & LIVE IP ENGINE
   // ══════════════════════════════════════════════════════
   function parseDeviceInfo() {
     const ua = navigator.userAgent || navigator.vendor || window.opera || "";
@@ -1132,7 +1142,7 @@
             ip: data2.ip,
             country: data2.country || "Thailand",
             city: data2.city || "Bangkok",
-            flag: data2.country_code ? `🇹🇭` : "🌐",
+            flag: data2.country_code || "TH",
             isp: data2.connection && data2.connection.isp ? data2.connection.isp : "Internet Provider"
           };
         }
@@ -1242,8 +1252,9 @@
     trackVisitorTelemetry();
   }
 
-  // ดำเนินการตรวจสอบธีมทันทีก่อน DOM เพื่อความรวดเร็ว 0 latency
+  // ดำเนินการตรวจสอบธีมและใส่สไตล์ทันทีก่อน DOM เพื่อความรวดเร็ว 0 latency ไร้ FOUC
   try {
+    injectSharedThemeStyles();
     const preTheme = localStorage.getItem(THEME_STORAGE_KEY) || "dark";
     if (preTheme === "light") {
       document.documentElement.classList.add("light-theme");

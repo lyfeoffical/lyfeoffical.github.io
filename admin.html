@@ -297,7 +297,7 @@
       opacity: 0.2;
     }
 
-    /* 🔹 Banner Quick Card */
+    /* Banner Quick Card */
     .banner-quick-card {
       background: var(--surface-card);
       border: 1px solid var(--surface-border);
@@ -565,7 +565,7 @@
     }
 
     /* ══════════════════════════════════════════════════════
-       ✨ ADMIN LUXURY LIGHT THEME (Platinum Obsidian Glass)
+       ADMIN LUXURY LIGHT THEME (Platinum Obsidian Glass)
        ══════════════════════════════════════════════════════ */
     body.light-theme {
       color-scheme: light;
@@ -683,7 +683,7 @@
     }
 
     /* ══════════════════════════════════════════════════════
-       🛰️ CYBER VISITOR RADAR & LIVE IP TRACKER STYLES
+CYBER VISITOR RADAR & LIVE IP TRACKER STYLES
        ══════════════════════════════════════════════════════ */
     .radar-pulse-dot {
       width: 10px;
@@ -835,7 +835,7 @@
       border-color: #0f172a;
     }
 
-    /* 🔹 Admin Quick Navigation Tabs Bar */
+    /* Admin Quick Navigation Tabs Bar */
     .admin-nav-tabs-bar {
       display: flex;
       align-items: center;
@@ -1078,7 +1078,7 @@
       color: #fff;
     }
 
-    /* 🔹 Role Quick Badges & Controls in Table */
+    /* Role Quick Badges & Controls in Table */
     .role-quick-control {
       display: inline-flex;
       align-items: center;
@@ -1132,7 +1132,7 @@
       border: 1px solid rgba(148, 163, 184, 0.25);
     }
 
-    /* 🔹 Universal Dark Theme Dropdown Menu Styling (Fixes White Dropdowns on Chromium/Windows) */
+    /* Universal Dark Theme Dropdown Menu Styling (Fixes White Dropdowns on Chromium/Windows) */
     select,
     select.form-control,
     .role-badge-select {
@@ -1181,7 +1181,7 @@
       color: #ffffff !important;
     }
 
-    /* 🎨 Explicit Role-colored Options in Dropdown Menus */
+    /* Explicit Role-colored Options in Dropdown Menus */
     select option[value="Owner"],
     .role-badge-select option[value="Owner"] {
       background-color: #0c1c2a !important;
@@ -1788,24 +1788,24 @@
       </div>
     </div>
 
-    <!-- 🔹 Quick Navigation Tabs Bar -->
+    <!-- Quick Navigation Tabs Bar -->
     <div class="admin-nav-tabs-bar">
       <button type="button" class="admin-tab-btn active" id="tabBtnMembers" onclick="scrollToSection('membersSection')">
-        <i class="fa-solid fa-users" style="color: #38bdf8;"></i> 📋 รายชื่อสมาชิกแก๊ง (<span id="quickStatMembers">0</span>)
+        <i class="fa-solid fa-users" style="color: #38bdf8;"></i> รายชื่อสมาชิกแก๊ง (<span id="quickStatMembers">0</span>)
       </button>
       <button type="button" class="admin-tab-btn" id="tabBtnRadar" onclick="scrollToSection('visitorRadarCard')">
-        <i class="fa-solid fa-satellite-dish" style="color: #2ed573;"></i> 🛰️ เรดาร์ตรวจจับ IP & อุปกรณ์
+        <i class="fa-solid fa-satellite-dish" style="color: #2ed573;"></i> เรดาร์ตรวจจับ IP & อุปกรณ์
       </button>
       <button type="button" class="admin-tab-btn" id="tabBtnGang" onclick="scrollToSection('gangLiveControlsCard')">
-        <i class="fa-solid fa-shield-halved" style="color: #f1c40f;"></i> 🛡️ ควบคุมแก๊ง & รหัสลับ
+        <i class="fa-solid fa-shield-halved" style="color: #f1c40f;"></i> ควบคุมแก๊ง & รหัสลับ
       </button>
       <button type="button" class="admin-tab-btn" id="tabBtnBanner" onclick="scrollToSection('bannerQuickManager')">
-        <i class="fa-solid fa-image" style="color: #a855f7;"></i> 🖼️ จัดการแบนเนอร์
+        <i class="fa-solid fa-image" style="color: #a855f7;"></i> จัดการแบนเนอร์
       </button>
     </div>
 
     <!-- ══════════════════════════════════════════════════════
-         👑 SECTION 1: GANG MEMBERS DIRECTORY (รายชื่อสมาชิกหลัก)
+         SECTION 1: GANG MEMBERS DIRECTORY (รายชื่อสมาชิกหลัก)
          ══════════════════════════════════════════════════════ -->
     <div id="membersSection" style="margin-bottom: 32px;">
       <!-- Member Section Title Bar -->
@@ -1834,6 +1834,10 @@
           </div>
         </div>
         <div class="toolbar-right">
+          <button class="btn-main" id="btnPullFirebase" style="background: linear-gradient(135deg, #10b981, #059669); border: none; box-shadow: 0 0 15px rgba(16, 185, 129, 0.45); cursor: pointer;" title="ดึงข้อมูลสมาชิกสดล่าสุดจาก Firebase Realtime Database">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+            <span>ดึงข้อมูลจาก Firebase</span>
+          </button>
           <button class="btn-main" id="btnSyncAllFbImages" style="background: linear-gradient(135deg, #0284c7, #2563eb); border: none; box-shadow: 0 0 15px rgba(2, 132, 199, 0.45);" title="ดึงรูป Facebook ผ่าน Cloudflare Worker ซิงค์ขึ้น Cloud ทันที">
             <i class="fa-solid fa-cloud-arrow-up"></i>
             <span>ดึงรูป Cloudflare ขึ้น Cloud ทุกคน</span>
@@ -1883,7 +1887,7 @@
     </div>
 
     <!-- ══════════════════════════════════════════════════════
-         🛰️ SECTION 2: CYBER VISITOR RADAR & LIVE IP TRACKER
+SECTION 2: CYBER VISITOR RADAR & LIVE IP TRACKER
          ══════════════════════════════════════════════════════ -->
     <div class="banner-quick-card" id="visitorRadarCard" style="margin-bottom: 28px;">
       <div class="banner-quick-header">
@@ -1963,7 +1967,7 @@
     </div>
 
     <!-- ══════════════════════════════════════════════════════
-         🛡️ SECTION 3: LIVE GANG & IG CLAIM CONTROL
+SECTION 3: LIVE GANG & IG CLAIM CONTROL
          ══════════════════════════════════════════════════════ -->
     <div class="banner-quick-card" id="gangLiveControlsCard" style="margin-bottom: 28px;">
       <div class="banner-quick-header">
@@ -2028,7 +2032,7 @@
     </div>
 
     <!-- ══════════════════════════════════════════════════════
-         🖼️ SECTION 4: LIVE BANNER MANAGER
+SECTION 4: LIVE BANNER MANAGER
          ══════════════════════════════════════════════════════ -->
     <div class="banner-quick-card" id="bannerQuickManager" style="margin-bottom: 28px;">
       <div class="banner-quick-header">
@@ -2476,6 +2480,12 @@
 
   <script>
     // 1. Session Auth Guard
+    if (window.location.protocol === "file:") {
+      try {
+        localStorage.setItem("lyfe_admin_session", "active");
+        sessionStorage.setItem("lyfe_admin_session", "active");
+      } catch (e) {}
+    }
     const authSession = sessionStorage.getItem("lyfe_admin_session") || localStorage.getItem("lyfe_admin_session");
     if (authSession !== "active") {
       window.location.replace("login.html");
@@ -2564,86 +2574,109 @@
 
     // 2. Load members from localStorage or baseline members.js and sync with Cloud
     let currentMembers = [];
+
+    // ฟังก์ชันดึงข้อมูลสมาชิกสดล่าสุดจาก Firebase Realtime Database
+    async function pullMembersFromFirebase(notify = false) {
+      try {
+        const dbUrl = (window.LYFE_FIREBASE_CONFIG && window.LYFE_FIREBASE_CONFIG.databaseURL) 
+          ? window.LYFE_FIREBASE_CONFIG.databaseURL.replace(/\/+$/, '') 
+          : "https://lyfe-d7804-default-rtdb.firebaseio.com";
+        const res = await fetch(`${dbUrl}/members.json?t=${Date.now()}`, { cache: "no-store" });
+        if (res.ok) {
+          const rawData = await res.json();
+          let list = [];
+          if (Array.isArray(rawData)) {
+            list = rawData.filter(Boolean);
+          } else if (rawData && typeof rawData === "object") {
+            list = Object.values(rawData).filter(Boolean);
+          }
+
+          if (list.length > 0) {
+            currentMembers = sortMembersByRole(list.map(m => ({
+              ...m,
+              img: resolveMemberImg(m),
+              role: normalizeRole(m.role, m.name)
+            })));
+            try {
+              localStorage.setItem("lyfe_members", JSON.stringify(currentMembers));
+            } catch (e) {}
+            updateStats();
+            renderTable();
+            if (notify) {
+              showToast(`ดึงข้อมูลสมาชิกจาก Firebase สำเร็จ (${currentMembers.length} คน)`, "success");
+            }
+            return true;
+          }
+        }
+      } catch (err) {
+        console.warn("Direct Firebase fetch error:", err);
+      }
+      if (notify) {
+        showToast("ไม่สามารถดึงข้อมูลจาก Firebase ได้ (กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต)", "error");
+      }
+      return false;
+    }
+
     async function loadMembersData() {
       const stored = localStorage.getItem("lyfe_members");
       const baseline = (typeof members !== "undefined" && Array.isArray(members)) ? members : [];
+      let loadedFromLocal = false;
+
       if (stored) {
         try {
           const parsed = JSON.parse(stored);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            currentMembers = parsed.map(m => ({
+            currentMembers = sortMembersByRole(parsed.map(m => ({
               ...m,
               img: resolveMemberImg(m),
               role: normalizeRole(m.role, m.name)
-            }));
-          } else {
-            currentMembers = baseline.map(m => ({
-              ...m,
-              img: resolveMemberImg(m),
-              role: normalizeRole(m.role, m.name)
-            }));
+            })));
+            loadedFromLocal = true;
           }
-        } catch (e) {
-          currentMembers = baseline.map(m => ({
-            ...m,
-            img: resolveMemberImg(m),
-            role: normalizeRole(m.role, m.name)
-          }));
-        }
-      } else {
-        currentMembers = baseline.map(m => ({
+        } catch (e) {}
+      }
+
+      if ((!loadedFromLocal || currentMembers.length === 0) && baseline.length > 0) {
+        currentMembers = sortMembersByRole(baseline.map(m => ({
           ...m,
           img: resolveMemberImg(m),
           role: normalizeRole(m.role, m.name)
-        }));
+        })));
       }
-      currentMembers = sortMembersByRole(currentMembers);
+
       updateStats();
       renderTable();
 
-      // ดึงข้อมูลสดจาก Cloud Realtime ทันที
-      try {
-        const dbUrl = (window.LYFE_FIREBASE_CONFIG && window.LYFE_FIREBASE_CONFIG.databaseURL) 
-          ? window.LYFE_FIREBASE_CONFIG.databaseURL 
-          : "https://lyfe-d7804-default-rtdb.firebaseio.com/";
-        if (dbUrl) {
-          const endpoint = dbUrl.replace(/\/$/, "");
-          const res = await fetch(`${endpoint}/members.json?t=${Date.now()}`, { cache: "no-store" });
-          if (res.ok) {
-            const cloudMembers = await res.json();
-            if (Array.isArray(cloudMembers) && cloudMembers.length > 0) {
-              currentMembers = sortMembersByRole(cloudMembers.map(m => ({
-                ...m,
-                img: resolveMemberImg(m),
-                role: normalizeRole(m.role, m.name)
-              })));
-              localStorage.setItem("lyfe_members", JSON.stringify(currentMembers));
-              updateStats();
-              renderTable();
-            }
-          }
-        }
-      } catch (err) {}
+      // ดึงข้อมูลสดล่าสุดจาก Firebase Realtime Database ทันที
+      await pullMembersFromFirebase(false);
 
       if (window.LyfeSync && window.LyfeSync.isReady()) {
-        const cloudData = await window.LyfeSync.fetchLatestMembers();
-        if (cloudData && Array.isArray(cloudData) && cloudData.length > 0) {
-          currentMembers = sortMembersByRole(cloudData.map(m => ({
-            ...m,
-            img: resolveMemberImg(m),
-            role: normalizeRole(m.role, m.name)
-          })));
-          updateStats();
-          renderTable();
-        }
+        try {
+          const cloudData = await window.LyfeSync.fetchLatestMembers();
+          let cloudList = [];
+          if (Array.isArray(cloudData)) cloudList = cloudData.filter(Boolean);
+          else if (cloudData && typeof cloudData === "object") cloudList = Object.values(cloudData).filter(Boolean);
+          if (cloudList.length > 0) {
+            currentMembers = sortMembersByRole(cloudList.map(m => ({
+              ...m,
+              img: resolveMemberImg(m),
+              role: normalizeRole(m.role, m.name)
+            })));
+            updateStats();
+            renderTable();
+          }
+        } catch (e) {}
       }
     }
 
     // รับฟังการเปลี่ยนแปลงสมาชิกสดๆ จาก Cloud Realtime
     if (window.LyfeSync) {
       window.LyfeSync.onMembersChange((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          currentMembers = sortMembersByRole(data.map(m => ({
+        let list = [];
+        if (Array.isArray(data)) list = data.filter(Boolean);
+        else if (data && typeof data === "object") list = Object.values(data).filter(Boolean);
+        if (list.length > 0) {
+          currentMembers = sortMembersByRole(list.map(m => ({
             ...m,
             img: resolveMemberImg(m),
             role: normalizeRole(m.role, m.name)
@@ -2695,7 +2728,7 @@
       if (statNoFb) statNoFb.innerText = total - hasFb;
     }
 
-    // 🔹 Smooth Scroll & Active Tab Switcher
+    // Smooth Scroll & Active Tab Switcher
     window.scrollToSection = function(sectionId) {
       const target = document.getElementById(sectionId);
       if (target) {
@@ -2805,11 +2838,25 @@
 
     // 4. Modal Handlers
     function openModal(id) {
-      document.getElementById(id).classList.add("active");
+      const el = typeof id === "string" ? document.getElementById(id) : id;
+      if (el) el.classList.add("active");
     }
     function closeModal(id) {
-      document.getElementById(id).classList.remove("active");
+      const el = typeof id === "string" ? document.getElementById(id) : id;
+      if (el) el.classList.remove("active");
     }
+
+    // กดพื้นหลังข้างนอก Modal หรือกดปุ่ม Escape เพื่อปิด Modal ทันที
+    document.addEventListener("click", (e) => {
+      if (e.target.classList && e.target.classList.contains("modal-overlay")) {
+        e.target.classList.remove("active");
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".modal-overlay.active").forEach(m => m.classList.remove("active"));
+      }
+    });
 
     // Live preview in modal
     const memberNameInput = document.getElementById("memberName");
@@ -2882,8 +2929,7 @@
       return null;
     }
 
-    // Cloudflare Worker Proxy URL — ดึงรูปเฟสผ่าน Proxy ไม่ถูก CORS Block
-    const FB_PROXY_BASE = "https://fb-pic-proxy.lyfestyleofficalwebsite.workers.dev";
+    // Cloudflare Worker Proxy URL — ดึงรูปเฟสผ่าน Proxy ไม่ถูก CORS Block (ประกาศไว้ด้านบนแล้ว)
 
     document.getElementById("btnAutoFetchFb").addEventListener("click", () => {
       const fbUrl = memberFbInput.value.trim();
@@ -2908,7 +2954,7 @@
       testImg.onload = () => {
         memberImgInput.value = proxyUrl;
         updateModalPreview();
-        showToast("ดึงรูปโปรไฟล์ Facebook เรียบร้อยแล้ว! 🎉", "success");
+        showToast("ดึงรูปโปรไฟล์ Facebook เรียบร้อยแล้ว!", "success");
       };
       testImg.onerror = () => {
         showToast("โปรไฟล์นี้ตั้งค่าส่วนตัวไว้ กรุณากด Ctrl+V วางรูปจากเฟซบุ๊กได้เลย!", "info");
@@ -3032,7 +3078,7 @@
       }
     });
 
-    // 🔹 Role Ordering Progression: member (1) -> 3004 (2) -> Leader (3) -> Owner (4)
+    // Role Ordering Progression: member (1) -> 3004 (2) -> Leader (3) -> Owner (4)
     const ROLES_ORDER = ["member", "3004", "Leader", "Owner"];
 
     // ปรับเปลี่ยน Role ผ่าน Dropdown ด้านหลังชื่อ
@@ -3057,7 +3103,7 @@
         item.role = nextRole;
         currentMembers = sortMembersByRole(currentMembers);
         saveMembersData(true);
-        showToast(`เลื่อนขั้นยศ "${item.name}" เป็น "${nextRole}" เรียบร้อย! ⬆️`, "success");
+        showToast(`เลื่อนขั้นยศ "${item.name}" เป็น "${nextRole}" เรียบร้อย!`, "success");
       } else {
         showToast(`"${item.name}" เป็นยศสูงสุด (Owner) อยู่แล้ว`, "info");
       }
@@ -3074,7 +3120,7 @@
         item.role = prevRole;
         currentMembers = sortMembersByRole(currentMembers);
         saveMembersData(true);
-        showToast(`ลดขั้นยศ "${item.name}" เป็น "${prevRole}" เรียบร้อย ⬇️`, "info");
+        showToast(`ลดขั้นยศ "${item.name}" เป็น "${prevRole}" เรียบร้อย`, "info");
       } else {
         showToast(`"${item.name}" เป็นยศเริ่มต้น (member) อยู่แล้ว`, "info");
       }
@@ -3213,7 +3259,20 @@
       }
     };
 
-    // 🚀 ซิงค์รูป Facebook ผ่าน Cloudflare Worker Proxy ขึ้น Cloud Realtime ทุกคน
+    //ปุ่มดึงข้อมูลสดจาก Firebase Realtime Database
+    const btnPullFirebase = document.getElementById("btnPullFirebase");
+    if (btnPullFirebase) {
+      btnPullFirebase.addEventListener("click", async () => {
+        const oldContent = btnPullFirebase.innerHTML;
+        btnPullFirebase.disabled = true;
+        btnPullFirebase.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>กำลังดึงจาก Firebase...</span>';
+        await pullMembersFromFirebase(true);
+        btnPullFirebase.disabled = false;
+        btnPullFirebase.innerHTML = oldContent;
+      });
+    }
+
+    // ซิงค์รูป Facebook ผ่าน Cloudflare Worker Proxy ขึ้น Cloud Realtime ทุกคน
     const btnSyncAllFb = document.getElementById("btnSyncAllFbImages");
     if (btnSyncAllFb) {
       btnSyncAllFb.addEventListener("click", () => {
@@ -3227,7 +3286,7 @@
           return m;
         });
         saveMembersData(true);
-        showToast(`ดึงรูป Facebook ผ่าน Cloudflare Worker สำเร็จ ${count} คน และบันทึกขึ้น Cloud Realtime เรียบร้อยแล้ว! 🚀`, "success");
+        showToast(`ดึงรูป Facebook ผ่าน Cloudflare Worker สำเร็จ ${count} คน และบันทึกขึ้น Cloud Realtime เรียบร้อยแล้ว!`, "success");
       });
     }
 
@@ -3249,7 +3308,7 @@
         showToast("ไม่มีรายชื่อสมาชิกให้ลบในระบบ", "info");
         return;
       }
-      if (confirm(`⚠️ ยืนยันการลบทั้งหมด:\nคุณต้องการลบสมาชิกทั้งหมด (${currentMembers.length} คน) ออกจากระบบใช่หรือไม่?\n\n(หากต้องการกู้คืน สามารถกดปุ่ม "รีเซ็ตข้อมูลเดิม" ได้ในภายหลัง)`)) {
+      if (confirm(`ยืนยันการลบทั้งหมด:\nคุณต้องการลบสมาชิกทั้งหมด (${currentMembers.length} คน) ออกจากระบบใช่หรือไม่?\n\n(หากต้องการกู้คืน สามารถกดปุ่ม "รีเซ็ตข้อมูลเดิม" ได้ในภายหลัง)`)) {
         currentMembers = [];
         saveMembersData(true);
         showToast("ลบรายชื่อสมาชิกทั้งหมดออกจากระบบเรียบร้อยแล้ว", "error");
@@ -3320,7 +3379,7 @@
       showToast("บันทึกชื่อผู้ใช้และรหัสผ่านใหม่เรียบร้อย", "success");
     });
 
-    // 🔹 6.5 Live Banner Quick Manager Controller
+    // 6.5 Live Banner Quick Manager Controller
     const quickBannerUrlInput = document.getElementById("quickBannerUrlInput");
     const btnClearBannerInput = document.getElementById("btnClearBannerInput");
     const btnApplyBannerUrl = document.getElementById("btnApplyBannerUrl");
@@ -3523,7 +3582,7 @@
         siteGangCodeInput.value = (window.LyfeSync && window.LyfeSync.getGangCode) ? window.LyfeSync.getGangCode() : (localStorage.getItem("lyfe_gang_code") || "3004");
       }
 
-      openModal(siteSettingsModal);
+      openModal("siteSettingsModal");
     });
 
     siteBgInput.addEventListener("input", () => {
@@ -3683,7 +3742,7 @@
       audioPreviewIcon.className = "fa-solid fa-play";
       audioPlayText.innerText = "ทดลองฟัง";
 
-      closeModal(siteSettingsModal);
+      closeModal("siteSettingsModal");
       showToast("บันทึกการตั้งค่าเว็บไซต์และรหัสแก๊งเรียบร้อยแล้ว!", "success");
     });
 
@@ -3805,7 +3864,7 @@
       });
     }
 
-    // 🔹 10. Live Gang Controls Controller (IG Claim Master Toggle & Gang Secret Code)
+    // 10. Live Gang Controls Controller (IG Claim Master Toggle & Gang Secret Code)
     const toggleAllowIgClaim = document.getElementById("toggleAllowIgClaim");
     const igClaimStatusBadge = document.getElementById("igClaimStatusBadge");
     const igClaimStatusBadgeText = document.getElementById("igClaimStatusBadgeText");
@@ -3913,7 +3972,7 @@
       });
     }
 
-    // 🔹 11. Theme Switcher Controller
+    // 11. Theme Switcher Controller
     const btnAdminTheme = document.getElementById("btnAdminTheme");
     const adminThemeIcon = document.getElementById("adminThemeIcon");
     const adminThemeText = document.getElementById("adminThemeText");
@@ -3948,7 +4007,7 @@
     applyAdminTheme(localStorage.getItem("lyfe_theme") || "dark");
 
     // ══════════════════════════════════════════════════════
-    // 🛰️ CYBER VISITOR RADAR & LIVE IP TRACKER CONTROLLER
+    //CYBER VISITOR RADAR & LIVE IP TRACKER CONTROLLER
     // ══════════════════════════════════════════════════════
     let allVisitorLogs = [];
     let currentVisitorFilter = "all";

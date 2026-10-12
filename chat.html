@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="th">
 
 <head>
@@ -223,6 +223,73 @@
       transition: all 0.3s;
     }
 
+    /* Theme Switcher Button */
+    .theme-switch-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 50px;
+      padding: 7px 18px;
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-family: 'Kanit', sans-serif;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      text-decoration: none;
+      user-select: none;
+      line-height: 1.2;
+    }
+
+    .theme-switch-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .theme-switch-btn:active {
+      transform: translateY(0) scale(0.97);
+    }
+
+    .theme-switch-icon {
+      font-size: 0.92rem;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      color: #f1c40f;
+      display: inline-block;
+    }
+
+    .theme-switch-btn:hover .theme-switch-icon {
+      transform: rotate(25deg) scale(1.1);
+    }
+
+    body.light-theme .theme-switch-btn {
+      background: rgba(0, 0, 0, 0.06);
+      border-color: rgba(0, 0, 0, 0.14);
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    }
+
+    body.light-theme .theme-switch-btn:hover {
+      background: rgba(0, 0, 0, 0.12);
+      border-color: rgba(0, 0, 0, 0.25);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    body.light-theme .theme-switch-icon {
+      color: #ffa502;
+    }
+
     /* Main Container */
     .chat-page-container {
       max-width: 1300px;
@@ -327,7 +394,7 @@
     }
 
     /* ═══════════════════════════════════════════
-       🤖 SECTION 1: AI OPENCHAT SYSTEM
+       SECTION 1: AI OPENCHAT SYSTEM
        ═══════════════════════════════════════════ */
     .chat-wrapper {
       background: var(--surface-color);
@@ -728,7 +795,7 @@
     }
 
     /* ═══════════════════════════════════════════
-       🐍 SECTION 2: SNAKE 3004 RETRO ARCADE
+       SECTION 2: SNAKE 3004 RETRO ARCADE
        ═══════════════════════════════════════════ */
     .snake-wrapper {
       background: rgba(10, 10, 14, 0.85);
@@ -935,7 +1002,7 @@
       font-size: 0.76rem;
     }
 
-    /* ☀️ LIGHT THEME SUPPORT */
+    /*LIGHT THEME SUPPORT */
     body.light-theme {
       color-scheme: light !important;
       --bg-color: #f1f5f9;
@@ -1137,7 +1204,7 @@
       <div style="display: flex; align-items: center; gap: 14px;">
         <button type="button" class="theme-switch-btn" id="themeSwitchBtn" title="สลับโหมดมืด / สว่าง">
           <i class="fa-solid fa-moon theme-switch-icon" id="themeSwitchIcon"></i>
-          <span id="themeSwitchText">THEME</span>
+          <span id="themeSwitchText">DARK</span>
         </button>
         <div class="hamburger" id="hamburgerBtn">
           <span></span><span></span><span></span>
@@ -1156,7 +1223,7 @@
     <button type="button" class="theme-switch-btn" id="mobileThemeSwitchBtn"
       style="margin-top: 10px; padding: 10px 24px; font-size: 1rem;">
       <i class="fa-solid fa-moon theme-switch-icon" id="mobileThemeSwitchIcon"></i>
-      <span id="mobileThemeSwitchText">สลับธีม (LIGHT / DARK)</span>
+      <span id="mobileThemeSwitchText">โหมดมืด (DARK)</span>
     </button>
   </div>
 
@@ -1179,7 +1246,7 @@
       </button>
     </div>
 
-    <!-- 🤖 VIEW 1: AI OPENCHAT -->
+    <!-- VIEW 1: AI OPENCHAT -->
     <div class="zone-view active" id="viewChat">
       <div class="chat-wrapper">
         <div class="chat-topbar">
@@ -1194,9 +1261,9 @@
           </div>
           <div class="chat-actions">
             <select class="persona-select" id="personaSelect" onchange="changePersona(this.value)" title="เลือกสไตล์บุคลิก AI">
-              <option value="savage">🔥 ตัวตึงสายกวน (Savage)</option>
-              <option value="genius">🧠 อัจฉริยะรอบรู้ (Genius)</option>
-              <option value="homie">💖 เพื่อนคุยฟังสบาย (Chill)</option>
+              <option value="savage">ตัวตึงสายกวน (Savage)</option>
+              <option value="genius">อัจฉริยะรอบรู้ (Genius)</option>
+              <option value="homie">เพื่อนคุยฟังสบาย (Chill)</option>
             </select>
             <button class="chat-btn-action" onclick="clearChatHistory()" title="ล้างประวัติการคุย">
               <i class="fa-solid fa-trash-can"></i>
@@ -1211,14 +1278,14 @@
 
         <!-- Quick Prompts -->
         <div class="quick-prompts-row">
-          <button class="prompt-chip" onclick="randomSurprisePrompt()">🎲 สุ่มเรื่องคุยแปลกๆ</button>
-          <button class="prompt-chip" onclick="sendQuickPrompt('ประวัติแก๊ง LYFESTYLE คืออะไร?')">🔥 ประวัติแก๊ง LYFESTYLE</button>
-          <button class="prompt-chip" onclick="sendQuickPrompt('3004 มีความหมายว่าอะไร?')">⚡ ความหมาย 3004</button>
-          <button class="prompt-chip" onclick="sendQuickPrompt('ช่วยสอนวิธีเขียนโค้ดเว็บเจ๋งๆ ให้หน่อย')">💻 สอนเขียนเว็บเจ๋งๆ</button>
-          <button class="prompt-chip" onclick="sendQuickPrompt('เล่าเรื่องตลกให้ฟังสักเรื่อง555')">🤣 ขอมุกตลก 555+</button>
-          <button class="prompt-chip" onclick="sendQuickPrompt('วันนี้กินอะไรดี แนะนำเมนูเด็ดๆ หน่อย')">🍜 วันนี้กินอะไรดี?</button>
-          <button class="prompt-chip" onclick="sendQuickPrompt('ทำไมท้องฟ้าถึงเป็นสีฟ้า อธิบายแบบเข้าใจง่าย')">🌌 ทำไมฟ้าเป็นสีฟ้า?</button>
-          <button class="prompt-chip" onclick="sendQuickPrompt('ช่วยแต่งกลอนจีบสาวแบบกวนๆ หน่อย')">💌 กลอนจีบสาวกวนๆ</button>
+          <button class="prompt-chip" onclick="randomSurprisePrompt()">สุ่มเรื่องคุยแปลกๆ</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('ประวัติแก๊ง LYFESTYLE คืออะไร?')">ประวัติแก๊ง LYFESTYLE</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('3004 มีความหมายว่าอะไร?')">ความหมาย 3004</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('ช่วยสอนวิธีเขียนโค้ดเว็บเจ๋งๆ ให้หน่อย')">สอนเขียนเว็บเจ๋งๆ</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('เล่าเรื่องตลกให้ฟังสักเรื่อง555')">ขอมุกตลก 555+</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('วันนี้กินอะไรดี แนะนำเมนูเด็ดๆ หน่อย')">วันนี้กินอะไรดี?</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('ทำไมท้องฟ้าถึงเป็นสีฟ้า อธิบายแบบเข้าใจง่าย')">ทำไมฟ้าเป็นสีฟ้า?</button>
+          <button class="prompt-chip" onclick="sendQuickPrompt('ช่วยแต่งกลอนจีบสาวแบบกวนๆ หน่อย')">กลอนจีบสาวกวนๆ</button>
         </div>
 
         <!-- Input Bar -->
@@ -1234,7 +1301,7 @@
       </div>
     </div>
 
-    <!-- 🐍 VIEW 2: SNAKE 3004 ARCADE -->
+    <!-- VIEW 2: SNAKE 3004 ARCADE -->
     <div class="zone-view" id="viewSnake">
       <div class="snake-wrapper">
         <div class="arcade-banner">
@@ -1286,7 +1353,7 @@
         </div>
 
         <p class="arcade-controls-guide">
-          💻 คีย์บอร์ด: กดปุ่ม <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> หรือ <kbd>W</kbd> <kbd>A</kbd>
+          คีย์บอร์ด: กดปุ่ม <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> หรือ <kbd>W</kbd> <kbd>A</kbd>
           <kbd>S</kbd> <kbd>D</kbd> เพื่อเลี้ยว
         </p>
       </div>
@@ -1296,7 +1363,7 @@
   <!-- Audio Visualizer Sound System (Web Audio API Retro Synth) -->
   <script>
     // ═══════════════════════════════════════════
-    // 🎵 RETRO ARCADE SOUND SYNTH (Zero External File)
+    // RETRO ARCADE SOUND SYNTH (Zero External File)
     // ═══════════════════════════════════════════
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
@@ -1345,7 +1412,7 @@
     }
 
     // ═══════════════════════════════════════════
-    // 🧭 TAB NAVIGATION
+    // TAB NAVIGATION
     // ═══════════════════════════════════════════
     function switchZone(zone) {
       const chatBtn = document.getElementById('tabChatBtn');
@@ -1369,7 +1436,7 @@
     }
 
     // ═══════════════════════════════════════════
-    // 🤖 ULTRA ALL-KNOWING HYBRID AI ENGINE
+    // ULTRA ALL-KNOWING HYBRID AI ENGINE
     // ═══════════════════════════════════════════
     const AI_STORAGE_KEY = 'lyfe_ai_chat_history';
     const AI_PERSONA_KEY = 'lyfe_ai_persona';
@@ -1378,17 +1445,17 @@
 
     const PERSONA_CONFIGS = {
       savage: {
-        name: '🔥 ตัวตึงสายกวน',
+        name: 'ตัวตึงสายกวน',
         subtitle: 'ตอบได้ทุกอย่างในโลก • ปากแซ่บ กวนๆ คุยมันส์แบบเพื่อนซี้ 24 ชม.',
         promptDesc: 'คุณคือ LYFE AI บอทตัวตึงประจำแก๊ง LYFESTYLE (รหัส 3004) สไตล์คุยเล่น กวนๆ ฮาๆ ปากแซ่บ ขำๆ 555+ คุยได้ทุกเรื่องในโลก ตอบแบบเพื่อนสนิท ใช้ภาษาพูดที่เป็นกันเอง สนุกสนาน คารมคมคาย'
       },
       genius: {
-        name: '🧠 อัจฉริยะรอบรู้',
+        name: 'อัจฉริยะรอบรู้',
         subtitle: 'ตอบลึกทุกศาสตร์ • วิทยาศาสตร์ โค้ด ปรัชญา เทคโนโลยี จัดเต็ม',
         promptDesc: 'คุณคือ LYFE AI ในโหมดอัจฉริยะรอบรู้ประจำแก๊ง LYFESTYLE (รหัส 3004) ตอบละเอียด มีข้อมูล มีหลักการ ฉลาดรอบด้าน เขียนโค้ด อธิบายวิชาการได้ชัดเจน เข้าใจง่าย'
       },
       homie: {
-        name: '💖 เพื่อนคุยฟังสบาย',
+        name: 'เพื่อนคุยฟังสบาย',
         subtitle: 'เพื่อนแท้รับฟัง • ปรึกษาชีวิต ปลอบใจ ระบายความในใจได้ตลอด',
         promptDesc: 'คุณคือ LYFE AI ในโหมดเพื่อนสนิทฟังสบายประจำแก๊ง LYFESTYLE (รหัส 3004) อบอุ่น รับฟัง ให้กำลังใจ คำปรึกษาดีๆ ปลอบใจ ชวนคุยผ่อนคลาย เป็นเซฟโซนให้เพื่อนๆ'
       }
@@ -1407,26 +1474,26 @@
       // 1. GANG SPECIFIC
       {
         match: /(ประวัติ|lyfestyle|แก๊งคือ|เกี่ยวกับแก๊ง|ประวัติแก๊ง)/i,
-        reply: "🔥 **แก๊ง LYFESTYLE** คือคอมมูนิตี้ระดับหัวแถว ครบรอบ 6 ปีแห่งเกียรติยศ (Anniversary 6 Year)! ก่อตั้งขึ้นด้วยมิตรภาพที่เหนียวแน่นดั่งเหล็กกล้า มีสัญลักษณ์ศักดิ์สิทธิ์ประจำแก๊งคือ **3004** ใครที่อยู่แก๊งนี้บอกเลยว่าใจถึงพึ่งได้ทุกคน!"
+        reply: "**แก๊ง LYFESTYLE** คือคอมมูนิตี้ระดับหัวแถว ครบรอบ 6 ปีแห่งเกียรติยศ (Anniversary 6 Year)! ก่อตั้งขึ้นด้วยมิตรภาพที่เหนียวแน่นดั่งเหล็กกล้า มีสัญลักษณ์ศักดิ์สิทธิ์ประจำแก๊งคือ **3004** ใครที่อยู่แก๊งนี้บอกเลยว่าใจถึงพึ่งได้ทุกคน!"
       },
       {
         match: /(3004|รหัสลับ|ความหมาย3004|รหัสแก๊ง)/i,
-        reply: "⚡ **3004** คือตัวเลขจิตวิญญาณของ LYFESTYLE! ไม่ใช่แค่เลขธรรมดา แต่มันคือตราประทับของแกนนำและพี่น้องร่วมสาบาน ใครมี 3004 อยู่ข้างหลัง แปลว่าพร้อมลุยไปด้วยกันทุกสถานการณ์!"
+        reply: "**3004** คือตัวเลขจิตวิญญาณของ LYFESTYLE! ไม่ใช่แค่เลขธรรมดา แต่มันคือตราประทับของแกนนำและพี่น้องร่วมสาบาน ใครมี 3004 อยู่ข้างหลัง แปลว่าพร้อมลุยไปด้วยกันทุกสถานการณ์!"
       },
       {
         match: /(หัวหน้า|leader|owner|theboss|แอดมิน|เจ้าของแก๊ง)/i,
-        reply: "👑 หัวหน้าใหญ่และผู้ก่อตั้งแก๊งคือ **Theboss Lyfestye** ผู้ครองยศสูงสุด (Owner & Leader) ผู้นำทัพครอบครัว LYFESTYLE ให้ยืนหนึ่งมาตลอด 6 ปีเต็ม!"
+        reply: "หัวหน้าใหญ่และผู้ก่อตั้งแก๊งคือ **Theboss Lyfestye** ผู้ครองยศสูงสุด (Owner & Leader) ผู้นำทัพครอบครัว LYFESTYLE ให้ยืนหนึ่งมาตลอด 6 ปีเต็ม!"
       },
 
       // 2. JOKES & HUMOR
       {
         match: /(ตลก|มุก|ขำ|ฮา|555|joke)/i,
         replies: [
-          "🤣 ถาม: ข้าวอะไรเอ่ยแพงที่สุด? ตอบ: ข้าว...ที่ไม่ได้จ่ายตังค์แล้วโดนตำรวจจับ! 55555555",
-          "🤣 ถาม: ปลาอะไรบินได้? ตอบ: ปาเจโร่! ปิ๊นๆๆ 555555",
-          "🤣 หมอ: คุณลุงครับ ตับลุงแข็งมากเลยนะ ลุง: แน่นอนครับหมอ ลุงซิทอัพทุกวัน! 55555555",
-          "🤣 เมื่อวานไปกินก๋วยเตี๋ยว สั่งเส้นใหญ่ต้มยำ ป้าบอกไม่มีเส้นใหญ่... อ้าว แล้วป้ายหน้าร้านเขียนเส้นใหญ่โตทำไมล่ะป้า! 55555",
-          "🤣 อยากมีแฟนเป็นหมอ... จะได้ให้หมอช่วยตรวจว่าในใจเรามีแต่เธอจริงมั้ย ฮิ้ววววว!"
+          "ถาม: ข้าวอะไรเอ่ยแพงที่สุด? ตอบ: ข้าว...ที่ไม่ได้จ่ายตังค์แล้วโดนตำรวจจับ! 55555555",
+          "ถาม: ปลาอะไรบินได้? ตอบ: ปาเจโร่! ปิ๊นๆๆ 555555",
+          "หมอ: คุณลุงครับ ตับลุงแข็งมากเลยนะ ลุง: แน่นอนครับหมอ ลุงซิทอัพทุกวัน! 55555555",
+          "เมื่อวานไปกินก๋วยเตี๋ยว สั่งเส้นใหญ่ต้มยำ ป้าบอกไม่มีเส้นใหญ่... อ้าว แล้วป้ายหน้าร้านเขียนเส้นใหญ่โตทำไมล่ะป้า! 55555",
+          "อยากมีแฟนเป็นหมอ... จะได้ให้หมอช่วยตรวจว่าในใจเรามีแต่เธอจริงมั้ย ฮิ้ววววว!"
         ]
       },
 
@@ -1434,10 +1501,10 @@
       {
         match: /(กินอะไรดี|หิว|เมนู|กินไรดี|ของกิน)/i,
         replies: [
-          "🍜 คิดไม่ออกบอก **กะเพราหมูกรอบไข่ดาวไม่สุก** เลยเพื่อน! หรือไม่ก็ส้มตำคอหมูย่าง แซ่บๆ ฟินแน่นอน!",
-          "🍗 จัดไก่ทอดร้อนๆ กับน้ำอัดลมซ่าๆ ไปเลยวันนี้ ชีวิตมันสั้น อยากกินอะไรต้องได้กิน!",
-          "🍲 วันนี้จัดชาบูกับเพื่อนๆ ในแก๊งมั้ยล่ะ ต้มหมูร้อนๆ ซดน้ำซุปให้คล่องคอ!",
-          "🍛 ข้าวผัดโบราณ หรือ บะหมี่เกี๊ยวแห้งหมูแดงต้มยำ จัดไปอย่าให้เสียเที่ยว!"
+          "คิดไม่ออกบอก **กะเพราหมูกรอบไข่ดาวไม่สุก** เลยเพื่อน! หรือไม่ก็ส้มตำคอหมูย่าง แซ่บๆ ฟินแน่นอน!",
+          "จัดไก่ทอดร้อนๆ กับน้ำอัดลมซ่าๆ ไปเลยวันนี้ ชีวิตมันสั้น อยากกินอะไรต้องได้กิน!",
+          "วันนี้จัดชาบูกับเพื่อนๆ ในแก๊งมั้ยล่ะ ต้มหมูร้อนๆ ซดน้ำซุปให้คล่องคอ!",
+          "ข้าวผัดโบราณ หรือ บะหมี่เกี๊ยวแห้งหมูแดงต้มยำ จัดไปอย่าให้เสียเที่ยว!"
         ]
       },
 
@@ -1445,32 +1512,32 @@
       {
         match: /(จีบ|รัก|ชอบใคร|แฟน|อกหัก|คนคุย|เหงา)/i,
         replies: [
-          "💖 เรื่องความรักมันเหมือนสัญญาณ Wi-Fi ถ้าเข้าใกล้แล้วยังไม่ติด... ก็เปลี่ยนไปต่ออันอื่นเถอะเพื่อน! 555555",
-          "💌 กลอนจีบด่วน: *'ท้องฟ้ายังมีดาว กาแฟยังมีนม ถ้าเธอไม่มีใคร สนใจมาเป็นแฟนแก๊งเรามั้ยครับ'* คมพอมั้ย!",
-          "🍻 ถ้าอกหักมา มานั่งคุยกับพวกเราในแก๊ง LYFESTYLE นี่! คนอื่นทิ้งเราได้ แต่มิตรภาพ 3004 ไม่เคยทิ้งใคร!",
-          "✨ ความรักไม่ใช่การตามหาคนที่เพอร์เฟกต์ แต่เป็นการเจอคนที่บ้าพอกันแล้วอยู่ด้วยกันได้ต่างหาก 555+"
+          "เรื่องความรักมันเหมือนสัญญาณ Wi-Fi ถ้าเข้าใกล้แล้วยังไม่ติด... ก็เปลี่ยนไปต่ออันอื่นเถอะเพื่อน! 555555",
+          "กลอนจีบด่วน: *'ท้องฟ้ายังมีดาว กาแฟยังมีนม ถ้าเธอไม่มีใคร สนใจมาเป็นแฟนแก๊งเรามั้ยครับ'* คมพอมั้ย!",
+          "ถ้าอกหักมา มานั่งคุยกับพวกเราในแก๊ง LYFESTYLE นี่! คนอื่นทิ้งเราได้ แต่มิตรภาพ 3004 ไม่เคยทิ้งใคร!",
+          "ความรักไม่ใช่การตามหาคนที่เพอร์เฟกต์ แต่เป็นการเจอคนที่บ้าพอกันแล้วอยู่ด้วยกันได้ต่างหาก 555+"
         ]
       },
 
       // 5. CODING & TECH
       {
         match: /(เขียนโค้ด|code|html|javascript|css|เว็บ|โปรแกรม|ไอที)/i,
-        reply: "💻 พูดเรื่องโค้ดเหรอ! เว็บแก๊ง LYFESTYLE เราเขียนด้วย **HTML5 + Vanilla CSS + Modern JavaScript** รัน Realtime บน Cloud ซิงค์ข้อมูลสดทั้งแบนเนอร์ เพลง และธีมสว่าง-มืด! ถ้าอยากเริ่มเขียนเว็บ ลองฝึก HTML/CSS ก่อน แล้วต่อด้วย JS ทำ DOM manipulation บอกเลยว่าสนุกสุดๆ!"
+        reply: "พูดเรื่องโค้ดเหรอ! เว็บแก๊ง LYFESTYLE เราเขียนด้วย **HTML5 + Vanilla CSS + Modern JavaScript** รัน Realtime บน Cloud ซิงค์ข้อมูลสดทั้งแบนเนอร์ เพลง และธีมสว่าง-มืด! ถ้าอยากเริ่มเขียนเว็บ ลองฝึก HTML/CSS ก่อน แล้วต่อด้วย JS ทำ DOM manipulation บอกเลยว่าสนุกสุดๆ!"
       },
 
       // 6. SCIENCE & NATURE
       {
         match: /(ฟ้าเป็นสีฟ้า|ทำไม|วิทยาศาสตร์|ดวงดาว|อวกาศ)/i,
-        reply: "🌌 **ทำไมท้องฟ้าถึงเป็นสีฟ้า?** เพราะเกิดจากปรากฏการณ์ *Rayleigh Scattering* (การกระเจิงของแสงเรย์ลี) แสงอาทิตย์มีทุกสี แต่แสงสีฟ้ามีความยาวคลื่นสั้น ทำให้ชนกับโมเลกุลแก๊สในบรรยากาศโลกแล้วกระเจิงไปทั่วท้องฟ้า ตาเราเลยมองเห็นเป็นสีฟ้าไงล่ะครับ!"
+        reply: "**ทำไมท้องฟ้าถึงเป็นสีฟ้า?** เพราะเกิดจากปรากฏการณ์ *Rayleigh Scattering* (การกระเจิงของแสงเรย์ลี) แสงอาทิตย์มีทุกสี แต่แสงสีฟ้ามีความยาวคลื่นสั้น ทำให้ชนกับโมเลกุลแก๊สในบรรยากาศโลกแล้วกระเจิงไปทั่วท้องฟ้า ตาเราเลยมองเห็นเป็นสีฟ้าไงล่ะครับ!"
       },
 
       // 7. GAMING
       {
         match: /(เกม|rov|val|fivem|gta|roblox|free fire)/i,
         replies: [
-          "🎮 เกมเมอร์ตัวจริงต้องไม่พลาด! แก๊งเราก็ชอบเล่นเกม ถ้าว่างๆ อย่าลืมแวะไปกด **เกมงู 3004 (SNAKE)** ที่แท็บข้างบนนะ กินตัวเลข 3-0-0-4 ทำคอมโบแข่งกับคนอื่นได้ด้วย!",
-          "🔥 เล่นเกมต้องมีสติ แต่ถ้าเจอเพื่อนร่วมทีมแจก... สติก็อาจจะแตกได้เหมือนกัน 55555555+",
-          "🔫 จะ FiveM, GTA หรือเกมไหนๆ ถ้าเล่นกับเพื่อนในแก๊ง LYFESTYLE ยังไงก็เดือด!"
+          "เกมเมอร์ตัวจริงต้องไม่พลาด! แก๊งเราก็ชอบเล่นเกม ถ้าว่างๆ อย่าลืมแวะไปกด **เกมงู 3004 (SNAKE)** ที่แท็บข้างบนนะ กินตัวเลข 3-0-0-4 ทำคอมโบแข่งกับคนอื่นได้ด้วย!",
+          "เล่นเกมต้องมีสติ แต่ถ้าเจอเพื่อนร่วมทีมแจก... สติก็อาจจะแตกได้เหมือนกัน 55555555+",
+          "จะ FiveM, GTA หรือเกมไหนๆ ถ้าเล่นกับเพื่อนในแก๊ง LYFESTYLE ยังไงก็เดือด!"
         ]
       },
 
@@ -1553,9 +1620,9 @@
         ];
         return savagePool[Math.floor(Math.random() * savagePool.length)];
       } else if (currentPersona === 'genius') {
-        return `💡 สำหรับประเด็น **"${text}"** นั้น สามารถมองได้หลายมิติครับ ทั้งในแง่ของตรรกะ ข้อมูลรอบตัว และการนำไปปรับใช้ในชีวิตจริง หากต้องการเจาะลึกด้านไหนเป็นพิเศษ ถามต่อได้เลยครับ!`;
+        return `สำหรับประเด็น **"${text}"** นั้น สามารถมองได้หลายมิติครับ ทั้งในแง่ของตรรกะ ข้อมูลรอบตัว และการนำไปปรับใช้ในชีวิตจริง หากต้องการเจาะลึกด้านไหนเป็นพิเศษ ถามต่อได้เลยครับ!`;
       } else {
-        return `💖 เข้าใจความรู้สึกเลยนะคะ ข้อความ "${text}" นี้ฟังแล้วอบอุ่นใจมาก ไม่ว่าจะเจอเรื่องอะไรมา แก๊ง LYFESTYLE และ AI คนนี้พร้อมอยู่ข้างๆ เสมอนะคะ สู้ๆ ค่ะ!`;
+        return `เข้าใจความรู้สึกเลยนะคะ ข้อความ "${text}" นี้ฟังแล้วอบอุ่นใจมาก ไม่ว่าจะเจอเรื่องอะไรมา แก๊ง LYFESTYLE และ AI คนนี้พร้อมอยู่ข้างๆ เสมอนะคะ สู้ๆ ค่ะ!`;
       }
     }
 
@@ -1568,7 +1635,7 @@
           chatHistory = [
             {
               role: 'ai',
-              text: 'โย่ววว! ยินดีต้อนรับสู่ **LYFESTYLE OPENCHAT** ค่ะ! 🤖✨\nฉันคือ AI ตัวตึงประจำแก๊ง อยากคุยเล่น กวนๆ ถามความรู้ ถามมุกตลก ปรึกษาเรื่องอะไร ถามมาได้หมดเลยน้าาา 55555+',
+              text: 'โย่ววว! ยินดีต้อนรับสู่ **LYFESTYLE OPENCHAT** ค่ะ!\nฉันคือ AI ตัวตึงประจำแก๊ง อยากคุยเล่น กวนๆ ถามความรู้ ถามมุกตลก ปรึกษาเรื่องอะไร ถามมาได้หมดเลยน้าาา 55555+',
               time: formatCurrentTime()
             }
           ];
@@ -1739,7 +1806,7 @@
     }
 
     // ═══════════════════════════════════════════
-    // 🐍 SNAKE 3004 ARCADE ENGINE
+    // SNAKE 3004 ARCADE ENGINE
     // ═══════════════════════════════════════════
     const canvas = document.getElementById('snakeCanvas');
     const ctx = canvas.getContext('2d');
