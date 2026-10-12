@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ไลฟ์สไตล์.com</title>
+  <link rel="icon" type="image/png" href="https://img1.pic.in.th/images/3004g.png">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&family=Bebas+Neue&family=Sarabun:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-color: #030303;
+      --surface-color: rgba(255, 255, 255, 0.02);
+      --surface-border: rgba(255, 255, 255, 0.05);
+      --surface-hover: rgba(255, 255, 255, 0.05);
+      --accent: #ffffff;
+      --accent-glow: rgba(255, 255, 255, 0.25);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.4);
+      --nav-font: 'Kanit', sans-serif;
+      --heading-font: 'Kanit', sans-serif;
+      --body-font: 'Kanit', sans-serif;
+    }
+
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+
+    body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, a, p, span, label, div {
+      font-family: 'Kanit', sans-serif;
+    }
+
+    .fa-solid, .fas {
+      font-family: "Font Awesome 6 Free" !important;
+      font-weight: 900 !important;
+    }
+    .fa-brands, .fab {
+      font-family: "Font Awesome 6 Brands" !important;
+      font-weight: 400 !important;
+    }
+    .fa-regular, .far {
+      font-family: "Font Awesome 6 Free" !important;
+      font-weight: 400 !important;
+    }
+    
+    body {
+      background: var(--bg-color);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      min-height: 100vh;
+      opacity: 0;
+      transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    body.no-scroll {
+      overflow: hidden !important;
+    }
+
+    body.loaded {
+      opacity: 1;
+    }
+
+    /* 🔹 Background System (GIF + Blur) */
+    .bg-animation {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background: url('background.gif') center/cover no-repeat;
+    }
+
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: rgba(3, 3, 3, 0.75);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    .bg-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: radial-gradient(circle at center, transparent 30%, rgba(3, 3, 3, 0.95) 100%);
+      pointer-events: none;
+    }
+
+    /* 🔹 Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #030303; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+
+    /* 🔹 Navbar */
+    header {
+      background: rgba(3, 3, 3, 0.25);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      padding: 18px 5%;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      border-bottom: 1px solid var(--surface-border);
+      z-index: 1000;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .navbar { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
+
+    .logo img {
+      height: 42px;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.15));
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .logo a {
+      display: inline-block;
+      text-decoration: none;
+    }
+    .logo a:hover img {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.35));
+    }
+
+    nav.nav-desktop ul {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-family: var(--nav-font);
+      font-size: 1.05rem;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      padding: 6px 0;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transform: translateX(-50%);
+      box-shadow: 0 0 12px rgba(255,255,255,0.8);
+    }
+
+    nav a:hover::after, nav a.active::after {
+      width: 100%;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    /* 🔹 Hero Section */
+    .hero {
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    .hero h1 {
+      font-family: var(--heading-font);
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      letter-spacing: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .highlight {
+      color: transparent;
+      -webkit-text-stroke: 1.5px #fff;
+      filter: drop-shadow(0 0 20px rgba(255,255,255,0.25));
+    }
+
+    .hero-button {
+      font-family: var(--nav-font);
+      font-size: 1.15rem;
+      color: #000;
+      background: #fff;
+      padding: 14px 50px;
+      text-decoration: none;
+      margin-top: 35px;
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      letter-spacing: 3px;
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-button:hover {
+      background: transparent;
+      color: #fff;
+      box-shadow: inset 0 0 0 1.5px #fff, 0 8px 30px rgba(255, 255, 255, 0.3);
+      transform: translateY(-4px);
+    }
+
+    /* 🔹 News Section */
+    .latest-news {
+      max-width: 1100px;
+      margin: 50px auto 120px;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      font-family: var(--heading-font);
+      font-size: 1.8rem;
+      letter-spacing: 5px;
+      margin-bottom: 45px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-weight: 600;
+    }
+
+    .section-title::after {
+      content: "";
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.15), transparent);
+      flex-grow: 1;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 40px;
+    }
+
+    .news-card {
+      background: var(--surface-color);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--surface-border);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .news-card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.05);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 220px;
+      background: rgba(255, 255, 255, 0.02) url('https://img2.pic.in.th/OVF.jpg') center/cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .news-card:hover .card-img {
+      transform: scale(1.04);
+    }
+
+    .card-img1 {
+      width: 100%;
+      height: 220px;
+      background: rgba(255, 255, 255, 0.02) url('https://img2.pic.in.th/588511780d269d1e7fa.jpg') center/cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .news-card:hover .card-img1 {
+      transform: scale(1.04);
+    }
+
+    .card-content {
+      padding: 30px;
+    }
+
+    .card-category {
+      display: inline-block;
+      font-family: var(--nav-font);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px 14px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .card-content h3 {
+      font-family: var(--heading-font);
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+    }
+
+    /* 🔹 Anti-Devtools Popup */
+    #block-popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 3, 3, 0.85);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    #block-popup .box {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.02);
+      color: #fff;
+      padding: 35px 70px;
+      border-radius: 20px;
+      font-family: var(--nav-font);
+      font-size: 2.2rem;
+      letter-spacing: 6px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      animation: alertBlink 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes alertBlink {
+      0% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+      100% { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.15); }
+    }
+
+    /* 🔹 Mobile Navigation */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 1100;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 2px;
+      background: #fff;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    /* Animation ตอนกด Hamburger */
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      height: 100vh;
+      background: rgba(3, 3, 3, 0.98);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      transition: right 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 1050;
+    }
+
+    .mobile-menu.active { right: 0; }
+
+    .mobile-menu a {
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--nav-font);
+      font-size: 2.2rem;
+      letter-spacing: 4px;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .mobile-menu a:hover { transform: scale(1.08); text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+
+    @media (max-width: 768px) {
+      nav.nav-desktop { display: none; }
+      .hamburger { display: flex; }
+      .hero {
+        padding: 100px 20px 40px;
+      }
+      .hero h1 { font-size: 2.8rem; letter-spacing: 6px; }
+      .latest-news {
+        margin: 30px auto 80px;
+        padding: 0 16px;
+      }
+      .news-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .volume-container {
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2.2rem;
+        letter-spacing: 3px;
+      }
+      .hero p {
+        letter-spacing: 3px !important;
+        font-size: 0.8rem !important;
+      }
+      .hero-button {
+        padding: 12px 35px;
+        font-size: 1rem;
+        margin-top: 25px;
+      }
+      .section-title {
+        font-size: 1.4rem;
+        letter-spacing: 3px;
+        margin-bottom: 25px;
+      }
+      .card-content {
+        padding: 20px 16px;
+      }
+      .card-content h3 {
+        font-size: 1.25rem;
+        letter-spacing: 2px;
+      }
+      #block-popup .box {
+        padding: 20px 30px;
+        font-size: 1.3rem;
+        letter-spacing: 3px;
+      }
+      .intro-title {
+        font-size: 2.4rem !important;
+        letter-spacing: 8px !important;
+      }
+      .intro-subtitle {
+        font-size: 1rem;
+        letter-spacing: 4px;
+      }
+      .enter-btn {
+        padding: 12px 35px;
+        font-size: 1.1rem;
+      }
+    }
+
+    /* 🔹 Animations */
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(5px); }
+      to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+
+    /* 🔹 Intro Overlay */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: #030303;
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
+    }
+
+    .intro-bg-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle at bottom, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      animation: pulseGlow 6s infinite alternate ease-in-out;
+    }
+
+    .intro-content {
+      position: relative;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      z-index: 2;
+    }
+
+    .intro-subtitle {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 8px;
+      color: var(--text-muted);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.3s;
+    }
+
+    .intro-title {
+      font-family: 'Kanit', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-weight: 700;
+      letter-spacing: 18px;
+      color: #fff;
+      margin: 10px 0;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: heroFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.6s;
+      text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+    }
+
+    .intro-line {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      margin: 15px auto 0;
+      animation: expandLine 1.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 0.8s;
+    }
+
+    @keyframes expandLine {
+      to { width: 120px; }
+    }
+
+    .enter-btn {
+      position: relative;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 16px 50px;
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: 4px;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 50px;
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+      opacity: 0;
+      animation: heroFadeIn 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards 1.2s;
+    }
+
+    .enter-btn:hover {
+      border-color: #fff;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+      transform: scale(1.05);
+    }
+
+    .btn-shine {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+      animation: moveShine 4s infinite ease-in-out;
+    }
+
+    @keyframes moveShine {
+      0% { left: -100%; }
+      30%, 100% { left: 100%; }
+    }
+
+    .intro-overlay.fade-out {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* 🔹 Unified Volume Container Style */
+    .volume-container {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 50px;
+      width: 50px;
+      height: 50px;
+      transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s, border-color 0.3s;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .volume-container:hover {
+      width: 200px;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 255, 255, 0.05);
+    }
+
+    .volume-content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .vol-icon-box {
+      min-width: 34px;
+      height: 34px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .vol-icon-box i {
+      color: #fff;
+      font-size: 1.05rem;
+      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+    }
+
+    .slider-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding-right: 15px;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      pointer-events: none;
+    }
+
+    .volume-container:hover .slider-wrapper {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+      transition: transform 0.2s;
+    }
+
+    .volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+  </style>
+</head>
+<body class="no-scroll">
+
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+<div id="intro-overlay" class="intro-overlay">
+    <div class="intro-bg-glow"></div>
+    
+    <div class="intro-content">
+        <div class="intro-text-wrapper">
+            <h2 class="intro-subtitle">WELCOME TO FAMILY</h2>
+            <h1 class="intro-title">LYFESTYLE</h1>
+            <div class="intro-line"></div>
+        </div>
+        
+        <button class="enter-btn" onclick="startExperience()">
+            <span class="btn-text">CLICK</span>
+            <div class="btn-shine"></div>
+        </button>
+    </div>
+</div>
+  <div class="bg-animation"></div>
+  <div class="bg-overlay"></div>
+  <div class="bg-vignette"></div>
+
+
+
+  <div id="block-popup">
+    <div class="box">SYSTEM PROTECTED</div>
+  </div>
+
+  <header id="mainHeader">
+    <div class="navbar">
+      <div class="logo">
+        <a href="index.html"><img src="https://img1.pic.in.th/images/3004g.png" alt="LYFESTYLE Logo"></a>
+      </div>
+      
+      <nav class="nav-desktop">
+        <ul>
+          <li><a href="index.html" class="active">HOME</a></li>
+          <li><a href="members.html">MEMBERS</a></li>
+          <li><a href="official.html">OFFICIAL</a></li>
+          <li><a href="login.html" title="Admin Login"><i class="fa-solid fa-lock" style="font-size: 0.85rem; margin-right: 4px;"></i> ADMIN</a></li>
+        </ul>
+      </nav>
+
+      <div class="hamburger" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">HOME</a>
+    <a href="members.html">MEMBERS</a>
+    <a href="official.html">OFFICIAL</a>
+    <a href="login.html">ADMIN</a>
+  </div>
+
+  <section class="hero">
+    <h1>LYFESTYLE <span class="highlight">LIST</span></h1>
+    <p style="color: var(--text-dim); letter-spacing: 5px; font-size: 0.9rem;">A N N I i V E R S A R Y 6 Y E A R</p>
+    <a href="members.html" class="hero-button">MEMBERS</a>
+  </section>
+
+        <div class="volume-container">
+          <div class="volume-content">
+              <div class="icon-box" onclick="toggleMute()">
+                  <i class="fa-solid fa-volume-high" id="volIcon"></i>
+              </div>
+              <div class="slider-wrapper">
+                  <input type="range" class="volume-slider" id="volSlider" min="0" max="1" step="0.01" value="0.5">
+              </div>
+          </div>
+      </div>
+
+  <section class="latest-news">
+    <h2 class="section-title">PARTNER GANG</h2>
+    <div class="news-grid">
+      <a href="https://ovf.ufsmp.com/" target="_blank" class="news-card" style="animation-delay: 0.2s; text-decoration: none; display: block; color: inherit;">
+        <div class="card-img"></div>
+        <div class="card-content">
+          <span class="card-category">PARTNER</span>
+          <h3>O V E R F R I E N D</h3>
+          <p style="color: var(--text-dim); font-size: 0.85rem;"></p>
+        </div>
+      </a>
+      <a href="http://588.mygstyle.com/index.php" target="_blank" class="news-card" style="animation-delay: 0.4s; text-decoration: none; display: block; color: inherit;">
+        <div class="card-img1"></div>
+        <div class="card-content">
+          <span class="card-category">PARTNER</span>
+          <h3>S A B U D B O B</h3>
+          <p style="color: var(--text-dim); font-size: 0.85rem;"></p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <script>
+    const music = document.getElementById("bgMusic");
+    const volSlider = document.getElementById("volSlider");
+    const volIcon = document.getElementById("volIcon");
+
+    // 🔹 Security: Anti-Devtools & Right Click
+    function showBlockPopup() {
+        const popup = document.getElementById("block-popup");
+        if (!popup) return;
+        popup.style.display = "flex";
+        setTimeout(() => popup.style.opacity = "1", 10);
+        setTimeout(() => {
+            popup.style.opacity = "0";
+            setTimeout(() => popup.style.display = "none", 300);
+        }, 1500);
+    }
+
+    document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        showBlockPopup();
+    });
+
+    document.addEventListener('keydown', e => {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+        if (e.key === 'F12' || e.keyCode === 123) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) {
+            e.preventDefault();
+            showBlockPopup();
+            return false;
+        }
+    }, false);
+
+    // 🔹 Start Experience (ENTER/CLICK)
+    function startExperience() {
+        localStorage.setItem("musicStarted", "true");
+
+        const savedVol = localStorage.getItem("musicVol");
+        const isMuted = localStorage.getItem("musicMuted") === "true";
+        let initialVol = savedVol ? parseFloat(savedVol) : 0.5;
+        
+        music.volume = isMuted ? 0 : initialVol;
+        music.play().catch(err => console.log("Play failed:", err));
+        
+        updateSliderUI(music.volume);
+
+        const intro = document.getElementById("intro-overlay");
+        if (intro) intro.classList.add("fade-out");
+        
+        document.body.classList.remove("no-scroll");
+    }
+
+    // 🔹 Unified Volume Slider UI and Logic
+    function updateSliderUI(v) {
+        const p = v * 100;
+        if (volSlider) {
+            volSlider.value = v;
+            volSlider.style.background = `linear-gradient(90deg, #fff ${p}%, rgba(255,255,255,0.1) ${p}%)`;
+        }
+        if (volIcon) {
+            if (v == 0) volIcon.className = "fa-solid fa-volume-xmark";
+            else if (v < 0.5) volIcon.className = "fa-solid fa-volume-low";
+            else volIcon.className = "fa-solid fa-volume-high";
+        }
+    }
+
+    if (volSlider) {
+        volSlider.addEventListener("input", (e) => {
+            const val = parseFloat(e.target.value);
+            music.volume = val;
+            localStorage.setItem("musicVol", val);
+            localStorage.setItem("musicMuted", val === 0 ? "true" : "false");
+            updateSliderUI(val);
+        });
+    }
+
+    function toggleMute() {
+        const isMuted = localStorage.getItem("musicMuted") === "true";
+        const savedVol = localStorage.getItem("musicVol") || 0.5;
+        
+        if (!isMuted && music.volume > 0) {
+            music.dataset.oldVol = music.volume;
+            music.volume = 0;
+            localStorage.setItem("musicMuted", "true");
+            updateSliderUI(0);
+        } else {
+            const restoreVol = music.dataset.oldVol || parseFloat(savedVol) || 0.5;
+            music.volume = restoreVol;
+            localStorage.setItem("musicMuted", "false");
+            localStorage.setItem("musicVol", restoreVol);
+            updateSliderUI(restoreVol);
+        }
+    }
+
+    // Save playing position
+    setInterval(() => {
+        if (!music.paused) {
+            localStorage.setItem("musicTime", music.currentTime);
+        }
+    }, 1000);
+
+    // 🔹 Mobile Menu Logic
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+        hamburger.onclick = () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        };
+    }
+
+    // 🔹 Initialize on DOMContentLoaded
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add("loaded");
+
+        const savedTime = localStorage.getItem("musicTime");
+        const savedVol = localStorage.getItem("musicVol");
+        const isMuted = localStorage.getItem("musicMuted") === "true";
+        const musicStarted = localStorage.getItem("musicStarted") === "true";
+
+        if (savedTime) music.currentTime = parseFloat(savedTime);
+        
+        let initialVol = savedVol ? parseFloat(savedVol) : 0.5;
+        music.volume = isMuted ? 0 : initialVol;
+        updateSliderUI(music.volume);
+
+        if (musicStarted) {
+            const intro = document.getElementById("intro-overlay");
+            if (intro) intro.style.display = "none";
+            document.body.classList.remove("no-scroll");
+            
+            music.play().catch(() => {
+                console.log("Waiting for user interaction...");
+                document.addEventListener('click', () => {
+                    music.play();
+                }, { once: true });
+            });
+        }
+
+        // Smooth Page Transitions
+        const navLinks = document.querySelectorAll('nav a, .mobile-menu a, .logo a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.hostname === window.location.hostname && !this.target) {
+                    e.preventDefault();
+                    const targetUrl = this.href;
+                    document.body.style.opacity = '0';
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 500);
+                }
+            });
+        });
+    });
+
+    // 🔹 Header Scroll Effect
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('mainHeader');
+        if (!header) return;
+        if (window.scrollY > 50) {
+            header.style.padding = '12px 5%';
+            header.style.background = 'rgba(3, 3, 3, 0.95)';
+        } else {
+            header.style.padding = '18px 5%';
+            header.style.background = 'rgba(3, 3, 3, 0.25)';
+        }
+    });
+  </script>
+  <script src="site-features.js"></script>
+</body>
+</html>
