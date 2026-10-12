@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ไลฟ์สไตล์.com</title>
-  <link rel="icon" type="image/png" href="https://s.imgz.io/2026/10/12/54280320-e77d-4b74-a7a6-0c2b0c4350cd-removebg-previewc8b5229924557002.png">
+  <link rel="icon" type="image/png"
+    href="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png">
   <link
     href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&family=Bebas+Neue&family=Sarabun:wght@300;400&display=swap"
     rel="stylesheet">
@@ -601,10 +602,103 @@
         font-size: 1rem;
       }
 
-      .mobile-menu a {
-        font-size: 1.8rem;
-        letter-spacing: 3px;
-      }
+    /* ☀️ Ultimate Luxury Light Mode (Platinum Crystal Glass) */
+    body.light-theme {
+      color-scheme: light !important;
+      --bg-color: #f1f5f9;
+      --surface-color: rgba(255, 255, 255, 0.78);
+      --surface-border: rgba(0, 0, 0, 0.08);
+      --surface-hover: rgba(255, 255, 255, 0.98);
+      --accent: #0f172a;
+      --accent-glow: rgba(15, 23, 42, 0.15);
+      --text-primary: #0f172a;
+      --text-secondary: rgba(15, 23, 42, 0.75);
+      --text-muted: rgba(15, 23, 42, 0.45);
+    }
+
+    body.light-theme .bg-overlay {
+      background: rgba(241, 245, 249, 0.85);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+    }
+
+    body.light-theme .bg-vignette {
+      background: radial-gradient(circle at center, transparent 35%, rgba(203, 213, 225, 0.8) 100%);
+    }
+
+    body.light-theme header {
+      background: rgba(255, 255, 255, 0.75);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    body.light-theme nav a {
+      color: rgba(15, 23, 42, 0.7);
+    }
+
+    body.light-theme nav a:hover,
+    body.light-theme nav a.active {
+      color: #000000;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+    }
+
+    body.light-theme nav a::after {
+      background: #0f172a;
+      box-shadow: 0 0 10px rgba(15, 23, 42, 0.4);
+    }
+
+    body.light-theme .hamburger span {
+      background: #0f172a;
+    }
+
+    body.light-theme .mobile-menu {
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    body.light-theme .mobile-menu a {
+      color: #0f172a;
+    }
+
+    body.light-theme .mobile-menu a:hover {
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    body.light-theme .title-section h1 {
+      color: #0f172a;
+      text-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    body.light-theme .underline-glow {
+      background: #0f172a;
+      box-shadow: 0 0 20px rgba(15, 23, 42, 0.35);
+    }
+
+    body.light-theme .official-card {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-theme .official-card:hover {
+      background: rgba(255, 255, 255, 0.98);
+      border-color: rgba(0, 0, 0, 0.18);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+    }
+
+    body.light-theme .official-card h3 {
+      color: #0f172a;
+    }
+
+    body.light-theme .official-link {
+      background: #0f172a;
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.25);
+    }
+
+    body.light-theme .official-link:hover {
+      background: transparent;
+      color: #0f172a;
+      box-shadow: inset 0 0 0 1.5px #0f172a, 0 0 20px rgba(15, 23, 42, 0.3);
     }
   </style>
 </head>
@@ -620,18 +714,27 @@
 
   <header id="mainHeader">
     <div class="navbar">
-      <div class="logo"><a href="index.html"><img src="https://img1.pic.in.th/images/3004g.png" alt="Logo"></a></div>
+      <div class="logo"><a href="index.html"><img
+            src="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png"
+            alt="Logo"></a></div>
       <nav class="nav-desktop">
         <ul>
           <li><a href="index.html">HOME</a></li>
           <li><a href="members.html">MEMBERS</a></li>
+          <li><a href="chat.html">OPENCHAT</a></li>
           <li><a href="official.html" class="active">OFFICIAL</a></li>
           <li><a href="login.html" title="Admin Login"><i class="fa-solid fa-lock"
                 style="font-size: 0.85rem; margin-right: 4px;"></i> ADMIN</a></li>
         </ul>
       </nav>
-      <div class="hamburger" id="hamburgerBtn">
-        <span></span><span></span><span></span>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button type="button" class="theme-switch-btn" id="themeSwitchBtn" title="สลับโหมดมืด / สว่าง">
+          <i class="fa-solid fa-moon theme-switch-icon" id="themeSwitchIcon"></i>
+          <span id="themeSwitchText">THEME</span>
+        </button>
+        <div class="hamburger" id="hamburgerBtn">
+          <span></span><span></span><span></span>
+        </div>
       </div>
     </div>
   </header>
@@ -639,8 +742,13 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">HOME</a>
     <a href="members.html">MEMBERS</a>
+    <a href="chat.html">OPENCHAT</a>
     <a href="official.html">OFFICIAL</a>
     <a href="login.html">ADMIN</a>
+    <button type="button" class="theme-switch-btn" id="mobileThemeSwitchBtn" style="margin-top: 10px; padding: 10px 24px; font-size: 1rem;">
+      <i class="fa-solid fa-moon theme-switch-icon" id="mobileThemeSwitchIcon"></i>
+      <span id="mobileThemeSwitchText">สลับธีม (LIGHT / DARK)</span>
+    </button>
   </div>
 
   <div class="container">
@@ -800,14 +908,15 @@
     window.addEventListener('scroll', () => {
       const header = document.getElementById('mainHeader');
       if (!header) return;
+      const isLight = document.body.classList.contains('light-theme');
       if (window.scrollY > 50) {
         header.style.padding = '12px 5%';
-        header.style.background = 'rgba(3, 3, 3, 0.95)';
-        header.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+        header.style.background = isLight ? 'rgba(255, 255, 255, 0.92)' : 'rgba(3, 3, 3, 0.95)';
+        header.style.borderBottomColor = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)';
       } else {
         header.style.padding = '18px 5%';
-        header.style.background = 'rgba(3, 3, 3, 0.25)';
-        header.style.borderBottomColor = 'rgba(255,255,255,0.05)';
+        header.style.background = isLight ? 'rgba(255, 255, 255, 0.75)' : 'rgba(3, 3, 3, 0.25)';
+        header.style.borderBottomColor = isLight ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.05)';
       }
     });
   </script>

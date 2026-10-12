@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
   <title>ไลฟ์สไตล์.com</title>
-  <link rel="icon" type="image/png" href="https://s.imgz.io/2026/10/12/54280320-e77d-4b74-a7a6-0c2b0c4350cd-removebg-previewc8b5229924557002.png">
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&family=Bebas+Neue&family=Sarabun:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png"
+    href="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&family=Bebas+Neue&family=Sarabun:wght@300;400&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <style>
     :root {
+      color-scheme: dark;
       --bg-color: #030303;
       --surface-color: rgba(255, 255, 255, 0.02);
       --surface-border: rgba(255, 255, 255, 0.05);
@@ -24,29 +30,49 @@
       --body-font: 'Kanit', sans-serif;
     }
 
-    * { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, a, p, span, label, div {
+    body,
+    button,
+    input,
+    select,
+    textarea,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    a,
+    p,
+    span,
+    label,
+    div {
       font-family: 'Kanit', sans-serif;
     }
 
-    .fa-solid, .fas {
+    .fa-solid,
+    .fas {
       font-family: "Font Awesome 6 Free" !important;
       font-weight: 900 !important;
     }
-    .fa-brands, .fab {
+
+    .fa-brands,
+    .fab {
       font-family: "Font Awesome 6 Brands" !important;
       font-weight: 400 !important;
     }
-    .fa-regular, .far {
+
+    .fa-regular,
+    .far {
       font-family: "Font Awesome 6 Free" !important;
       font-weight: 400 !important;
     }
-    
+
     body {
       background: var(--bg-color);
       color: var(--text-primary);
@@ -90,10 +116,22 @@
     }
 
     /* 🔹 Custom Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #030303; }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #030303;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
 
     /* 🔹 Navbar */
     header {
@@ -109,7 +147,13 @@
       transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    .navbar { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
     .logo img {
       height: 42px;
@@ -117,10 +161,12 @@
       display: block;
       transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
+
     .logo a {
       display: inline-block;
       text-decoration: none;
     }
+
     .logo a:hover img {
       transform: scale(1.05);
       filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.35));
@@ -156,16 +202,18 @@
       background: var(--accent);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       transform: translateX(-50%);
-      box-shadow: 0 0 12px rgba(255,255,255,0.8);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
     }
 
-    nav a:hover::after, nav a.active::after {
+    nav a:hover::after,
+    nav a.active::after {
       width: 100%;
     }
 
-    nav a:hover, nav a.active {
+    nav a:hover,
+    nav a.active {
       color: var(--accent);
-      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
     /* 🔹 Hero Section */
@@ -186,13 +234,19 @@
       text-transform: uppercase;
       font-weight: 700;
       margin-bottom: 12px;
-      text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 255, 255, 0.15);
+      animation: heroTitleGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroTitleGlow {
+      0% { text-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 15px rgba(255,255,255,0.05); }
+      100% { text-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 35px rgba(255,255,255,0.3); }
     }
 
     .highlight {
       color: transparent;
       -webkit-text-stroke: 1.5px #fff;
-      filter: drop-shadow(0 0 20px rgba(255,255,255,0.25));
+      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.35));
     }
 
     .hero-button {
@@ -206,14 +260,31 @@
       border-radius: 50px;
       transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
       letter-spacing: 3px;
-      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+      box-shadow: 0 6px 25px rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .hero-button:hover::after {
+      left: 100%;
     }
 
     .hero-button:hover {
       background: transparent;
       color: #fff;
-      box-shadow: inset 0 0 0 1.5px #fff, 0 8px 30px rgba(255, 255, 255, 0.3);
-      transform: translateY(-4px);
+      box-shadow: inset 0 0 0 1.5px #fff, 0 8px 35px rgba(255, 255, 255, 0.4);
+      transform: translateY(-4px) scale(1.02);
     }
 
     /* 🔹 News Section */
@@ -342,8 +413,15 @@
     }
 
     @keyframes alertBlink {
-      0% { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
-      100% { border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.15); }
+      0% {
+        border-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      }
+
+      100% {
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.15);
+      }
     }
 
     /* 🔹 Mobile Navigation */
@@ -363,9 +441,17 @@
     }
 
     /* Animation ตอนกด Hamburger */
-    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
-    .hamburger.active span:nth-child(2) { opacity: 0; }
-    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 6px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -6px);
+    }
 
     .mobile-menu {
       position: fixed;
@@ -385,7 +471,9 @@
       z-index: 1050;
     }
 
-    .mobile-menu.active { right: 0; }
+    .mobile-menu.active {
+      right: 0;
+    }
 
     .mobile-menu a {
       color: #fff;
@@ -396,23 +484,39 @@
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
-    .mobile-menu a:hover { transform: scale(1.08); text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+    .mobile-menu a:hover {
+      transform: scale(1.08);
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
 
     @media (max-width: 768px) {
-      nav.nav-desktop { display: none; }
-      .hamburger { display: flex; }
+      nav.nav-desktop {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
       .hero {
         padding: 100px 20px 40px;
       }
-      .hero h1 { font-size: 2.8rem; letter-spacing: 6px; }
+
+      .hero h1 {
+        font-size: 2.8rem;
+        letter-spacing: 6px;
+      }
+
       .latest-news {
         margin: 30px auto 80px;
         padding: 0 16px;
       }
+
       .news-grid {
         grid-template-columns: 1fr;
         gap: 24px;
       }
+
       .volume-container {
         bottom: 20px;
         right: 20px;
@@ -424,40 +528,49 @@
         font-size: 2.2rem;
         letter-spacing: 3px;
       }
+
       .hero p {
         letter-spacing: 3px !important;
         font-size: 0.8rem !important;
       }
+
       .hero-button {
         padding: 12px 35px;
         font-size: 1rem;
         margin-top: 25px;
       }
+
       .section-title {
         font-size: 1.4rem;
         letter-spacing: 3px;
         margin-bottom: 25px;
       }
+
       .card-content {
         padding: 20px 16px;
       }
+
       .card-content h3 {
         font-size: 1.25rem;
         letter-spacing: 2px;
       }
+
       #block-popup .box {
         padding: 20px 30px;
         font-size: 1.3rem;
         letter-spacing: 3px;
       }
+
       .intro-title {
         font-size: 2.4rem !important;
         letter-spacing: 8px !important;
       }
+
       .intro-subtitle {
         font-size: 1rem;
         letter-spacing: 4px;
       }
+
       .enter-btn {
         padding: 12px 35px;
         font-size: 1.1rem;
@@ -466,8 +579,17 @@
 
     /* 🔹 Animations */
     @keyframes heroFadeIn {
-      from { opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(5px); }
-      to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+        filter: blur(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
     }
 
     /* 🔹 Intro Overlay */
@@ -535,7 +657,9 @@
     }
 
     @keyframes expandLine {
-      to { width: 120px; }
+      to {
+        width: 120px;
+      }
     }
 
     .enter-btn {
@@ -572,8 +696,14 @@
     }
 
     @keyframes moveShine {
-      0% { left: -100%; }
-      30%, 100% { left: 100%; }
+      0% {
+        left: -100%;
+      }
+
+      30%,
+      100% {
+        left: 100%;
+      }
     }
 
     .intro-overlay.fade-out {
@@ -674,33 +804,165 @@
       transition: transform 0.2s;
     }
 
-    .volume-slider::-webkit-slider-thumb:hover {
-      transform: scale(1.25);
+    /* ☀️ Ultimate Luxury Light Mode (Platinum Crystal Glass) */
+    body.light-theme {
+      color-scheme: light !important;
+      --bg-color: #f1f5f9;
+      --surface-color: rgba(255, 255, 255, 0.78);
+      --surface-border: rgba(0, 0, 0, 0.08);
+      --surface-hover: rgba(255, 255, 255, 0.98);
+      --accent: #0f172a;
+      --accent-glow: rgba(15, 23, 42, 0.15);
+      --text-primary: #0f172a;
+      --text-secondary: rgba(15, 23, 42, 0.75);
+      --text-muted: rgba(15, 23, 42, 0.45);
+    }
+
+    body.light-theme .bg-overlay {
+      background: rgba(241, 245, 249, 0.85);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+    }
+
+    body.light-theme .bg-vignette {
+      background: radial-gradient(circle at center, transparent 35%, rgba(203, 213, 225, 0.8) 100%);
+    }
+
+    body.light-theme header {
+      background: rgba(255, 255, 255, 0.75);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    body.light-theme nav a {
+      color: rgba(15, 23, 42, 0.7);
+    }
+
+    body.light-theme nav a:hover,
+    body.light-theme nav a.active {
+      color: #000000;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+    }
+
+    body.light-theme nav a::after {
+      background: #0f172a;
+      box-shadow: 0 0 10px rgba(15, 23, 42, 0.4);
+    }
+
+    body.light-theme .hamburger span {
+      background: #0f172a;
+    }
+
+    body.light-theme .mobile-menu {
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    body.light-theme .mobile-menu a {
+      color: #0f172a;
+    }
+
+    body.light-theme .mobile-menu a:hover {
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    body.light-theme .hero h1 {
+      color: #0f172a;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 0 20px rgba(15, 23, 42, 0.1);
+    }
+
+    body.light-theme .highlight {
+      color: transparent;
+      -webkit-text-stroke: 1.5px #0f172a;
+      filter: drop-shadow(0 0 20px rgba(15, 23, 42, 0.2));
+    }
+
+    body.light-theme .hero-button {
+      background: #0f172a;
+      color: #ffffff;
+      box-shadow: 0 6px 25px rgba(15, 23, 42, 0.25);
+    }
+
+    body.light-theme .hero-button:hover {
+      background: transparent;
+      color: #0f172a;
+      box-shadow: inset 0 0 0 1.5px #0f172a, 0 8px 30px rgba(15, 23, 42, 0.25);
+    }
+
+    body.light-theme .section-title {
+      color: #0f172a;
+    }
+
+    body.light-theme .section-title::after {
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.15), transparent);
+    }
+
+    body.light-theme .news-card {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-theme .news-card:hover {
+      background: rgba(255, 255, 255, 0.98);
+      border-color: rgba(0, 0, 0, 0.18);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+    }
+
+    body.light-theme .card-content h3 {
+      color: #0f172a;
+    }
+
+    body.light-theme .card-category {
+      color: #64748b;
+    }
+
+    body.light-theme .intro-overlay {
+      background: #f8fafc;
+    }
+
+    body.light-theme .intro-title {
+      color: #0f172a;
+      text-shadow: 0 0 30px rgba(15, 23, 42, 0.15);
+    }
+
+    body.light-theme .intro-subtitle {
+      color: #64748b;
+    }
+
+    body.light-theme .enter-btn {
+      color: #0f172a;
+      border-color: rgba(15, 23, 42, 0.3);
+    }
+
+    body.light-theme .enter-btn:hover {
+      border-color: #0f172a;
+      box-shadow: 0 0 30px rgba(15, 23, 42, 0.15);
     }
   </style>
 </head>
+
 <body class="no-scroll">
 
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
 
-<div id="intro-overlay" class="intro-overlay">
+  <div id="intro-overlay" class="intro-overlay">
     <div class="intro-bg-glow"></div>
-    
+
     <div class="intro-content">
-        <div class="intro-text-wrapper">
-            <h2 class="intro-subtitle">WELCOME TO FAMILY</h2>
-            <h1 class="intro-title">LYFESTYLE</h1>
-            <div class="intro-line"></div>
-        </div>
-        
-        <button class="enter-btn" onclick="startExperience()">
-            <span class="btn-text">CLICK</span>
-            <div class="btn-shine"></div>
-        </button>
+      <div class="intro-text-wrapper">
+        <h2 class="intro-subtitle">WELCOME TO FAMILY</h2>
+        <h1 class="intro-title">LYFESTYLE</h1>
+        <div class="intro-line"></div>
+      </div>
+
+      <button class="enter-btn" onclick="startExperience()">
+        <span class="btn-text">CLICK</span>
+        <div class="btn-shine"></div>
+      </button>
     </div>
-</div>
+  </div>
   <div class="bg-animation"></div>
   <div class="bg-overlay"></div>
   <div class="bg-vignette"></div>
@@ -714,22 +976,32 @@
   <header id="mainHeader">
     <div class="navbar">
       <div class="logo">
-        <a href="index.html"><img src="https://img1.pic.in.th/images/3004g.png" alt="LYFESTYLE Logo"></a>
+        <a href="index.html"><img
+            src="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png"
+            alt="LYFESTYLE Logo"></a>
       </div>
-      
+
       <nav class="nav-desktop">
         <ul>
           <li><a href="index.html" class="active">HOME</a></li>
           <li><a href="members.html">MEMBERS</a></li>
+          <li><a href="chat.html">OPENCHAT</a></li>
           <li><a href="official.html">OFFICIAL</a></li>
-          <li><a href="login.html" title="Admin Login"><i class="fa-solid fa-lock" style="font-size: 0.85rem; margin-right: 4px;"></i> ADMIN</a></li>
+          <li><a href="login.html" title="Admin Login"><i class="fa-solid fa-lock"
+                style="font-size: 0.85rem; margin-right: 4px;"></i> ADMIN</a></li>
         </ul>
       </nav>
 
-      <div class="hamburger" id="hamburgerBtn">
-        <span></span>
-        <span></span>
-        <span></span>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button type="button" class="theme-switch-btn" id="themeSwitchBtn" title="สลับโหมดมืด / สว่าง">
+          <i class="fa-solid fa-moon theme-switch-icon" id="themeSwitchIcon"></i>
+          <span id="themeSwitchText">THEME</span>
+        </button>
+        <div class="hamburger" id="hamburgerBtn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </div>
   </header>
@@ -737,8 +1009,13 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">HOME</a>
     <a href="members.html">MEMBERS</a>
+    <a href="chat.html">OPENCHAT</a>
     <a href="official.html">OFFICIAL</a>
     <a href="login.html">ADMIN</a>
+    <button type="button" class="theme-switch-btn" id="mobileThemeSwitchBtn" style="margin-top: 10px; padding: 10px 24px; font-size: 1rem;">
+      <i class="fa-solid fa-moon theme-switch-icon" id="mobileThemeSwitchIcon"></i>
+      <span id="mobileThemeSwitchText">สลับธีม (LIGHT / DARK)</span>
+    </button>
   </div>
 
   <section class="hero">
@@ -747,21 +1024,22 @@
     <a href="members.html" class="hero-button">MEMBERS</a>
   </section>
 
-        <div class="volume-container">
-          <div class="volume-content">
-              <div class="icon-box" onclick="toggleMute()">
-                  <i class="fa-solid fa-volume-high" id="volIcon"></i>
-              </div>
-              <div class="slider-wrapper">
-                  <input type="range" class="volume-slider" id="volSlider" min="0" max="1" step="0.01" value="0.5">
-              </div>
-          </div>
+  <div class="volume-container">
+    <div class="volume-content">
+      <div class="icon-box" onclick="toggleMute()">
+        <i class="fa-solid fa-volume-high" id="volIcon"></i>
       </div>
+      <div class="slider-wrapper">
+        <input type="range" class="volume-slider" id="volSlider" min="0" max="1" step="0.01" value="0.5">
+      </div>
+    </div>
+  </div>
 
   <section class="latest-news">
     <h2 class="section-title">PARTNER GANG</h2>
     <div class="news-grid">
-      <a href="https://ovf.ufsmp.com/" target="_blank" class="news-card" style="animation-delay: 0.2s; text-decoration: none; display: block; color: inherit;">
+      <a href="https://ovf.ufsmp.com/" target="_blank" class="news-card"
+        style="animation-delay: 0.2s; text-decoration: none; display: block; color: inherit;">
         <div class="card-img"></div>
         <div class="card-content">
           <span class="card-category">PARTNER</span>
@@ -769,7 +1047,8 @@
           <p style="color: var(--text-dim); font-size: 0.85rem;"></p>
         </div>
       </a>
-      <a href="http://588.mygstyle.com/index.php" target="_blank" class="news-card" style="animation-delay: 0.4s; text-decoration: none; display: block; color: inherit;">
+      <a href="http://588.mygstyle.com/index.php" target="_blank" class="news-card"
+        style="animation-delay: 0.4s; text-decoration: none; display: block; color: inherit;">
         <div class="card-img1"></div>
         <div class="card-content">
           <span class="card-category">PARTNER</span>
@@ -787,180 +1066,184 @@
 
     // 🔹 Security: Anti-Devtools & Right Click
     function showBlockPopup() {
-        const popup = document.getElementById("block-popup");
-        if (!popup) return;
-        popup.style.display = "flex";
-        setTimeout(() => popup.style.opacity = "1", 10);
-        setTimeout(() => {
-            popup.style.opacity = "0";
-            setTimeout(() => popup.style.display = "none", 300);
-        }, 1500);
+      const popup = document.getElementById("block-popup");
+      if (!popup) return;
+      popup.style.display = "flex";
+      setTimeout(() => popup.style.opacity = "1", 10);
+      setTimeout(() => {
+        popup.style.opacity = "0";
+        setTimeout(() => popup.style.display = "none", 300);
+      }, 1500);
     }
 
     document.addEventListener('contextmenu', e => {
-        e.preventDefault();
-        showBlockPopup();
+      e.preventDefault();
+      showBlockPopup();
     });
 
     document.addEventListener('keydown', e => {
-        if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) {
-            e.preventDefault();
-            showBlockPopup();
-            return false;
-        }
-        if (e.key === 'F12' || e.keyCode === 123) {
-            e.preventDefault();
-            showBlockPopup();
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-            e.preventDefault();
-            showBlockPopup();
-            return false;
-        }
-        if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) {
-            e.preventDefault();
-            showBlockPopup();
-            return false;
-        }
+      if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.keyCode === 83)) {
+        e.preventDefault();
+        showBlockPopup();
+        return false;
+      }
+      if (e.key === 'F12' || e.keyCode === 123) {
+        e.preventDefault();
+        showBlockPopup();
+        return false;
+      }
+      if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C' || e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+        e.preventDefault();
+        showBlockPopup();
+        return false;
+      }
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U' || e.keyCode === 85)) {
+        e.preventDefault();
+        showBlockPopup();
+        return false;
+      }
     }, false);
 
     // 🔹 Start Experience (ENTER/CLICK)
     function startExperience() {
-        localStorage.setItem("musicStarted", "true");
+      localStorage.setItem("musicStarted", "true");
 
-        const savedVol = localStorage.getItem("musicVol");
-        const isMuted = localStorage.getItem("musicMuted") === "true";
-        let initialVol = savedVol ? parseFloat(savedVol) : 0.5;
-        
-        music.volume = isMuted ? 0 : initialVol;
-        music.play().catch(err => console.log("Play failed:", err));
-        
-        updateSliderUI(music.volume);
+      const savedVol = localStorage.getItem("musicVol");
+      const isMuted = localStorage.getItem("musicMuted") === "true";
+      let initialVol = savedVol ? parseFloat(savedVol) : 0.5;
 
-        const intro = document.getElementById("intro-overlay");
-        if (intro) intro.classList.add("fade-out");
-        
-        document.body.classList.remove("no-scroll");
+      music.volume = isMuted ? 0 : initialVol;
+      music.play().catch(err => console.log("Play failed:", err));
+
+      updateSliderUI(music.volume);
+
+      const intro = document.getElementById("intro-overlay");
+      if (intro) intro.classList.add("fade-out");
+
+      document.body.classList.remove("no-scroll");
     }
 
     // 🔹 Unified Volume Slider UI and Logic
     function updateSliderUI(v) {
-        const p = v * 100;
-        if (volSlider) {
-            volSlider.value = v;
-            volSlider.style.background = `linear-gradient(90deg, #fff ${p}%, rgba(255,255,255,0.1) ${p}%)`;
-        }
-        if (volIcon) {
-            if (v == 0) volIcon.className = "fa-solid fa-volume-xmark";
-            else if (v < 0.5) volIcon.className = "fa-solid fa-volume-low";
-            else volIcon.className = "fa-solid fa-volume-high";
-        }
+      const p = v * 100;
+      if (volSlider) {
+        volSlider.value = v;
+        volSlider.style.background = `linear-gradient(90deg, #fff ${p}%, rgba(255,255,255,0.1) ${p}%)`;
+      }
+      if (volIcon) {
+        if (v == 0) volIcon.className = "fa-solid fa-volume-xmark";
+        else if (v < 0.5) volIcon.className = "fa-solid fa-volume-low";
+        else volIcon.className = "fa-solid fa-volume-high";
+      }
     }
 
     if (volSlider) {
-        volSlider.addEventListener("input", (e) => {
-            const val = parseFloat(e.target.value);
-            music.volume = val;
-            localStorage.setItem("musicVol", val);
-            localStorage.setItem("musicMuted", val === 0 ? "true" : "false");
-            updateSliderUI(val);
-        });
+      volSlider.addEventListener("input", (e) => {
+        const val = parseFloat(e.target.value);
+        music.volume = val;
+        localStorage.setItem("musicVol", val);
+        localStorage.setItem("musicMuted", val === 0 ? "true" : "false");
+        updateSliderUI(val);
+      });
     }
 
     function toggleMute() {
-        const isMuted = localStorage.getItem("musicMuted") === "true";
-        const savedVol = localStorage.getItem("musicVol") || 0.5;
-        
-        if (!isMuted && music.volume > 0) {
-            music.dataset.oldVol = music.volume;
-            music.volume = 0;
-            localStorage.setItem("musicMuted", "true");
-            updateSliderUI(0);
-        } else {
-            const restoreVol = music.dataset.oldVol || parseFloat(savedVol) || 0.5;
-            music.volume = restoreVol;
-            localStorage.setItem("musicMuted", "false");
-            localStorage.setItem("musicVol", restoreVol);
-            updateSliderUI(restoreVol);
-        }
+      const isMuted = localStorage.getItem("musicMuted") === "true";
+      const savedVol = localStorage.getItem("musicVol") || 0.5;
+
+      if (!isMuted && music.volume > 0) {
+        music.dataset.oldVol = music.volume;
+        music.volume = 0;
+        localStorage.setItem("musicMuted", "true");
+        updateSliderUI(0);
+      } else {
+        const restoreVol = music.dataset.oldVol || parseFloat(savedVol) || 0.5;
+        music.volume = restoreVol;
+        localStorage.setItem("musicMuted", "false");
+        localStorage.setItem("musicVol", restoreVol);
+        updateSliderUI(restoreVol);
+      }
     }
 
     // Save playing position
     setInterval(() => {
-        if (!music.paused) {
-            localStorage.setItem("musicTime", music.currentTime);
-        }
+      if (!music.paused) {
+        localStorage.setItem("musicTime", music.currentTime);
+      }
     }, 1000);
 
     // 🔹 Mobile Menu Logic
     const hamburger = document.getElementById('hamburgerBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     if (hamburger && mobileMenu) {
-        hamburger.onclick = () => {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
-        };
+      hamburger.onclick = () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+      };
     }
 
     // 🔹 Initialize on DOMContentLoaded
     document.addEventListener("DOMContentLoaded", () => {
-        document.body.classList.add("loaded");
+      document.body.classList.add("loaded");
 
-        const savedTime = localStorage.getItem("musicTime");
-        const savedVol = localStorage.getItem("musicVol");
-        const isMuted = localStorage.getItem("musicMuted") === "true";
-        const musicStarted = localStorage.getItem("musicStarted") === "true";
+      const savedTime = localStorage.getItem("musicTime");
+      const savedVol = localStorage.getItem("musicVol");
+      const isMuted = localStorage.getItem("musicMuted") === "true";
+      const musicStarted = localStorage.getItem("musicStarted") === "true";
 
-        if (savedTime) music.currentTime = parseFloat(savedTime);
-        
-        let initialVol = savedVol ? parseFloat(savedVol) : 0.5;
-        music.volume = isMuted ? 0 : initialVol;
-        updateSliderUI(music.volume);
+      if (savedTime) music.currentTime = parseFloat(savedTime);
 
-        if (musicStarted) {
-            const intro = document.getElementById("intro-overlay");
-            if (intro) intro.style.display = "none";
-            document.body.classList.remove("no-scroll");
-            
-            music.play().catch(() => {
-                console.log("Waiting for user interaction...");
-                document.addEventListener('click', () => {
-                    music.play();
-                }, { once: true });
-            });
-        }
+      let initialVol = savedVol ? parseFloat(savedVol) : 0.5;
+      music.volume = isMuted ? 0 : initialVol;
+      updateSliderUI(music.volume);
 
-        // Smooth Page Transitions
-        const navLinks = document.querySelectorAll('nav a, .mobile-menu a, .logo a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (this.hostname === window.location.hostname && !this.target) {
-                    e.preventDefault();
-                    const targetUrl = this.href;
-                    document.body.style.opacity = '0';
-                    setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 500);
-                }
-            });
+      if (musicStarted) {
+        const intro = document.getElementById("intro-overlay");
+        if (intro) intro.style.display = "none";
+        document.body.classList.remove("no-scroll");
+
+        music.play().catch(() => {
+          console.log("Waiting for user interaction...");
+          document.addEventListener('click', () => {
+            music.play();
+          }, { once: true });
         });
+      }
+
+      // Smooth Page Transitions
+      const navLinks = document.querySelectorAll('nav a, .mobile-menu a, .logo a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          if (this.hostname === window.location.hostname && !this.target) {
+            e.preventDefault();
+            const targetUrl = this.href;
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+              window.location.href = targetUrl;
+            }, 500);
+          }
+        });
+      });
     });
 
     // 🔹 Header Scroll Effect
     window.addEventListener('scroll', () => {
-        const header = document.getElementById('mainHeader');
-        if (!header) return;
-        if (window.scrollY > 50) {
-            header.style.padding = '12px 5%';
-            header.style.background = 'rgba(3, 3, 3, 0.95)';
-        } else {
-            header.style.padding = '18px 5%';
-            header.style.background = 'rgba(3, 3, 3, 0.25)';
-        }
+      const header = document.getElementById('mainHeader');
+      if (!header) return;
+      const isLight = document.body.classList.contains('light-theme');
+      if (window.scrollY > 50) {
+        header.style.padding = '12px 5%';
+        header.style.background = isLight ? 'rgba(255, 255, 255, 0.92)' : 'rgba(3, 3, 3, 0.95)';
+        header.style.borderBottomColor = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)';
+      } else {
+        header.style.padding = '18px 5%';
+        header.style.background = isLight ? 'rgba(255, 255, 255, 0.75)' : 'rgba(3, 3, 3, 0.25)';
+        header.style.borderBottomColor = isLight ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.05)';
+      }
     });
   </script>
   <script src="site-features.js"></script>
 </body>
+
 </html>
