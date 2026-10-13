@@ -1782,17 +1782,107 @@
     </div>
   </header>
 
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html">HOME</a>
-    <a href="members.html">MEMBERS</a>
-    <a href="chat.html">BOARDGANG</a>
-    <a href="official.html">OFFICIAL</a>
-    <a href="login.html">ADMIN</a>
-    <button type="button" class="theme-switch-btn" id="mobileThemeSwitchBtn" style="margin-top: 10px; padding: 10px 24px; font-size: 1rem;">
-      <i class="fa-solid fa-moon theme-switch-icon" id="mobileThemeSwitchIcon"></i>
-      <span id="mobileThemeSwitchText">โหมดมืด (DARK)</span>
-    </button>
-  </div>
+  <!-- Universal Mobile Slide Bar (Sidebar Drawer & Overlay) -->
+  <div class="lyfe-sidebar-overlay" id="lyfeSidebarOverlay"></div>
+  <aside class="lyfe-sidebar" id="lyfeMobileSidebar" aria-label="เมนูสไลด์บาร์สำหรับมือถือ">
+    <div class="lyfe-sidebar-inner">
+      <div class="lyfe-sidebar-header">
+        <a href="index.html" class="lyfe-sidebar-brand">
+          <img src="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png" alt="LYFESTYLE Logo" class="lyfe-sidebar-logo">
+          <div class="lyfe-sidebar-brand-text">
+            <span class="lyfe-sidebar-brand-title">LYFESTYLE</span>
+            <span class="lyfe-sidebar-badge"><i class="fa-solid fa-circle"></i> ONLINE</span>
+          </div>
+        </a>
+        <button type="button" class="lyfe-sidebar-close" id="lyfeSidebarCloseBtn" aria-label="ปิดเมนูสไลด์บาร์">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="lyfe-sidebar-status-card">
+        <div class="lyfe-sidebar-status-icon">
+          <i class="fa-solid fa-crown"></i>
+        </div>
+        <div class="lyfe-sidebar-status-info">
+          <div class="lyfe-sidebar-status-title">ไลฟ์สไตล์มีกูเป็นมงกฎ</div>
+          <div class="lyfe-sidebar-status-sub">GANG SYSTEM • 6 YEARS</div>
+        </div>
+      </div>
+
+      <div class="lyfe-sidebar-scroll-area">
+        <div class="lyfe-sidebar-section-label">
+          <span>เมนูหลัก (NAVIGATION)</span>
+        </div>
+        <nav class="lyfe-sidebar-nav">
+          <a href="index.html" class="lyfe-sidebar-link" data-page="index">
+            <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-house"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">หน้าแรก</span>
+              <span class="lyfe-sidebar-link-en">HOME</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="members.html" class="lyfe-sidebar-link active" data-page="members">
+            <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">สมาชิกแก๊ง</span>
+              <span class="lyfe-sidebar-link-en">MEMBERS</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="chat.html" class="lyfe-sidebar-link" data-page="chat">
+            <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">บอร์ดแก๊ง & เลานจ์</span>
+              <span class="lyfe-sidebar-link-en">BOARDGANG</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="official.html" class="lyfe-sidebar-link" data-page="official">
+            <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">ข้อมูลทางการ</span>
+              <span class="lyfe-sidebar-link-en">OFFICIAL</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="login.html" class="lyfe-sidebar-link" data-page="login">
+            <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-lock"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">ระบบแอดมิน</span>
+              <span class="lyfe-sidebar-link-en">ADMIN PANEL</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+        </nav>
+
+        <div class="lyfe-sidebar-section-label">
+          <span>การตั้งค่า (SETTINGS & CONTROLS)</span>
+        </div>
+        <div class="lyfe-sidebar-controls-grid">
+          <button type="button" class="lyfe-sidebar-control-btn theme-switch-btn" id="sidebarThemeBtn" title="สลับโหมดมืด / สว่าง">
+            <i class="fa-solid fa-moon theme-switch-icon" id="sidebarThemeIcon"></i>
+            <span id="sidebarThemeText">โหมดมืด</span>
+          </button>
+          <button type="button" class="lyfe-sidebar-control-btn" id="sidebarMusicToggleBtn" title="เปิด / ปิด เสียงเพลง">
+            <i class="fa-solid fa-volume-high" id="sidebarMusicIcon"></i>
+            <span id="sidebarMusicText">เสียงเพลง</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="lyfe-sidebar-footer">
+        <div class="lyfe-sidebar-footer-text">
+          <strong>LYFESTYLE COMMUNITY</strong>
+          <span>A N N I V E R S A R Y • 6 Y E A R S</span>
+        </div>
+      </div>
+    </div>
+  </aside>
 
   <div class="container">
     <div class="title-section">
@@ -2104,11 +2194,9 @@
           }
         }
 
-        // ตัวบอกสถานะโควตาใต้การ์ด
+        // ตัวบอกสถานะโควตาใต้การ์ด (ตอนล็อกสิทธิ์แล้ว ไม่ต้องแสดงข้อความล็อกสิทธิ์)
         let quotaIndicator = "";
-        if (isClaimed) {
-          quotaIndicator = `<div class="card-quota-indicator locked" title="ผูกบัญชี Instagram เรียบร้อยแล้ว"><i class="fa-solid fa-lock"></i> <span>${cleanIgDisplay || 'ผูกสำเร็จ'} • ล็อกสิทธิ์แล้ว</span></div>`;
-        } else {
+        if (!isClaimed) {
           if (isClaimAllowed) {
             quotaIndicator = `<div class="card-quota-indicator" title="ยังไม่เคยผูก IG (สิทธิ์ว่าง 1 ครั้ง)"><i class="fa-solid fa-shield-halved"></i> <span>สิทธิ์ผูก IG 1 ครั้ง</span></div>`;
           } else {
@@ -2536,15 +2624,14 @@
     }, 1000);
 
 
-    // ระบบ Mobile Menu
+    // ระบบ Mobile Slide Bar
     const hamburger = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-
-    if (hamburger && mobileMenu) {
-      hamburger.onclick = () => {
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+    if (hamburger) {
+      hamburger.onclick = (e) => {
+        e.preventDefault();
+        if (window.LyfeSidebar) {
+          window.LyfeSidebar.toggle();
+        }
       };
     }
 

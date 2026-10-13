@@ -1698,9 +1698,21 @@ CYBER VISITOR RADAR & LIVE IP TRACKER STYLES
       }
     }
 
+    @media (max-width: 992px) {
+      .nav-actions {
+        display: none !important;
+      }
+      .hamburger {
+        display: flex !important;
+      }
+      .nav-inner {
+        padding: 12px 18px;
+      }
+    }
+
     @media (max-width: 480px) {
       .brand-title {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
       }
 
       .stats-grid {
@@ -1762,8 +1774,154 @@ CYBER VISITOR RADAR & LIVE IP TRACKER STYLES
           <span>ออกจากระบบ</span>
         </button>
       </div>
+      <div class="hamburger" id="hamburgerBtn" title="เปิดเมนูสไลด์บาร์">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </header>
+
+  <!-- Universal Mobile Slide Bar (Sidebar Drawer & Overlay) -->
+  <div class="lyfe-sidebar-overlay" id="lyfeSidebarOverlay"></div>
+  <aside class="lyfe-sidebar" id="lyfeMobileSidebar" aria-label="เมนูสไลด์บาร์สำหรับมือถือ">
+    <div class="lyfe-sidebar-inner">
+      <div class="lyfe-sidebar-header">
+        <a href="index.html" class="lyfe-sidebar-brand">
+          <img src="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png" alt="LYFESTYLE Logo" class="lyfe-sidebar-logo">
+          <div class="lyfe-sidebar-brand-text">
+            <span class="lyfe-sidebar-brand-title">LYFESTYLE</span>
+            <span class="lyfe-sidebar-badge"><i class="fa-solid fa-circle"></i> ADMIN CONSOLE</span>
+          </div>
+        </a>
+        <button type="button" class="lyfe-sidebar-close" id="lyfeSidebarCloseBtn" aria-label="ปิดเมนูสไลด์บาร์">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="lyfe-sidebar-status-card">
+        <div class="lyfe-sidebar-status-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div class="lyfe-sidebar-status-info">
+          <div class="lyfe-sidebar-status-title">แผงควบคุมระบบแอดมิน</div>
+          <div class="lyfe-sidebar-status-sub">GANG SYSTEM • MASTER</div>
+        </div>
+      </div>
+
+      <div class="lyfe-sidebar-scroll-area">
+        <!-- Admin Section First -->
+        <div class="lyfe-sidebar-section-label">
+          <span>เครื่องมือควบคุมแอดมิน (ADMIN CONSOLE)</span>
+        </div>
+        <nav class="lyfe-sidebar-nav">
+          <a href="javascript:void(0)" class="lyfe-sidebar-link" onclick="scrollToSection && scrollToSection('membersSection'); window.LyfeSidebar && window.LyfeSidebar.close();">
+            <div class="lyfe-sidebar-link-icon" style="color: #38bdf8;"><i class="fa-solid fa-user-gear"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">จัดการสมาชิกแก๊ง</span>
+              <span class="lyfe-sidebar-link-en">MEMBERS DIRECTORY</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="javascript:void(0)" class="lyfe-sidebar-link" onclick="scrollToSection && scrollToSection('visitorRadarCard'); window.LyfeSidebar && window.LyfeSidebar.close();">
+            <div class="lyfe-sidebar-link-icon" style="color: #2ed573;"><i class="fa-solid fa-satellite-dish"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">เรดาร์ตรวจจับ IP & อุปกรณ์</span>
+              <span class="lyfe-sidebar-link-en">VISITOR RADAR</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="javascript:void(0)" class="lyfe-sidebar-link" onclick="scrollToSection && scrollToSection('gangLiveControlsCard'); window.LyfeSidebar && window.LyfeSidebar.close();">
+            <div class="lyfe-sidebar-link-icon" style="color: #f1c40f;"><i class="fa-solid fa-shield"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">ควบคุมแก๊ง & รหัสลับ</span>
+              <span class="lyfe-sidebar-link-en">GANG CONTROLS</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="javascript:void(0)" class="lyfe-sidebar-link" onclick="scrollToSection && scrollToSection('bannerQuickManager'); window.LyfeSidebar && window.LyfeSidebar.close();">
+            <div class="lyfe-sidebar-link-icon" style="color: #a855f7;"><i class="fa-solid fa-image"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">จัดการแบนเนอร์</span>
+              <span class="lyfe-sidebar-link-en">BANNER MANAGER</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+        </nav>
+
+        <div class="lyfe-sidebar-section-label">
+          <span>เมนูเว็บไซต์ (SITE NAVIGATION)</span>
+        </div>
+        <nav class="lyfe-sidebar-nav">
+          <a href="index.html" class="lyfe-sidebar-link" data-page="index">
+            <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-house"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">หน้าแรก</span>
+              <span class="lyfe-sidebar-link-en">HOME</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="members.html" class="lyfe-sidebar-link" data-page="members">
+            <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">สมาชิกแก๊ง (หน้าสด)</span>
+              <span class="lyfe-sidebar-link-en">MEMBERS</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="chat.html" class="lyfe-sidebar-link" data-page="chat">
+            <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">บอร์ดแก๊ง & เลานจ์</span>
+              <span class="lyfe-sidebar-link-en">BOARDGANG</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="official.html" class="lyfe-sidebar-link" data-page="official">
+            <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th">ข้อมูลทางการ</span>
+              <span class="lyfe-sidebar-link-en">OFFICIAL</span>
+            </div>
+            <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+          </a>
+
+          <a href="javascript:void(0)" class="lyfe-sidebar-link" onclick="document.getElementById('btnLogout') && document.getElementById('btnLogout').click();" style="border-color: rgba(255, 71, 87, 0.3);">
+            <div class="lyfe-sidebar-link-icon" style="color: #ff4757; background: rgba(255, 71, 87, 0.1);"><i class="fa-solid fa-right-from-bracket"></i></div>
+            <div class="lyfe-sidebar-link-content">
+              <span class="lyfe-sidebar-link-th" style="color: #ff4757;">ออกจากระบบ</span>
+              <span class="lyfe-sidebar-link-en">LOGOUT</span>
+            </div>
+          </a>
+        </nav>
+
+        <div class="lyfe-sidebar-section-label">
+          <span>การตั้งค่า (SETTINGS & CONTROLS)</span>
+        </div>
+        <div class="lyfe-sidebar-controls-grid">
+          <button type="button" class="lyfe-sidebar-control-btn theme-switch-btn" id="sidebarThemeBtn" title="สลับโหมดมืด / สว่าง">
+            <i class="fa-solid fa-moon theme-switch-icon" id="sidebarThemeIcon"></i>
+            <span id="sidebarThemeText">โหมดมืด</span>
+          </button>
+          <button type="button" class="lyfe-sidebar-control-btn" id="sidebarMusicToggleBtn" title="เปิด / ปิด เสียงเพลง">
+            <i class="fa-solid fa-volume-high" id="sidebarMusicIcon"></i>
+            <span id="sidebarMusicText">เสียงเพลง</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="lyfe-sidebar-footer">
+        <div class="lyfe-sidebar-footer-text">
+          <strong>LYFESTYLE COMMUNITY</strong>
+          <span>A N N I V E R S A R Y • 6 Y E A R S</span>
+        </div>
+      </div>
+    </div>
+  </aside>
 
   <!-- Container -->
   <div class="admin-container">
@@ -3251,7 +3409,7 @@ SECTION 4: LIVE BANNER MANAGER
       if (badge) {
         if (isClaimed) {
           badge.className = "quota-tag locked";
-          badge.innerText = "ล็อกสิทธิ์แล้ว";
+          badge.innerText = "ผูกเรียบร้อยแล้ว";
         } else {
           badge.className = "quota-tag";
           badge.innerText = "สิทธิ์ว่าง (1 ครั้ง)";

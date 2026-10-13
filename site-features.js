@@ -1166,6 +1166,1036 @@
 
   // ดำเนินการเมื่อ DOM โหลดเรียบร้อย
   
+  // ══════════════════════════════════════════════════════
+  // 6. UNIVERSAL MOBILE SLIDE BAR ENGINE (FOR ALL PHONES & SCREENS)
+  // ══════════════════════════════════════════════════════
+  function injectSidebarStyles() {
+    const id = "lyfe-sidebar-styles";
+    if (document.getElementById(id)) return;
+    const style = document.createElement("style");
+    style.id = id;
+    style.textContent = `
+      /* Lock scroll while mobile sidebar is open */
+      body.lyfe-sidebar-open,
+      html.lyfe-sidebar-open {
+        overflow: hidden !important;
+        touch-action: none !important;
+        -webkit-overflow-scrolling: auto !important;
+      }
+
+      /* Backdrop Overlay */
+      .lyfe-sidebar-overlay {
+        position: fixed !important;
+        inset: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        z-index: 99998 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s !important;
+        will-change: opacity, visibility;
+      }
+
+      .lyfe-sidebar-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+      }
+
+      /* Sidebar Drawer */
+      .lyfe-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: min(86vw, 350px) !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        background: rgba(10, 10, 14, 0.95) !important;
+        backdrop-filter: blur(28px) !important;
+        -webkit-backdrop-filter: blur(28px) !important;
+        border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: -15px 0 45px rgba(0, 0, 0, 0.75) !important;
+        z-index: 99999 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        transform: translateX(105%) !important;
+        transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        will-change: transform;
+        font-family: 'Prompt', 'Kanit', sans-serif !important;
+        color: #ffffff !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+      }
+
+      .lyfe-sidebar.active {
+        transform: translateX(0) !important;
+      }
+
+      /* Safe Area Insets for modern devices (iPhone notch, dynamic island, navigation bar) */
+      .lyfe-sidebar-inner {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+        width: 100% !important;
+        padding-top: max(16px, env(safe-area-inset-top)) !important;
+        padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+        padding-right: max(6px, env(safe-area-inset-right)) !important;
+        padding-left: max(4px, env(safe-area-inset-left)) !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+      }
+
+      /* Sidebar Header */
+      .lyfe-sidebar-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 16px 20px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        flex-shrink: 0 !important;
+      }
+
+      .lyfe-sidebar-brand {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        text-decoration: none !important;
+        color: inherit !important;
+      }
+
+      .lyfe-sidebar-logo {
+        width: 38px !important;
+        height: 38px !important;
+        object-fit: contain !important;
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25)) !important;
+      }
+
+      .lyfe-sidebar-brand-text {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2px !important;
+      }
+
+      .lyfe-sidebar-brand-title {
+        font-family: 'Kanit', 'Prompt', sans-serif !important;
+        font-size: 1.15rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 1.5px !important;
+        color: #ffffff !important;
+        line-height: 1.1 !important;
+      }
+
+      .lyfe-sidebar-badge {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        font-size: 0.68rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.5px !important;
+        color: #2ed573 !important;
+      }
+
+      .lyfe-sidebar-badge i {
+        font-size: 6px !important;
+        animation: lyfePulseDot 1.8s infinite !important;
+      }
+
+      @keyframes lyfePulseDot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.8); }
+      }
+
+      /* Close Button */
+      .lyfe-sidebar-close {
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 50% !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        color: #ffffff !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        outline: none !important;
+        font-size: 1.1rem !important;
+        transition: all 0.25s ease !important;
+        -webkit-tap-highlight-color: transparent !important;
+      }
+
+      .lyfe-sidebar-close:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-color: rgba(255, 255, 255, 0.35) !important;
+        transform: rotate(90deg) scale(1.06) !important;
+      }
+
+      .lyfe-sidebar-close:active {
+        transform: scale(0.92) !important;
+      }
+
+      /* Status Card */
+      .lyfe-sidebar-status-card {
+        margin: 14px 18px 6px !important;
+        padding: 12px 14px !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        flex-shrink: 0 !important;
+      }
+
+      .lyfe-sidebar-status-icon {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 9px !important;
+        background: rgba(245, 158, 11, 0.15) !important;
+        border: 1px solid rgba(245, 158, 11, 0.3) !important;
+        color: #f59e0b !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0.95rem !important;
+      }
+
+      .lyfe-sidebar-status-info {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2px !important;
+      }
+
+      .lyfe-sidebar-status-title {
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        color: #ffffff !important;
+      }
+
+      .lyfe-sidebar-status-sub {
+        font-size: 0.68rem !important;
+        color: rgba(255, 255, 255, 0.5) !important;
+        letter-spacing: 0.5px !important;
+      }
+
+      /* Scroll Area */
+      .lyfe-sidebar-scroll-area {
+        flex: 1 !important;
+        overflow-y: auto !important;
+        overscroll-behavior: contain !important;
+        -webkit-overflow-scrolling: touch !important;
+        padding: 12px 16px 20px !important;
+      }
+
+      .lyfe-sidebar-scroll-area::-webkit-scrollbar {
+        width: 4px !important;
+      }
+      .lyfe-sidebar-scroll-area::-webkit-scrollbar-track {
+        background: transparent !important;
+      }
+      .lyfe-sidebar-scroll-area::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.15) !important;
+        border-radius: 4px !important;
+      }
+
+      /* Section Label */
+      .lyfe-sidebar-section-label {
+        padding: 12px 4px 6px !important;
+        font-size: 0.68rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 1.2px !important;
+        color: rgba(255, 255, 255, 0.45) !important;
+        text-transform: uppercase !important;
+      }
+
+      /* Navigation List */
+      .lyfe-sidebar-nav {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+      }
+
+      .lyfe-sidebar-link {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 11px 14px !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        border-radius: 12px !important;
+        text-decoration: none !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        -webkit-tap-highlight-color: transparent !important;
+        user-select: none !important;
+      }
+
+      .lyfe-sidebar-link:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-color: rgba(255, 255, 255, 0.18) !important;
+        color: #ffffff !important;
+        transform: translateX(4px) !important;
+      }
+
+      .lyfe-sidebar-link:active {
+        transform: scale(0.98) !important;
+      }
+
+      .lyfe-sidebar-link.active {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)) !important;
+        border-color: rgba(255, 255, 255, 0.35) !important;
+        border-left: 3px solid #ffffff !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 0 15px rgba(255, 255, 255, 0.05) !important;
+      }
+
+      .lyfe-sidebar-link-icon {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0.95rem !important;
+        color: #ffffff !important;
+        transition: all 0.25s ease !important;
+        flex-shrink: 0 !important;
+      }
+
+      .lyfe-sidebar-link.active .lyfe-sidebar-link-icon {
+        background: #ffffff !important;
+        color: #000000 !important;
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.5) !important;
+      }
+
+      .lyfe-sidebar-link-content {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        min-width: 0 !important;
+      }
+
+      .lyfe-sidebar-link-th {
+        font-size: 0.92rem !important;
+        font-weight: 500 !important;
+        line-height: 1.2 !important;
+      }
+
+      .lyfe-sidebar-link-en {
+        font-size: 0.65rem !important;
+        color: rgba(255, 255, 255, 0.45) !important;
+        letter-spacing: 0.8px !important;
+      }
+
+      .lyfe-sidebar-link.active .lyfe-sidebar-link-en {
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+
+      .lyfe-sidebar-link-arrow {
+        font-size: 0.75rem !important;
+        color: rgba(255, 255, 255, 0.3) !important;
+        transition: transform 0.2s ease, color 0.2s ease !important;
+      }
+
+      .lyfe-sidebar-link:hover .lyfe-sidebar-link-arrow {
+        color: #ffffff !important;
+        transform: translateX(2px) !important;
+      }
+
+      .lyfe-sidebar-link.active .lyfe-sidebar-link-arrow {
+        color: #ffffff !important;
+      }
+
+      /* Controls Grid in Drawer */
+      .lyfe-sidebar-controls-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        margin-top: 4px !important;
+      }
+
+      .lyfe-sidebar-control-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 10px 12px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 10px !important;
+        color: #ffffff !important;
+        font-size: 0.8rem !important;
+        font-family: inherit !important;
+        font-weight: 500 !important;
+        cursor: pointer !important;
+        outline: none !important;
+        transition: all 0.25s ease !important;
+        user-select: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+      }
+
+      .lyfe-sidebar-control-btn:hover {
+        background: rgba(255, 255, 255, 0.12) !important;
+        border-color: rgba(255, 255, 255, 0.25) !important;
+        transform: translateY(-2px) !important;
+      }
+
+      .lyfe-sidebar-control-btn:active {
+        transform: scale(0.96) !important;
+      }
+
+      /* Footer */
+      .lyfe-sidebar-footer {
+        padding: 14px 20px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        flex-shrink: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+      }
+
+      .lyfe-sidebar-footer-text {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2px !important;
+      }
+
+      .lyfe-sidebar-footer-text strong {
+        font-size: 0.72rem !important;
+        letter-spacing: 1px !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+      }
+
+      .lyfe-sidebar-footer-text span {
+        font-size: 0.62rem !important;
+        color: rgba(255, 255, 255, 0.4) !important;
+        letter-spacing: 0.6px !important;
+      }
+
+      /* ══════════════════════════════════════════════════════
+         LIGHT MODE STYLING FOR SIDEBAR
+         ══════════════════════════════════════════════════════ */
+      body.light-theme .lyfe-sidebar {
+        background: rgba(255, 255, 255, 0.97) !important;
+        border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
+        box-shadow: -15px 0 45px rgba(0, 0, 0, 0.15) !important;
+        color: #0f172a !important;
+      }
+
+      body.light-theme .lyfe-sidebar-header {
+        border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+      }
+
+      body.light-theme .lyfe-sidebar-brand-title {
+        color: #0f172a !important;
+      }
+
+      body.light-theme .lyfe-sidebar-close {
+        background: rgba(0, 0, 0, 0.05) !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+        color: #0f172a !important;
+      }
+
+      body.light-theme .lyfe-sidebar-close:hover {
+        background: rgba(0, 0, 0, 0.1) !important;
+        border-color: rgba(0, 0, 0, 0.25) !important;
+      }
+
+      body.light-theme .lyfe-sidebar-status-card {
+        background: rgba(0, 0, 0, 0.02) !important;
+        border-color: rgba(0, 0, 0, 0.08) !important;
+      }
+
+      body.light-theme .lyfe-sidebar-status-title {
+        color: #0f172a !important;
+      }
+
+      body.light-theme .lyfe-sidebar-status-sub {
+        color: rgba(15, 23, 42, 0.55) !important;
+      }
+
+      body.light-theme .lyfe-sidebar-section-label {
+        color: rgba(15, 23, 42, 0.45) !important;
+      }
+
+      body.light-theme .lyfe-sidebar-link {
+        background: rgba(0, 0, 0, 0.02) !important;
+        border-color: rgba(0, 0, 0, 0.06) !important;
+        color: #1e293b !important;
+      }
+
+      body.light-theme .lyfe-sidebar-link:hover {
+        background: rgba(0, 0, 0, 0.06) !important;
+        border-color: rgba(0, 0, 0, 0.15) !important;
+        color: #0f172a !important;
+      }
+
+      body.light-theme .lyfe-sidebar-link.active {
+        background: rgba(0, 0, 0, 0.07) !important;
+        border-color: rgba(0, 0, 0, 0.2) !important;
+        border-left: 3px solid #0f172a !important;
+        color: #0f172a !important;
+      }
+
+      body.light-theme .lyfe-sidebar-link-icon {
+        background: rgba(0, 0, 0, 0.05) !important;
+        color: #0f172a !important;
+      }
+
+      body.light-theme .lyfe-sidebar-link.active .lyfe-sidebar-link-icon {
+        background: #0f172a !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.25) !important;
+      }
+
+      body.light-theme .lyfe-sidebar-link-en {
+        color: rgba(15, 23, 42, 0.5) !important;
+      }
+
+      body.light-theme .lyfe-sidebar-link-arrow {
+        color: rgba(15, 23, 42, 0.35) !important;
+      }
+
+      body.light-theme .lyfe-sidebar-control-btn {
+        background: rgba(0, 0, 0, 0.05) !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+        color: #0f172a !important;
+      }
+
+      body.light-theme .lyfe-sidebar-control-btn:hover {
+        background: rgba(0, 0, 0, 0.1) !important;
+        border-color: rgba(0, 0, 0, 0.2) !important;
+      }
+
+      body.light-theme .lyfe-sidebar-footer {
+        border-top-color: rgba(0, 0, 0, 0.08) !important;
+      }
+
+      body.light-theme .lyfe-sidebar-footer-text strong {
+        color: #0f172a !important;
+      }
+
+      body.light-theme .lyfe-sidebar-footer-text span {
+        color: rgba(15, 23, 42, 0.5) !important;
+      }
+
+      /* ══════════════════════════════════════════════════════
+         HAMBURGER BUTTON STYLING (CROSS-PAGE UNIFIED)
+         ══════════════════════════════════════════════════════ */
+      .hamburger {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 5px !important;
+        width: 40px !important;
+        height: 40px !important;
+        cursor: pointer !important;
+        z-index: 1050 !important;
+        border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        padding: 8px !important;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        -webkit-tap-highlight-color: transparent !important;
+        box-sizing: border-box !important;
+      }
+
+      .hamburger:hover {
+        background: rgba(255, 255, 255, 0.14) !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+        transform: scale(1.05) !important;
+      }
+
+      .hamburger span {
+        display: block !important;
+        width: 22px !important;
+        height: 2px !important;
+        background: #ffffff !important;
+        border-radius: 2px !important;
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px) !important;
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0 !important;
+        transform: scaleX(0) !important;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px) !important;
+      }
+
+      body.light-theme .hamburger {
+        background: rgba(0, 0, 0, 0.05) !important;
+        border-color: rgba(0, 0, 0, 0.12) !important;
+      }
+
+      body.light-theme .hamburger span {
+        background: #0f172a !important;
+      }
+
+      /* Desktop vs Mobile display rules */
+      @media (max-width: 768px) {
+        .nav-desktop,
+        nav.nav-desktop {
+          display: none !important;
+        }
+        .hamburger {
+          display: flex !important;
+        }
+      }
+
+      @media (min-width: 769px) {
+        header .hamburger,
+        .navbar .hamburger {
+          display: none !important;
+        }
+      }
+
+      /* Small mobile devices (iPhone SE, screens <= 360px) */
+      @media (max-width: 360px) {
+        .lyfe-sidebar {
+          width: 90vw !important;
+        }
+        .lyfe-sidebar-header {
+          padding: 12px 14px !important;
+        }
+        .lyfe-sidebar-scroll-area {
+          padding: 8px 12px 16px !important;
+        }
+        .lyfe-sidebar-link {
+          padding: 9px 10px !important;
+          gap: 9px !important;
+        }
+        .lyfe-sidebar-link-th {
+          font-size: 0.85rem !important;
+        }
+        .lyfe-sidebar-link-icon {
+          width: 30px !important;
+          height: 30px !important;
+          font-size: 0.85rem !important;
+        }
+      }
+
+      /* Mobile landscape mode */
+      @media (max-height: 480px) and (orientation: landscape) {
+        .lyfe-sidebar {
+          width: min(80vw, 360px) !important;
+        }
+        .lyfe-sidebar-status-card {
+          display: none !important;
+        }
+        .lyfe-sidebar-header {
+          padding: 8px 16px !important;
+        }
+        .lyfe-sidebar-link {
+          padding: 7px 12px !important;
+        }
+        .lyfe-sidebar-footer {
+          padding: 8px 16px !important;
+        }
+      }
+    `;
+    if (document.head) {
+      document.head.appendChild(style);
+    } else {
+      document.documentElement.appendChild(style);
+    }
+  }
+
+  function ensureSidebarDOM() {
+    // 1. Overlay
+    let overlay = document.getElementById("lyfeSidebarOverlay");
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.className = "lyfe-sidebar-overlay";
+      overlay.id = "lyfeSidebarOverlay";
+      document.body.appendChild(overlay);
+    }
+
+    // 2. Sidebar Drawer
+    let sidebar = document.getElementById("lyfeMobileSidebar");
+    
+    // Check if an existing old .mobile-menu is present, remove or convert it
+    const oldMobileMenu = document.getElementById("mobileMenu");
+    if (oldMobileMenu && !sidebar) {
+      oldMobileMenu.remove();
+    }
+
+    if (!sidebar) {
+      sidebar = document.createElement("aside");
+      sidebar.className = "lyfe-sidebar";
+      sidebar.id = "lyfeMobileSidebar";
+      sidebar.setAttribute("aria-label", "เมนูสไลด์บาร์สำหรับมือถือ");
+      sidebar.innerHTML = `
+        <div class="lyfe-sidebar-inner">
+          <div class="lyfe-sidebar-header">
+            <a href="index.html" class="lyfe-sidebar-brand">
+              <img src="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png" alt="LYFESTYLE Logo" class="lyfe-sidebar-logo">
+              <div class="lyfe-sidebar-brand-text">
+                <span class="lyfe-sidebar-brand-title">LYFESTYLE</span>
+                <span class="lyfe-sidebar-badge"><i class="fa-solid fa-circle"></i> ONLINE</span>
+              </div>
+            </a>
+            <button type="button" class="lyfe-sidebar-close" id="lyfeSidebarCloseBtn" aria-label="ปิดเมนูสไลด์บาร์">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <div class="lyfe-sidebar-status-card">
+            <div class="lyfe-sidebar-status-icon">
+              <i class="fa-solid fa-crown"></i>
+            </div>
+            <div class="lyfe-sidebar-status-info">
+              <div class="lyfe-sidebar-status-title">ไลฟ์สไตล์มีกูเป็นมงกฎ</div>
+              <div class="lyfe-sidebar-status-sub">GANG SYSTEM • 6 YEARS</div>
+            </div>
+          </div>
+
+          <div class="lyfe-sidebar-scroll-area">
+            <div class="lyfe-sidebar-section-label">
+              <span>เมนูหลัก (NAVIGATION)</span>
+            </div>
+            <nav class="lyfe-sidebar-nav">
+              <a href="index.html" class="lyfe-sidebar-link" data-page="index">
+                <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-house"></i></div>
+                <div class="lyfe-sidebar-link-content">
+                  <span class="lyfe-sidebar-link-th">หน้าแรก</span>
+                  <span class="lyfe-sidebar-link-en">HOME</span>
+                </div>
+                <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+              </a>
+
+              <a href="members.html" class="lyfe-sidebar-link" data-page="members">
+                <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-users"></i></div>
+                <div class="lyfe-sidebar-link-content">
+                  <span class="lyfe-sidebar-link-th">สมาชิกแก๊ง</span>
+                  <span class="lyfe-sidebar-link-en">MEMBERS</span>
+                </div>
+                <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+              </a>
+
+              <a href="chat.html" class="lyfe-sidebar-link" data-page="chat">
+                <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-gamepad"></i></div>
+                <div class="lyfe-sidebar-link-content">
+                  <span class="lyfe-sidebar-link-th">บอร์ดแก๊ง & เลานจ์</span>
+                  <span class="lyfe-sidebar-link-en">BOARDGANG</span>
+                </div>
+                <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+              </a>
+
+              <a href="official.html" class="lyfe-sidebar-link" data-page="official">
+                <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="lyfe-sidebar-link-content">
+                  <span class="lyfe-sidebar-link-th">ข้อมูลทางการ</span>
+                  <span class="lyfe-sidebar-link-en">OFFICIAL</span>
+                </div>
+                <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+              </a>
+
+              <a href="login.html" class="lyfe-sidebar-link" data-page="login">
+                <div class="lyfe-sidebar-link-icon"><i class="fa-solid fa-lock"></i></div>
+                <div class="lyfe-sidebar-link-content">
+                  <span class="lyfe-sidebar-link-th">ระบบแอดมิน</span>
+                  <span class="lyfe-sidebar-link-en">ADMIN PANEL</span>
+                </div>
+                <i class="fa-solid fa-chevron-right lyfe-sidebar-link-arrow"></i>
+              </a>
+            </nav>
+
+            <div class="lyfe-sidebar-admin-section" id="lyfeSidebarAdminSection" style="display: none;">
+              <div class="lyfe-sidebar-section-label">
+                <span>เครื่องมือแอดมิน (ADMIN TOOLS)</span>
+              </div>
+              <nav class="lyfe-sidebar-nav">
+                <a href="javascript:void(0)" class="lyfe-sidebar-link" id="sidebarAdminLinkMembers">
+                  <div class="lyfe-sidebar-link-icon" style="color: #38bdf8;"><i class="fa-solid fa-user-gear"></i></div>
+                  <div class="lyfe-sidebar-link-content">
+                    <span class="lyfe-sidebar-link-th">จัดการสมาชิกแก๊ง</span>
+                    <span class="lyfe-sidebar-link-en">MEMBERS DIRECTORY</span>
+                  </div>
+                </a>
+                <a href="javascript:void(0)" class="lyfe-sidebar-link" id="sidebarAdminLinkRadar">
+                  <div class="lyfe-sidebar-link-icon" style="color: #2ed573;"><i class="fa-solid fa-satellite-dish"></i></div>
+                  <div class="lyfe-sidebar-link-content">
+                    <span class="lyfe-sidebar-link-th">เรดาร์ตรวจจับ IP</span>
+                    <span class="lyfe-sidebar-link-en">VISITOR RADAR</span>
+                  </div>
+                </a>
+                <a href="javascript:void(0)" class="lyfe-sidebar-link" id="sidebarAdminLinkGang">
+                  <div class="lyfe-sidebar-link-icon" style="color: #f1c40f;"><i class="fa-solid fa-shield"></i></div>
+                  <div class="lyfe-sidebar-link-content">
+                    <span class="lyfe-sidebar-link-th">ควบคุมแก๊ง & รหัสลับ</span>
+                    <span class="lyfe-sidebar-link-en">GANG CONTROLS</span>
+                  </div>
+                </a>
+                <a href="javascript:void(0)" class="lyfe-sidebar-link" id="sidebarAdminLinkBanner">
+                  <div class="lyfe-sidebar-link-icon" style="color: #a855f7;"><i class="fa-solid fa-image"></i></div>
+                  <div class="lyfe-sidebar-link-content">
+                    <span class="lyfe-sidebar-link-th">จัดการแบนเนอร์</span>
+                    <span class="lyfe-sidebar-link-en">BANNER MANAGER</span>
+                  </div>
+                </a>
+              </nav>
+            </div>
+
+            <div class="lyfe-sidebar-section-label">
+              <span>การตั้งค่า (SETTINGS & CONTROLS)</span>
+            </div>
+            <div class="lyfe-sidebar-controls-grid">
+              <button type="button" class="lyfe-sidebar-control-btn theme-switch-btn" id="sidebarThemeBtn" title="สลับโหมดมืด / สว่าง">
+                <i class="fa-solid fa-moon theme-switch-icon" id="sidebarThemeIcon"></i>
+                <span id="sidebarThemeText">โหมดมืด</span>
+              </button>
+              <button type="button" class="lyfe-sidebar-control-btn" id="sidebarMusicToggleBtn" title="เปิด / ปิด เสียงเพลง">
+                <i class="fa-solid fa-volume-high" id="sidebarMusicIcon"></i>
+                <span id="sidebarMusicText">เสียงเพลง</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="lyfe-sidebar-footer">
+            <div class="lyfe-sidebar-footer-text">
+              <strong>LYFESTYLE COMMUNITY</strong>
+              <span>A N N I V E R S A R Y • 6 Y E A R S</span>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(sidebar);
+    }
+    return { overlay, sidebar };
+  }
+
+  function initUniversalMobileSidebar() {
+    injectSidebarStyles();
+    const { overlay, sidebar } = ensureSidebarDOM();
+
+    function openSidebar() {
+      sidebar.classList.add("active");
+      overlay.classList.add("active");
+      document.body.classList.add("lyfe-sidebar-open");
+      document.documentElement.classList.add("lyfe-sidebar-open");
+
+      document.querySelectorAll(".hamburger, #hamburgerBtn").forEach(btn => {
+        btn.classList.add("active");
+      });
+
+      syncSidebarAudioUI();
+      syncSidebarThemeUI();
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove("active");
+      overlay.classList.remove("active");
+      document.body.classList.remove("lyfe-sidebar-open");
+      document.documentElement.classList.remove("lyfe-sidebar-open");
+
+      document.querySelectorAll(".hamburger, #hamburgerBtn").forEach(btn => {
+        btn.classList.remove("active");
+      });
+    }
+
+    function toggleSidebar() {
+      if (sidebar.classList.contains("active")) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    }
+
+    // Expose global API
+    window.LyfeSidebar = {
+      open: openSidebar,
+      close: closeSidebar,
+      toggle: toggleSidebar,
+      isOpen: () => sidebar.classList.contains("active")
+    };
+
+    // Close on overlay or close button click
+    overlay.addEventListener("click", closeSidebar);
+    const closeBtn = document.getElementById("lyfeSidebarCloseBtn");
+    if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+
+    // Close on Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && sidebar.classList.contains("active")) {
+        closeSidebar();
+      }
+    });
+
+    // Close on navigation link click
+    sidebar.querySelectorAll(".lyfe-sidebar-link").forEach(link => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (href && !href.startsWith("javascript:")) {
+          closeSidebar();
+        }
+      });
+    });
+
+    // Delegate Hamburger clicks
+    document.addEventListener("click", (e) => {
+      const burger = e.target.closest("#hamburgerBtn, .hamburger, [data-sidebar-toggle]");
+      if (burger) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSidebar();
+      }
+    });
+
+    // Swipe right to close gesture on mobile touchscreens
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isSwiping = false;
+
+    sidebar.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isSwiping = true;
+      }
+    }, { passive: true });
+
+    sidebar.addEventListener("touchmove", (e) => {
+      if (!isSwiping || e.touches.length !== 1) return;
+      const currentX = e.touches[0].clientX;
+      const diffX = currentX - touchStartX;
+      if (diffX > 0) {
+        sidebar.style.transform = `translateX(${diffX}px)`;
+      }
+    }, { passive: true });
+
+    sidebar.addEventListener("touchend", (e) => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+      sidebar.style.transform = "";
+
+      if (diffX > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+        closeSidebar();
+      }
+    }, { passive: true });
+
+    // Active Link Highlighting
+    function syncActivePage() {
+      const path = (window.location.pathname || "").toLowerCase();
+      let activeKey = "index";
+      if (path.includes("members.html") || path.endsWith("/members")) activeKey = "members";
+      else if (path.includes("chat.html") || path.endsWith("/chat")) activeKey = "chat";
+      else if (path.includes("official.html") || path.endsWith("/official")) activeKey = "official";
+      else if (path.includes("login.html") || path.endsWith("/login")) activeKey = "login";
+      else if (path.includes("admin.html") || path.endsWith("/admin")) activeKey = "admin";
+      else activeKey = "index";
+
+      sidebar.querySelectorAll(".lyfe-sidebar-link").forEach(link => {
+        if (link.getAttribute("data-page") === activeKey) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+
+      // If on admin.html, show admin shortcuts
+      const adminSection = document.getElementById("lyfeSidebarAdminSection");
+      if (adminSection) {
+        if (activeKey === "admin" || path.includes("admin.html")) {
+          adminSection.style.display = "block";
+          const bindScroll = (id, targetId) => {
+            const btn = document.getElementById(id);
+            if (btn) {
+              btn.addEventListener("click", () => {
+                closeSidebar();
+                if (typeof window.scrollToSection === "function") {
+                  window.scrollToSection(targetId);
+                }
+              });
+            }
+          };
+          bindScroll("sidebarAdminLinkMembers", "membersSection");
+          bindScroll("sidebarAdminLinkRadar", "visitorRadarCard");
+          bindScroll("sidebarAdminLinkGang", "gangLiveControlsCard");
+          bindScroll("sidebarAdminLinkBanner", "bannerQuickManager");
+        } else {
+          adminSection.style.display = "none";
+        }
+      }
+    }
+
+    // Audio Sync in Sidebar
+    function syncSidebarAudioUI() {
+      const audio = document.getElementById("bgMusic") || document.querySelector("audio");
+      const icon = document.getElementById("sidebarMusicIcon");
+      const text = document.getElementById("sidebarMusicText");
+      if (!icon || !text) return;
+
+      if (!audio) {
+        text.textContent = "ไม่มีเพลง";
+        icon.className = "fa-solid fa-volume-xmark";
+        return;
+      }
+
+      const isMuted = audio.muted || audio.volume === 0 || audio.paused;
+      if (isMuted) {
+        icon.className = "fa-solid fa-volume-xmark";
+        text.textContent = "ปิดเสียง";
+      } else {
+        icon.className = "fa-solid fa-volume-high";
+        text.textContent = "เสียงเพลง";
+      }
+    }
+
+    const musicBtn = document.getElementById("sidebarMusicToggleBtn");
+    if (musicBtn) {
+      musicBtn.addEventListener("click", () => {
+        const audio = document.getElementById("bgMusic") || document.querySelector("audio");
+        if (audio) {
+          if (audio.paused || audio.muted || audio.volume === 0) {
+            audio.muted = false;
+            audio.volume = 0.5;
+            audio.play().catch(() => {});
+            try {
+              localStorage.setItem("musicMuted", "false");
+              localStorage.setItem("musicPlaying", "true");
+            } catch(e) {}
+          } else {
+            audio.muted = true;
+            try {
+              localStorage.setItem("musicMuted", "true");
+            } catch(e) {}
+          }
+          syncSidebarAudioUI();
+        }
+      });
+    }
+
+    // Theme Sync in Sidebar
+    function syncSidebarThemeUI() {
+      const isLight = document.body.classList.contains("light-theme") || document.documentElement.classList.contains("light-theme");
+      const icon = document.getElementById("sidebarThemeIcon");
+      const text = document.getElementById("sidebarThemeText");
+      if (icon) icon.className = isLight ? "fa-solid fa-sun theme-switch-icon" : "fa-solid fa-moon theme-switch-icon";
+      if (text) text.textContent = isLight ? "โหมดสว่าง" : "โหมดมืด";
+    }
+
+    syncActivePage();
+    syncSidebarAudioUI();
+    syncSidebarThemeUI();
+  }
+
   // 5. Y2K Universal Loader - Disabled (Direct Fast Navigation)
   function initY2kPageTransitions() {
     try {
@@ -1196,11 +2226,13 @@
     initAmbientParticles();
     initCardTiltAndGlow();
     initAudioVisualizer();
+    initUniversalMobileSidebar();
   }
 
   // ดำเนินการตรวจสอบธีมและใส่สไตล์พื้นหลังทันทีก่อน DOM เพื่อความรวดเร็ว 0 latency ไร้ FOUC
   try {
     injectSharedThemeStyles();
+    injectSidebarStyles();
     bindGlobalThemeDelegator();
     if (document.body) {
       document.body.classList.add("loaded");
