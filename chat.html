@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ไลฟ์สไตล์.com - BOARDGANG</title>
+  <script>
+    (function () {
+      try {
+        var bg = localStorage.getItem("lyfe_site_bg") || "background.gif";
+        var s = document.createElement("style");
+        s.id = "lyfe-instant-bg-fast";
+        s.textContent = ".bg-animation { background: url('" + bg + "') center/cover no-repeat !important; will-change: transform; transform: translateZ(0); }";
+        document.head.appendChild(s);
+      } catch (e) { }
+    })();
+  </script>
+  <link rel="icon" type="image/png"
+    href="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png">
+
+  <!-- Google Fonts: Prompt, Mitr & Kanit (Clean, Modern, 100% bug-free Thai glyphs) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Mitr:wght@400;500;600;700&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Untouched Member List: Never edit members.js -->
+  <script src="members.js"></script>
+
+  <style>
+    :root {
+      --grass-base: #459a4f;
+      --grass-light: #5cb868;
+      --grass-dark: #32753a;
+      --grass-shadow: #215227;
+      --wood-sign: #7c4a22;
+      --gold-sign: #eab308;
+      --gold-text: #fef08a;
+      --bubble-bg: #ffffff;
+      --bubble-border: #14532d;
+      --bubble-text: #0f172a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* Clean Modern Typography: Prompt, Mitr & Kanit */
+    body,
+    button,
+    input,
+    textarea,
+    select,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    div,
+    a,
+    label {
+      font-family: 'Prompt', 'Mitr', 'Kanit', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Keep FontAwesome icon glyphs protected from font override */
+    i,
+    .fa,
+    .fa-solid,
+    .fa-regular,
+    .fa-brands {
+      font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+      font-style: normal;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #27592e;
+    }
+
+    /* Top Navigation Bar (Clean: No Lounge button) */
+    .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(18, 43, 23, 0.95);
+      border-bottom: 2px solid rgba(134, 239, 172, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-brand:hover {
+      transform: scale(1.02);
+    }
+
+    .nav-brand img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+    }
+
+    .nav-brand span {
+      font-family: 'Prompt', 'Mitr', 'Kanit', sans-serif !important;
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      background: linear-gradient(135deg, #ffffff 0%, #dcfce7 40%, #86efac 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 8px rgba(74, 222, 128, 0.45));
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      color: #e2e8f0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn.active {
+      background: #eab308;
+      color: #1a1303;
+      font-weight: 600;
+      border-color: #fde047;
+    }
+
+    /* Main Lounge Viewport */
+    #lounge-viewport {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+      background: #3c8245;
+      cursor: grab;
+    }
+
+    #lounge-viewport:active {
+      cursor: grabbing;
+    }
+
+    #lounge-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: 0 0;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
+    }
+
+    /* DOM Overlay for Name Pills and Speech Bubbles */
+    #dom-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      transform-origin: 0 0;
+      pointer-events: none;
+    }
+
+    #dom-overlay * {
+      pointer-events: auto;
+    }
+
+
+
+    /* Member Name Pill (Large, Clear, Crisp Kanit, No Surname) */
+    .member-pill {
+      position: absolute;
+      transform: translate(-50%, 0);
+      background: rgba(15, 36, 19, 0.94);
+      border: 1.5px solid rgba(134, 239, 172, 0.6);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.65);
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #f0fdf4;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      font-family: 'Prompt', 'Mitr', 'Kanit', sans-serif !important;
+    }
+
+    .member-pill:hover {
+      background: rgba(22, 60, 30, 0.98);
+      border-color: #facc15;
+      transform: translate(-50%, -2px) scale(1.06);
+      color: #fef08a;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #4ade80;
+    }
+
+    .status-dot.gold {
+      background: #facc15;
+      box-shadow: 0 0 7px #facc15;
+    }
+
+    .status-dot.orange {
+      background: #fb923c;
+      box-shadow: 0 0 6px #fb923c;
+    }
+
+    /* Speech Bubble */
+    .speech-bubble {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      background: #ffffff;
+      border: 2px solid #14532d;
+      border-radius: 14px;
+      padding: 8px 14px;
+      color: #0f172a;
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+      pointer-events: auto;
+      cursor: pointer;
+      animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 50;
+      font-family: 'Prompt', 'Mitr', 'Kanit', sans-serif !important;
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 8px solid #ffffff;
+    }
+
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -11px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-top: 10px solid #14532d;
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: translate(-50%, -80%) scale(0.6);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translate(-50%, -100%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Floating Bottom Action Toolbar */
+    .floating-toolbar {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 36, 19, 0.94);
+      border: 1.5px solid rgba(134, 239, 172, 0.4);
+      border-radius: 9999px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 90;
+    }
+
+    .tool-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f0fdf4;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      font-family: 'Prompt', 'Mitr', 'Kanit', sans-serif !important;
+    }
+
+    .tool-btn:hover {
+      background: rgba(45, 105, 58, 0.98);
+      border-color: #86efac;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .tool-btn.active {
+      background: #22c55e;
+      color: #052e16;
+      font-weight: 600;
+      border-color: #86efac;
+    }
+
+    /* Profile Card Drawer / Modal */
+    #profile-modal {
+      position: absolute;
+      right: 20px;
+      top: 68px;
+      width: 320px;
+      background: rgba(15, 36, 19, 0.96);
+      border: 1px solid rgba(134, 239, 172, 0.45);
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 22px;
+      z-index: 110;
+      display: none;
+      animation: slideInRight 0.25s ease;
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .profile-avatar-wrap {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      border: 3px solid #facc15;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      background: #1e3a24;
+    }
+
+    .profile-avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .profile-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fef08a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .profile-role-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #86efac;
+      border: 1px solid rgba(134, 239, 172, 0.3);
+      margin-bottom: 6px;
+    }
+
+    .profile-role-tag.owner {
+      background: #ca8a04;
+      color: #fef08a;
+      border-color: #facc15;
+    }
+
+    .profile-role-tag.leader {
+      background: #c2410c;
+      color: #fed7aa;
+      border-color: #fb923c;
+    }
+
+
+
+    .profile-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 14px;
+    }
+
+    .profile-link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-fb {
+      background: #1877f2;
+      color: #fff;
+    }
+
+    .btn-fb:hover {
+      background: #166fe5;
+      transform: translateY(-1px);
+    }
+
+    .btn-ig {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: #fff;
+    }
+
+    .btn-ig:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-disabled {
+      opacity: 0.4;
+      pointer-events: none;
+      background: #334155 !important;
+    }
+
+    .btn-close-modal {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 16px;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .btn-close-modal:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Notification Toast */
+    #toast {
+      position: fixed;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(15, 36, 19, 0.95);
+      border: 1px solid #86efac;
+      color: #fef08a;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 200;
+      font-family: 'Prompt', 'Mitr', 'Kanit', sans-serif !important;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(4px);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Navigation (Clean: No Lounge button) -->
+  <header class="top-nav">
+    <a href="index.html" class="nav-brand">
+      <img src="https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png"
+        alt="Logo">
+      <span>ไลฟ์สไตล์.com</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> หน้าแรก</a>
+    </nav>
+  </header>
+
+  <!-- Main Viewport (Green Meadow) -->
+  <main id="lounge-viewport">
+    <canvas id="lounge-canvas"></canvas>
+    <div id="dom-overlay"></div>
+  </main>
+
+  <!-- Bottom Floating Toolbar -->
+  <footer class="floating-toolbar">
+    <button class="tool-btn" id="btn-sound" title="เปิด/ปิดเสียง">
+      <i class="fa-solid fa-volume-high"></i> <span>เสียง</span>
+    </button>
+    <button class="tool-btn" id="btn-zoom-fit" title="รีเซ็ตมุมมองพอดีจอ">
+      <i class="fa-solid fa-expand"></i> <span>พอดีจอ</span>
+    </button>
+  </footer>
+
+  <!-- Member Profile Modal -->
+  <div id="profile-modal">
+    <button class="btn-close-modal" id="btn-close-profile"><i class="fa-solid fa-xmark"></i></button>
+    <div class="profile-header">
+      <div class="profile-avatar-wrap">
+        <img id="modal-avatar" src="" alt="Avatar">
+      </div>
+      <div class="profile-info">
+        <div class="profile-name" id="modal-name">Member Name</div>
+        <div class="profile-role-tag" id="modal-role">Member</div>
+      </div>
+    </div>
+    <div class="profile-links">
+      <a href="#" target="_blank" class="profile-link-btn btn-fb" id="modal-fb">
+        <i class="fa-brands fa-facebook"></i> Facebook
+      </a>
+      <a href="#" target="_blank" class="profile-link-btn btn-ig" id="modal-ig">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </a>
+    </div>
+  </div>
+
+  <div id="toast">แจ้งเตือน</div>
+
+  <script>
+    (function () {
+      // 8-bit Audio Synthesizer
+      var audioCtx = null;
+      var soundEnabled = true;
+
+      function getAudioContext() {
+        if (!audioCtx) {
+          var AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) audioCtx = new AudioCtx();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        return audioCtx;
+      }
+
+      function play8BitSound(type) {
+        if (!soundEnabled) return;
+        try {
+          var ctx = getAudioContext();
+          if (!ctx) return;
+          var now = ctx.currentTime;
+          var osc = ctx.createOscillator();
+          var gain = ctx.createGain();
+
+          if (type === 'moo') {
+            // Buffalo Low Warm Moo
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(130, now);
+            osc.frequency.linearRampToValueAtTime(110, now + 0.12);
+            osc.frequency.linearRampToValueAtTime(80, now + 0.32);
+            gain.gain.setValueAtTime(0.24, now);
+            gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.35);
+          } else if (type === 'pop') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(700, now);
+            osc.frequency.exponentialRampToValueAtTime(950, now + 0.06);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.linearRampToValueAtTime(0.01, now + 0.06);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.06);
+          } else if (type === 'sign') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.setValueAtTime(554.37, now + 0.08);
+            osc.frequency.setValueAtTime(659.25, now + 0.16);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.linearRampToValueAtTime(0.01, now + 0.28);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.28);
+          } else if (type === 'coin') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(987.77, now);
+            osc.frequency.setValueAtTime(1318.51, now + 0.08);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.3);
+          }
+        } catch (e) { }
+      }
+
+      // Safe Member List Loader
+      var memberList = [];
+      if (typeof members !== 'undefined' && Array.isArray(members)) {
+        memberList = members;
+      } else if (typeof window.members !== 'undefined' && Array.isArray(window.members)) {
+        memberList = window.members;
+      } else {
+        memberList = [
+          { name: "Theboss Lyfestyle", role: "Owner" },
+          { name: "Atlas Lyfestyle", role: "Leader" },
+          { name: "Fver Lyfestyle", role: "Leader" },
+          { name: "Kaori Lyfestyle", role: "3004" },
+          { name: "Kathi Lyfestyle", role: "3004" }
+        ];
+      }
+
+      /* Extract real first name without surname */
+      function extractMemberFirstName(fullName) {
+        if (!fullName) return 'Member';
+        var trimmed = fullName.trim();
+        var clean = trimmed.replace(/\s+(Lyfestyle|Lyfe|Nel|Family)$/i, '').trim();
+        if (clean !== trimmed) {
+          return clean;
+        }
+        return clean.split(/\s+/)[0];
+      }
+
+      // Spacious Meadow Dimensions
+      var ROOM_W = 1900;
+      var ROOM_H = 1200;
+
+      var viewport = document.getElementById('lounge-viewport');
+      var canvas = document.getElementById('lounge-canvas');
+      var ctx = canvas.getContext('2d');
+      var domOverlay = document.getElementById('dom-overlay');
+
+      canvas.width = ROOM_W;
+      canvas.height = ROOM_H;
+
+      // Camera State
+      var camera = {
+        x: 0,
+        y: 0,
+        scale: 1
+      };
+
+      function fitCamera() {
+        var vw = viewport.clientWidth;
+        var vh = viewport.clientHeight;
+        var sX = vw / ROOM_W;
+        var sY = vh / ROOM_H;
+        var s = Math.min(sX, sY) * 1.05;
+        if (s < 0.4) s = 0.4;
+        if (s > 1.6) s = 1.6;
+
+        camera.scale = s;
+        camera.x = (vw - ROOM_W * s) / 2;
+        camera.y = (vh - ROOM_H * s) / 2;
+        applyCamera();
+      }
+
+      function applyCamera() {
+        var transformStr = 'translate(' + camera.x + 'px, ' + camera.y + 'px) scale(' + camera.scale + ')';
+        canvas.style.transform = transformStr;
+        domOverlay.style.transform = transformStr;
+      }
+
+      window.addEventListener('resize', fitCamera);
+
+      // Speech Quotes (Clean and emoji-free)
+      var QUOTES = [
+        "ไลฟ์สไตล์ดิวะ",
+        "ออกป่าว 😡😡😡",
+        "น้าราชาดิว่ะ 🥰❤️",
+        "อยากมี Setting โหดๆใช้ต้องร้านไหน Xstarshop ไง",
+        "3004",
+        "ไม่ต้องถามหาถึงเวลาเดะมาให้เห็น"
+      ];
+
+
+
+      // Deterministic String Hash
+      function hashCode(str) {
+        var hash = 0;
+        for (var i = 0; i < str.length; i++) {
+          hash = (hash << 5) - hash + str.charCodeAt(i);
+          hash |= 0;
+        }
+        return Math.abs(hash);
+      }
+
+      /* ==========================================================================
+         PIXEL WATER BUFFALO SPRITE GENERATOR (ควายพิกเซลทุกคน)
+         Wide horns, sturdy body, ears, muzzle with nostrils, walking hooves
+         ========================================================================== */
+      function createBuffaloSprite(member, index) {
+        var h = hashCode(member.name || ('member' + index));
+        var variant = (h + index) % 4;
+
+        var frames = [];
+        var SPRITE_W = 24;
+        var SPRITE_H = 20;
+
+        // Color palettes for buffalo variants
+        var bodyColor, shadeColor, highlightColor, hornColor, hornTipColor, muzzleColor, nostrilColor, hoofColor, earColor;
+        var variantTitle = 'ควายพิกเซล';
+
+        if (variant === 0) {
+          // Classic Dark Slate Buffalo (ควายดำ / ควายป่า)
+          variantTitle = 'ควายดำพิกเซล';
+          bodyColor = '#2f3640';
+          shadeColor = '#1e242c';
+          highlightColor = '#414b58';
+          hornColor = '#191d23';
+          hornTipColor = '#64748b';
+          muzzleColor = '#475569';
+          nostrilColor = '#0f172a';
+          hoofColor = '#0f141a';
+          earColor = '#3f4856';
+        } else if (variant === 1) {
+          // Ash Charcoal Buffalo (ควายเทา / ควายทุย)
+          variantTitle = 'ควายเทาพิกเซล';
+          bodyColor = '#3e4450';
+          shadeColor = '#2a2f38';
+          highlightColor = '#525b6a';
+          hornColor = '#1e2229';
+          hornTipColor = '#94a3b8';
+          muzzleColor = '#5a6474';
+          nostrilColor = '#14181f';
+          hoofColor = '#13161c';
+          earColor = '#4d5564';
+        } else if (variant === 2) {
+          // Rare Rosy Albino Buffalo (ควายเผือก - สีขาวอมชมพู)
+          variantTitle = 'ควายเผือกพิกเซล';
+          bodyColor = '#fbe9e9';
+          shadeColor = '#f3cfcf';
+          highlightColor = '#ffffff';
+          hornColor = '#d6cbbe';
+          hornTipColor = '#fef08a';
+          muzzleColor = '#fca5a5';
+          nostrilColor = '#e11d48';
+          hoofColor = '#9ca3af';
+          earColor = '#fecdd3';
+        } else {
+          // Earth Brown Buffalo (ควายโคลน / ควายน้ำตาลเข้ม)
+          variantTitle = 'ควายทุยพิกเซล';
+          bodyColor = '#3d342f';
+          shadeColor = '#27201c';
+          highlightColor = '#564a43';
+          hornColor = '#1f1a17';
+          hornTipColor = '#78716c';
+          muzzleColor = '#5b4e47';
+          nostrilColor = '#161210';
+          hoofColor = '#14100e';
+          earColor = '#4f443e';
+        }
+
+        for (var f = 0; f < 4; f++) {
+          var sc = document.createElement('canvas');
+          sc.width = SPRITE_W;
+          sc.height = SPRITE_H;
+          var sctx = sc.getContext('2d');
+          sctx.imageSmoothingEnabled = false;
+
+          var bob = (f === 0) ? 0 : (f === 3 ? -1 : (f % 2 === 0 ? -1 : 0));
+
+          // 1. Swishing Buffalo Tail (พู่หางควาย)
+          sctx.fillStyle = shadeColor;
+          sctx.fillRect(4, 9 + bob, 2, 2);
+          sctx.fillRect(3, 11 + bob, 2, 3);
+          // Tail Tuft
+          sctx.fillStyle = hoofColor;
+          if (f === 1) {
+            sctx.fillRect(2, 13 + bob, 2, 3);
+          } else if (f === 2) {
+            sctx.fillRect(3, 14 + bob, 2, 3);
+          } else {
+            sctx.fillRect(2, 14 + bob, 2, 3);
+          }
+
+          // 2. Magnificent Curved Horns (เขาควายไทย โค้งกว้างสง่างาม)
+          // Horn Core & Roots
+          sctx.fillStyle = hornColor;
+          // Left Horn Curve (sweeping left and arching up)
+          sctx.fillRect(8, 4 + bob, 3, 2);
+          sctx.fillRect(5, 3 + bob, 3, 2);
+          sctx.fillRect(2, 2 + bob, 3, 2);
+          sctx.fillRect(1, 1 + bob, 2, 2);
+          // Left Horn Tip pointing inward/upward
+          sctx.fillStyle = hornTipColor;
+          sctx.fillRect(2, 0 + bob, 2, 1);
+
+          // Right Horn Curve (sweeping right and arching up)
+          sctx.fillStyle = hornColor;
+          sctx.fillRect(13, 4 + bob, 3, 2);
+          sctx.fillRect(16, 3 + bob, 3, 2);
+          sctx.fillRect(19, 2 + bob, 3, 2);
+          sctx.fillRect(21, 1 + bob, 2, 2);
+          // Right Horn Tip pointing inward/upward
+          sctx.fillStyle = hornTipColor;
+          sctx.fillRect(20, 0 + bob, 2, 1);
+
+          // 3. Buffalo Ears (หูควายใต้โคนเขา กางออกด้านข้าง)
+          sctx.fillStyle = earColor;
+          var earFlap = (f === 1 || f === 3) ? 1 : 0;
+          sctx.fillRect(3, 5 + bob + earFlap, 4, 2);
+          sctx.fillRect(17, 5 + bob - earFlap, 4, 2);
+          // Inner Ear
+          sctx.fillStyle = (variant === 2) ? '#fda4af' : '#64748b';
+          sctx.fillRect(4, 6 + bob + earFlap, 2, 1);
+          sctx.fillRect(18, 6 + bob - earFlap, 2, 1);
+
+          // 4. Sturdy Body & Shoulder Hump (ลำตัวและโหนกควาย)
+          sctx.fillStyle = bodyColor;
+          sctx.fillRect(5, 7 + bob, 14, 8);
+          sctx.fillRect(4, 8 + bob, 16, 6);
+          // Shoulder Hump (โหนกควาย)
+          sctx.fillRect(7, 5 + bob, 10, 3);
+          sctx.fillRect(9, 4 + bob, 6, 2);
+
+          // 5. Forehead & Body Highlights
+          sctx.fillStyle = highlightColor;
+          sctx.fillRect(8, 5 + bob, 8, 2);
+          sctx.fillRect(6, 8 + bob, 12, 1);
+
+          // 6. Body Underside Shading
+          sctx.fillStyle = shadeColor;
+          sctx.fillRect(5, 13 + bob, 14, 2);
+
+          // 7. Eyes (ดวงตาโต อ่อนโยน น่ารัก)
+          sctx.fillStyle = '#0a0a0c';
+          sctx.fillRect(7, 6 + bob, 2, 2);
+          sctx.fillRect(15, 6 + bob, 2, 2);
+          // Eye White catchlight
+          sctx.fillStyle = '#ffffff';
+          sctx.fillRect(7, 6 + bob, 1, 1);
+          sctx.fillRect(15, 6 + bob, 1, 1);
+
+          // 8. Broad Buffalo Muzzle & Snout (ปากและจมูกกว้างมน)
+          sctx.fillStyle = muzzleColor;
+          sctx.fillRect(8, 8 + bob, 8, 5);
+          sctx.fillRect(7, 9 + bob, 10, 3);
+
+          // Wide Nostrils (รูจมูกควาย)
+          sctx.fillStyle = nostrilColor;
+          sctx.fillRect(9, 10 + bob, 2, 2);
+          sctx.fillRect(13, 10 + bob, 2, 2);
+
+          // 9. Strong Sturdy Legs & Hooves (ขาและกีบเท้า 4 ข้าง)
+          sctx.fillStyle = bodyColor;
+          var hColor = hoofColor;
+
+          if (f === 1) {
+            // Step 1: Front-Left and Back-Right moving
+            sctx.fillRect(5, 13, 3, 4);
+            sctx.fillRect(9, 13, 3, 3);
+            sctx.fillRect(12, 13, 3, 4);
+            sctx.fillRect(16, 13, 3, 3);
+            // Hooves
+            sctx.fillStyle = hColor;
+            sctx.fillRect(5, 17, 3, 2);
+            sctx.fillRect(9, 16, 3, 2);
+            sctx.fillRect(12, 17, 3, 2);
+            sctx.fillRect(16, 16, 3, 2);
+          } else if (f === 2) {
+            // Step 2: Full contact
+            sctx.fillRect(6, 13, 3, 4);
+            sctx.fillRect(9, 13, 3, 4);
+            sctx.fillRect(12, 13, 3, 4);
+            sctx.fillRect(15, 13, 3, 4);
+            // Hooves
+            sctx.fillStyle = hColor;
+            sctx.fillRect(6, 17, 3, 2);
+            sctx.fillRect(9, 17, 3, 2);
+            sctx.fillRect(12, 17, 3, 2);
+            sctx.fillRect(15, 17, 3, 2);
+          } else if (f === 3) {
+            // Step 3: Front-Right and Back-Left moving
+            sctx.fillRect(6, 13, 3, 3);
+            sctx.fillRect(9, 13, 3, 4);
+            sctx.fillRect(13, 13, 3, 3);
+            sctx.fillRect(15, 13, 3, 4);
+            // Hooves
+            sctx.fillStyle = hColor;
+            sctx.fillRect(6, 16, 3, 2);
+            sctx.fillRect(9, 17, 3, 2);
+            sctx.fillRect(13, 16, 3, 2);
+            sctx.fillRect(15, 17, 3, 2);
+          } else {
+            // Idle Stance
+            sctx.fillRect(6, 13, 3, 4);
+            sctx.fillRect(9, 13, 3, 4);
+            sctx.fillRect(12, 13, 3, 4);
+            sctx.fillRect(15, 13, 3, 4);
+            // Hooves
+            sctx.fillStyle = hColor;
+            sctx.fillRect(6, 17, 3, 2);
+            sctx.fillRect(9, 17, 3, 2);
+            sctx.fillRect(12, 17, 3, 2);
+            sctx.fillRect(15, 17, 3, 2);
+          }
+
+          // 10. Rank Accessories
+          if (member.role === 'Owner') {
+            // Golden Royal Crown between buffalo horns
+            sctx.fillStyle = '#facc15';
+            sctx.fillRect(10, 0 + bob, 4, 2);
+            sctx.fillRect(9, -2 + bob, 2, 2);
+            sctx.fillRect(11, -3 + bob, 2, 3);
+            sctx.fillRect(13, -2 + bob, 2, 2);
+            sctx.fillStyle = '#ef4444';
+            sctx.fillRect(11, -1 + bob, 2, 1);
+          } else if (member.role === 'Leader') {
+            // Red Bandana around neck
+            sctx.fillStyle = '#ef4444';
+            sctx.fillRect(7, 7 + bob, 10, 2);
+            sctx.fillRect(5, 8 + bob, 2, 3);
+          } else if (member.role === '3004') {
+            // Golden Star Badge
+            sctx.fillStyle = '#facc15';
+            sctx.fillRect(5, 9 + bob, 2, 2);
+          }
+
+          frames.push(sc);
+        }
+
+        return {
+          frames: frames,
+          width: SPRITE_W,
+          height: SPRITE_H,
+          variantTitle: variantTitle
+        };
+      }
+
+      // Initialize Characters (Spread widely across meadow)
+      var characters = [];
+
+
+
+      // Wide grid calculation to spread members apart across the meadow
+      var gridCols = 12;
+      var gridRows = Math.ceil(memberList.length / gridCols);
+      var cellW = (ROOM_W - 320) / gridCols;
+      var cellH = (ROOM_H - 380) / gridRows;
+
+      for (var i = 0; i < memberList.length; i++) {
+        var m = memberList[i];
+        var cleanFirstName = extractMemberFirstName(m.name);
+        var sprite = createBuffaloSprite(m, i);
+
+        var col = i % gridCols;
+        var row = Math.floor(i / gridCols);
+        var rx = 160 + col * cellW + ((Math.random() - 0.5) * cellW * 0.6);
+        var ry = 220 + row * cellH + ((Math.random() - 0.5) * cellH * 0.6);
+
+        // Create DOM Name Pill (Shows real first name, no surname)
+        var pill = document.createElement('div');
+        pill.className = 'member-pill';
+        var dotClass = (m.role === 'Owner') ? 'status-dot gold' : (m.role === 'Leader' ? 'status-dot orange' : 'status-dot');
+
+        pill.innerHTML = '<span class="' + dotClass + '"></span><span class="pill-name">' + cleanFirstName + '</span>';
+        domOverlay.appendChild(pill);
+
+        var char = {
+          index: i,
+          data: m,
+          cleanFirstName: cleanFirstName,
+          sprite: sprite,
+          variantTitle: sprite.variantTitle,
+          x: rx,
+          y: ry,
+          vx: (Math.random() - 0.5) * 0.9,
+          vy: (Math.random() - 0.5) * 0.7,
+          facing: Math.random() > 0.5 ? 1 : -1,
+          scale: 4.2, // Big clear chunky buffalo size
+          frameIndex: 0,
+          walkTimer: 0,
+          idleTimer: Math.random() * 80,
+          isMoving: true,
+          pillEl: pill,
+          speechEl: null,
+          speechTimer: 0
+        };
+
+        // Click handler for pill -> open modal directly
+        (function (c) {
+          c.pillEl.addEventListener('click', function (e) {
+            e.stopPropagation();
+            interactCharacter(c);
+            openProfileModal(c.data);
+          });
+        })(char);
+
+        characters.push(char);
+      }
+
+      // Speak and Sound Interaction
+      function interactCharacter(char) {
+        play8BitSound('moo');
+        triggerSpeech(char);
+      }
+
+      function triggerSpeech(char, customText) {
+        if (char.speechEl) {
+          domOverlay.removeChild(char.speechEl);
+          char.speechEl = null;
+        }
+        var text = customText || QUOTES[Math.floor(Math.random() * QUOTES.length)];
+        var bubble = document.createElement('div');
+        bubble.className = 'speech-bubble';
+        bubble.textContent = text;
+        domOverlay.appendChild(bubble);
+
+        char.speechEl = bubble;
+        char.speechTimer = 260;
+
+        bubble.addEventListener('click', function (e) {
+          e.stopPropagation();
+          interactCharacter(char);
+          openProfileModal(char.data);
+        });
+
+        play8BitSound('pop');
+      }
+
+      // Profile Modal Handling
+      var profileModal = document.getElementById('profile-modal');
+      var modalAvatar = document.getElementById('modal-avatar');
+      var modalName = document.getElementById('modal-name');
+      var modalRole = document.getElementById('modal-role');
+      var modalFb = document.getElementById('modal-fb');
+      var modalIg = document.getElementById('modal-ig');
+      var btnCloseProfile = document.getElementById('btn-close-profile');
+
+      function openProfileModal(member) {
+        modalName.textContent = member.name || 'Member';
+        modalAvatar.src = member.img || 'https://s.imgz.io/2026/10/12/5528f231-1046-4218-b192-4fd63f6a1d17-removebg-preview69cce28b66d71df6.png';
+        modalRole.textContent = member.role || 'Member';
+
+        modalRole.className = 'profile-role-tag';
+        if (member.role === 'Owner') modalRole.classList.add('owner');
+        if (member.role === 'Leader') modalRole.classList.add('leader');
+
+        if (member.fb && member.fb.trim() !== '') {
+          modalFb.href = member.fb;
+          modalFb.classList.remove('btn-disabled');
+        } else {
+          modalFb.href = '#';
+          modalFb.classList.add('btn-disabled');
+        }
+
+        if (member.ig && member.ig.trim() !== '') {
+          modalIg.href = member.ig;
+          modalIg.classList.remove('btn-disabled');
+        } else {
+          modalIg.href = '#';
+          modalIg.classList.add('btn-disabled');
+        }
+
+        profileModal.style.display = 'block';
+        play8BitSound('coin');
+      }
+
+      btnCloseProfile.addEventListener('click', function () {
+        profileModal.style.display = 'none';
+      });
+
+      function showToast(msg) {
+        var t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(function () {
+          t.classList.remove('show');
+        }, 2200);
+      }
+
+      /* ==========================================================================
+         LUSH GREEN MEADOW BACKGROUND RENDERER (ทุ่งหญ้าเขียวขจี)
+         ========================================================================== */
+      function drawMeadowBackground() {
+        // 1. Base Meadow Green Gradient
+        var grad = ctx.createLinearGradient(0, 0, 0, ROOM_H);
+        grad.addColorStop(0, '#387c42');
+        grad.addColorStop(0.5, '#469b50');
+        grad.addColorStop(1, '#3b8645');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, ROOM_W, ROOM_H);
+
+        // 2. Soft Rolling Meadow Patches
+        ctx.fillStyle = '#4fa95a';
+        for (var px = 0; px < ROOM_W; px += 280) {
+          for (var py = 60; py < ROOM_H; py += 220) {
+            ctx.beginPath();
+            ctx.ellipse(px + 80, py + 60, 140, 75, 0, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        ctx.fillStyle = '#3a8344';
+        for (var px = 140; px < ROOM_W; px += 320) {
+          for (var py = 120; py < ROOM_H; py += 240) {
+            ctx.beginPath();
+            ctx.ellipse(px + 60, py + 60, 120, 65, 0, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        // 3. Gentle Cobblestone Garden Paths / Stepping Stones
+        ctx.fillStyle = '#94a3b8';
+        var pathStones = [
+          [280, 480], [330, 520], [390, 560], [460, 610],
+          [ROOM_W - 320, 520], [ROOM_W - 380, 570], [ROOM_W - 440, 630],
+          [ROOM_W / 2 - 120, 780], [ROOM_W / 2 - 40, 820], [ROOM_W / 2 + 50, 850], [ROOM_W / 2 + 130, 880]
+        ];
+        for (var s = 0; s < pathStones.length; s++) {
+          var pt = pathStones[s];
+          ctx.beginPath();
+          ctx.ellipse(pt[0], pt[1], 18, 12, 0.2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#64748b';
+          ctx.beginPath();
+          ctx.ellipse(pt[0] - 2, pt[1] - 2, 14, 9, 0.2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#94a3b8';
+        }
+
+        // 4. Pixel Grass Tufts & Clovers
+        drawGrassTufts();
+
+        // 5. Wildflowers (Daisies, Pink blossoms, Buttercups, Poppies)
+        drawWildflowers();
+
+        // 6. Top Rustic Wooden Farm Fence
+        drawFence();
+      }
+
+      function drawGrassTufts() {
+        ctx.fillStyle = '#2d6a36';
+        var grassSeeds = [
+          [160, 280], [320, 360], [540, 290], [780, 340], [1020, 280], [1340, 320], [1620, 290], [1800, 350],
+          [220, 580], [480, 680], [860, 560], [1180, 620], [1460, 580], [1720, 680],
+          [180, 920], [420, 860], [680, 960], [980, 890], [1280, 950], [1540, 880], [1780, 940],
+          [340, 1100], [720, 1140], [1120, 1080], [1420, 1130], [1680, 1090]
+        ];
+        for (var g = 0; g < grassSeeds.length; g++) {
+          var gx = grassSeeds[g][0];
+          var gy = grassSeeds[g][1];
+          // 3 grass blades
+          ctx.fillRect(gx, gy, 3, 10);
+          ctx.fillRect(gx - 4, gy + 3, 3, 8);
+          ctx.fillRect(gx + 4, gy + 2, 3, 9);
+        }
+
+        // Highlight tips
+        ctx.fillStyle = '#6ee7b7';
+        for (var g = 0; g < grassSeeds.length; g++) {
+          var gx = grassSeeds[g][0];
+          var gy = grassSeeds[g][1];
+          ctx.fillRect(gx, gy, 3, 2);
+          ctx.fillRect(gx - 4, gy + 3, 3, 2);
+          ctx.fillRect(gx + 4, gy + 2, 3, 2);
+        }
+      }
+
+      function drawWildflowers() {
+        var flowers = [
+          [200, 340, '#fef08a'], [260, 420, '#ffffff'], [420, 310, '#f472b6'], [620, 410, '#ef4444'],
+          [740, 260, '#38bdf8'], [880, 380, '#ffffff'], [1100, 320, '#fef08a'], [1260, 420, '#f472b6'],
+          [1480, 360, '#ffffff'], [1650, 410, '#fde047'], [1760, 310, '#ef4444'],
+          [280, 720, '#ffffff'], [450, 790, '#f472b6'], [680, 730, '#fef08a'], [820, 820, '#38bdf8'],
+          [1040, 740, '#ffffff'], [1220, 810, '#ef4444'], [1380, 730, '#f472b6'], [1620, 820, '#fef08a'],
+          [180, 1050, '#f472b6'], [380, 990, '#ffffff'], [560, 1080, '#fef08a'], [790, 1020, '#ef4444'],
+          [960, 1120, '#38bdf8'], [1190, 1040, '#ffffff'], [1360, 1110, '#f472b6'], [1590, 1050, '#fef08a']
+        ];
+
+        for (var fl = 0; fl < flowers.length; fl++) {
+          var fx = flowers[fl][0];
+          var fy = flowers[fl][1];
+          var fcolor = flowers[fl][2];
+
+          // 4 Petals
+          ctx.fillStyle = fcolor;
+          ctx.fillRect(fx - 4, fy - 1, 9, 3);
+          ctx.fillRect(fx - 1, fy - 4, 3, 9);
+
+          // Center pollen dot
+          ctx.fillStyle = '#eab308';
+          ctx.fillRect(fx, fy, 2, 2);
+        }
+      }
+
+      function drawFence() {
+        var fenceY = 58;
+        var fenceH = 34;
+
+        // Wooden fence horizontal rails
+        ctx.fillStyle = '#6c3f1b';
+        ctx.fillRect(100, fenceY + 6, ROOM_W - 200, 8);
+        ctx.fillRect(100, fenceY + 20, ROOM_W - 200, 8);
+
+        ctx.fillStyle = '#8e5425';
+        ctx.fillRect(100, fenceY + 6, ROOM_W - 200, 2);
+        ctx.fillRect(100, fenceY + 20, ROOM_W - 200, 2);
+
+        // Vertical Fence Posts
+        for (var px = 120; px < ROOM_W - 120; px += 70) {
+          ctx.fillStyle = '#5c3517';
+          ctx.fillRect(px, fenceY, 12, fenceH);
+          ctx.fillStyle = '#8e5425';
+          ctx.fillRect(px, fenceY, 3, fenceH);
+          // Pointed tip
+          ctx.fillStyle = '#7c4a22';
+          ctx.beginPath();
+          ctx.moveTo(px, fenceY);
+          ctx.lineTo(px + 6, fenceY - 7);
+          ctx.lineTo(px + 12, fenceY);
+          ctx.fill();
+        }
+      }
+
+      // Main Animation Loop
+      var speechSpawnTimer = 0;
+
+      function updateAndRender() {
+        ctx.clearRect(0, 0, ROOM_W, ROOM_H);
+
+        // 1. Render Meadow Background
+        drawMeadowBackground();
+
+        // 2. Sort characters by Y for 2.5D depth ordering
+        characters.sort(function (a, b) {
+          return a.y - b.y;
+        });
+
+        // 3. Periodic Random Speech Bubble
+        speechSpawnTimer++;
+        if (speechSpawnTimer > 200) {
+          speechSpawnTimer = 0;
+          var randomChar = characters[Math.floor(Math.random() * characters.length)];
+          if (randomChar && !randomChar.speechEl) {
+            triggerSpeech(randomChar);
+          }
+        }
+
+        // 4. Update and Render Characters
+        for (var i = 0; i < characters.length; i++) {
+          var c = characters[i];
+
+          // Anti-Crowding Separation Force (สมาชิกเยอะ กระจายตัวแยกกัน ไม่เบียดทับกัน)
+          for (var j = 0; j < characters.length; j++) {
+            if (i === j) continue;
+            var other = characters[j];
+            var dx = c.x - other.x;
+            var dy = c.y - other.y;
+            var distSq = dx * dx + dy * dy;
+            var minSpace = 95; // ระยะห่างพอดีกับขนาดควายใหญ่ขึ้น
+            if (distSq < minSpace * minSpace && distSq > 0.01) {
+              var dist = Math.sqrt(distSq);
+              var push = ((minSpace - dist) / minSpace) * 0.55;
+              c.x += (dx / dist) * push;
+              c.y += (dy / dist) * push;
+            }
+          }
+
+          // Free Roam Walking Update
+          c.idleTimer--;
+          if (c.idleTimer <= 0) {
+            if (c.isMoving) {
+              c.isMoving = false;
+              c.idleTimer = 40 + Math.random() * 80;
+            } else {
+              c.isMoving = true;
+              c.idleTimer = 90 + Math.random() * 180;
+              var angle = Math.random() * Math.PI * 2;
+              var speed = 0.4 + Math.random() * 0.6;
+              c.vx = Math.cos(angle) * speed;
+              c.vy = Math.sin(angle) * speed * 0.6;
+              c.facing = (c.vx >= 0) ? 1 : -1;
+            }
+          }
+
+          if (c.isMoving) {
+            c.x += c.vx;
+            c.y += c.vy;
+
+            // Bounds check for the meadow
+            if (c.x < 120) { c.x = 120; c.vx = Math.abs(c.vx); c.facing = 1; }
+            if (c.x > ROOM_W - 120) { c.x = ROOM_W - 120; c.vx = -Math.abs(c.vx); c.facing = -1; }
+            if (c.y < 200) { c.y = 200; c.vy = Math.abs(c.vy); }
+            if (c.y > ROOM_H - 120) { c.y = ROOM_H - 120; c.vy = -Math.abs(c.vy); }
+          }
+
+          // Walk Animation Cycle
+          if (c.isMoving) {
+            c.walkTimer++;
+            if (c.walkTimer > 8) {
+              c.walkTimer = 0;
+              c.frameIndex = (c.frameIndex + 1) % 4;
+            }
+          } else {
+            c.frameIndex = 0;
+          }
+
+          // Draw Soft Drop Shadow
+          ctx.save();
+          ctx.fillStyle = 'rgba(20, 50, 25, 0.45)';
+          ctx.beginPath();
+          ctx.ellipse(c.x, c.y + 4, 30, 11, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+
+          // Render Pixel Buffalo Sprite (Chunky, Crisp, Wide Horns)
+          ctx.save();
+          var drawY = c.y - (c.sprite.height * c.scale);
+          ctx.translate(c.x, drawY);
+          if (c.facing === -1) {
+            ctx.scale(-1, 1);
+          }
+          var curFrame = c.sprite.frames[c.frameIndex];
+          ctx.drawImage(
+            curFrame,
+            -c.sprite.width * c.scale / 2,
+            0,
+            c.sprite.width * c.scale,
+            c.sprite.height * c.scale
+          );
+          ctx.restore();
+
+          // Update DOM Name Pill
+          var pillY = c.y + 14;
+          c.pillEl.style.left = c.x + 'px';
+          c.pillEl.style.top = pillY + 'px';
+
+          // Update Speech Bubble
+          if (c.speechEl) {
+            c.speechTimer--;
+            if (c.speechTimer <= 0) {
+              domOverlay.removeChild(c.speechEl);
+              c.speechEl = null;
+            } else {
+              var bubbleY = drawY - 14;
+              c.speechEl.style.left = c.x + 'px';
+              c.speechEl.style.top = bubbleY + 'px';
+            }
+          }
+        }
+
+        requestAnimationFrame(updateAndRender);
+      }
+
+      // Viewport Pan and Zoom Controls
+      var isDragging = false;
+      var lastMouseX = 0;
+      var lastMouseY = 0;
+
+      viewport.addEventListener('mousedown', function (e) {
+        if (e.target !== viewport && e.target !== canvas) return;
+        isDragging = true;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+      });
+
+      window.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+        var dx = e.clientX - lastMouseX;
+        var dy = e.clientY - lastMouseY;
+        camera.x += dx;
+        camera.y += dy;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+        applyCamera();
+      });
+
+      window.addEventListener('mouseup', function () {
+        isDragging = false;
+      });
+
+      // Mouse Wheel Zoom
+      viewport.addEventListener('wheel', function (e) {
+        e.preventDefault();
+        var zoomFactor = e.deltaY < 0 ? 1.08 : 0.92;
+        var newScale = camera.scale * zoomFactor;
+        if (newScale >= 0.4 && newScale <= 2.2) {
+          var rect = viewport.getBoundingClientRect();
+          var mouseX = e.clientX - rect.left;
+          var mouseY = e.clientY - rect.top;
+
+          camera.x = mouseX - (mouseX - camera.x) * zoomFactor;
+          camera.y = mouseY - (mouseY - camera.y) * zoomFactor;
+          camera.scale = newScale;
+          applyCamera();
+        }
+      }, { passive: false });
+
+      // Touch Pan and Zoom
+      var touchStartDist = 0;
+      viewport.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 1) {
+          isDragging = true;
+          lastMouseX = e.touches[0].clientX;
+          lastMouseY = e.touches[0].clientY;
+        } else if (e.touches.length === 2) {
+          isDragging = false;
+          var dx = e.touches[0].clientX - e.touches[1].clientX;
+          var dy = e.touches[0].clientY - e.touches[1].clientY;
+          touchStartDist = Math.sqrt(dx * dx + dy * dy);
+        }
+      });
+
+      viewport.addEventListener('touchmove', function (e) {
+        if (e.touches.length === 1 && isDragging) {
+          var dx = e.touches[0].clientX - lastMouseX;
+          var dy = e.touches[0].clientY - lastMouseY;
+          camera.x += dx;
+          camera.y += dy;
+          lastMouseX = e.touches[0].clientX;
+          lastMouseY = e.touches[0].clientY;
+          applyCamera();
+        } else if (e.touches.length === 2 && touchStartDist > 0) {
+          var dx = e.touches[0].clientX - e.touches[1].clientX;
+          var dy = e.touches[0].clientY - e.touches[1].clientY;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          var factor = dist / touchStartDist;
+          touchStartDist = dist;
+
+          var newScale = camera.scale * factor;
+          if (newScale >= 0.4 && newScale <= 2.2) {
+            camera.scale = newScale;
+            applyCamera();
+          }
+        }
+      }, { passive: false });
+
+      viewport.addEventListener('touchend', function () {
+        isDragging = false;
+        touchStartDist = 0;
+      });
+
+      // Canvas Click -> Nearest buffalo interaction
+      canvas.addEventListener('click', function (e) {
+        var rect = canvas.getBoundingClientRect();
+        var clickX = (e.clientX - rect.left) / camera.scale;
+        var clickY = (e.clientY - rect.top) / camera.scale;
+
+        var nearest = null;
+        var minDist = 99999;
+        for (var i = 0; i < characters.length; i++) {
+          var c = characters[i];
+          var dist = Math.sqrt(Math.pow(c.x - clickX, 2) + Math.pow(c.y - clickY, 2));
+          if (dist < minDist) {
+            minDist = dist;
+            nearest = c;
+          }
+        }
+
+        if (nearest && minDist < 75) {
+          interactCharacter(nearest);
+          openProfileModal(nearest.data);
+        }
+      });
+
+      // Toolbar Controls
+      var btnSound = document.getElementById('btn-sound');
+      var btnFit = document.getElementById('btn-zoom-fit');
+
+      btnSound.addEventListener('click', function () {
+        soundEnabled = !soundEnabled;
+        btnSound.classList.toggle('active', soundEnabled);
+        var icon = btnSound.querySelector('i');
+        if (soundEnabled) {
+          icon.className = 'fa-solid fa-volume-high';
+          showToast('เปิดเสียงเอฟเฟกต์แล้ว');
+          play8BitSound('coin');
+        } else {
+          icon.className = 'fa-solid fa-volume-xmark';
+          showToast('ปิดเสียงเอฟเฟกต์');
+        }
+      });
+
+      btnFit.addEventListener('click', function () {
+        fitCamera();
+        showToast('รีเซ็ตขนาดพอดีหน้าจอแล้ว');
+        play8BitSound('pop');
+      });
+
+      // Start Meadow Lounge
+      fitCamera();
+      requestAnimationFrame(updateAndRender);
+
+      // Intro Speech from Owner / First Animal
+      setTimeout(function () {
+        var boss = characters.find(function (c) { return c.data.role === 'Owner'; }) || characters[0];
+        if (boss) {
+          triggerSpeech(boss, "ไลฟ์สไตล์มีกูเป็นมงกฎ");
+        }
+      }, 1000);
+
+    })();
+  </script>
+</body>
+
+</html>
