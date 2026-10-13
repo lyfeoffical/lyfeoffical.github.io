@@ -1258,7 +1258,8 @@
     if (hamburger) {
       hamburger.onclick = (e) => {
         e.preventDefault();
-        if (window.LyfeSidebar) {
+        e.stopPropagation();
+        if (window.LyfeSidebar && typeof window.LyfeSidebar.toggle === "function") {
           window.LyfeSidebar.toggle();
         }
       };

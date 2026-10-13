@@ -1705,6 +1705,9 @@
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
         -webkit-tap-highlight-color: transparent !important;
         box-sizing: border-box !important;
+        touch-action: manipulation !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
       }
 
       .hamburger:hover {
@@ -1720,6 +1723,7 @@
         background: #ffffff !important;
         border-radius: 2px !important;
         transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        pointer-events: none !important;
       }
 
       .hamburger.active span:nth-child(1) {
@@ -1981,7 +1985,10 @@
     injectSidebarStyles();
     const { overlay, sidebar } = ensureSidebarDOM();
 
+    let lastToggleTime = 0;
+
     function openSidebar() {
+      lastToggleTime = Date.now();
       sidebar.classList.add("active");
       overlay.classList.add("active");
       document.body.classList.add("lyfe-sidebar-open");
@@ -1996,6 +2003,7 @@
     }
 
     function closeSidebar() {
+      lastToggleTime = Date.now();
       sidebar.classList.remove("active");
       overlay.classList.remove("active");
       document.body.classList.remove("lyfe-sidebar-open");
@@ -2007,6 +2015,11 @@
     }
 
     function toggleSidebar() {
+      const now = Date.now();
+      if (now - lastToggleTime < 350) {
+        return; // ป้องกันการเรียกซ้ำจากการ bubble หรือแตะหน้าจอเบิ้ล
+      }
+      lastToggleTime = now;
       if (sidebar.classList.contains("active")) {
         closeSidebar();
       } else {
@@ -2023,9 +2036,19 @@
     };
 
     // Close on overlay or close button click
-    overlay.addEventListener("click", closeSidebar);
+    overlay.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeSidebar();
+    });
     const closeBtn = document.getElementById("lyfeSidebarCloseBtn");
-    if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+    if (closeBtn) {
+      closeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeSidebar();
+      });
+    }
 
     // Close on Escape key
     document.addEventListener("keydown", (e) => {
@@ -2044,7 +2067,7 @@
       });
     });
 
-    // Delegate Hamburger clicks
+    // Delegate Hamburger clicks with debounce
     document.addEventListener("click", (e) => {
       const burger = e.target.closest("#hamburgerBtn, .hamburger, [data-sidebar-toggle]");
       if (burger) {
@@ -2214,19 +2237,27 @@
   }
 
   function startAllFeatures() {
-    initY2kPageTransitions();
-    injectSharedThemeStyles();
-    bindGlobalThemeDelegator();
-    initUniversalTheme();
-    applyCustomBackground();
-    applyCustomMusic();
-    initCookieConsent();
-    initAntiAiShield();
-    initSystemProtection();
-    initAmbientParticles();
-    initCardTiltAndGlow();
-    initAudioVisualizer();
-    initUniversalMobileSidebar();
+    const safeRun = (fn, name) => {
+      try {
+        if (typeof fn === "function") fn();
+      } catch (err) {
+        console.warn(`[LyfeFeatures] Error during ${name}:`, err);
+      }
+    };
+
+    safeRun(initY2kPageTransitions, "initY2kPageTransitions");
+    safeRun(injectSharedThemeStyles, "injectSharedThemeStyles");
+    safeRun(bindGlobalThemeDelegator, "bindGlobalThemeDelegator");
+    safeRun(initUniversalTheme, "initUniversalTheme");
+    safeRun(applyCustomBackground, "applyCustomBackground");
+    safeRun(applyCustomMusic, "applyCustomMusic");
+    safeRun(initCookieConsent, "initCookieConsent");
+    safeRun(initAntiAiShield, "initAntiAiShield");
+    safeRun(initSystemProtection, "initSystemProtection");
+    safeRun(initAmbientParticles, "initAmbientParticles");
+    safeRun(initCardTiltAndGlow, "initCardTiltAndGlow");
+    safeRun(initAudioVisualizer, "initAudioVisualizer");
+    safeRun(initUniversalMobileSidebar, "initUniversalMobileSidebar");
   }
 
   // ดำเนินการตรวจสอบธีมและใส่สไตล์พื้นหลังทันทีก่อน DOM เพื่อความรวดเร็ว 0 latency ไร้ FOUC
