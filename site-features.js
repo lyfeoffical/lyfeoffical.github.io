@@ -785,20 +785,26 @@
     const isLight = theme === "light";
 
     // 1. Desktop & Generic Theme Switch Buttons
-    const themeButtons = document.querySelectorAll("#themeSwitchBtn, #loginThemeBtn, [data-theme-toggle]");
+    const themeButtons = document.querySelectorAll("#themeSwitchBtn, #sidebarThemeBtn, #loginThemeBtn, [data-theme-toggle]");
     themeButtons.forEach(btn => {
       const icon = btn.querySelector(".theme-switch-icon, i");
       if (icon) {
         icon.className = isLight ? "fa-solid fa-sun theme-switch-icon" : "fa-solid fa-moon theme-switch-icon";
         icon.style.color = isLight ? "#ffa502" : "#f1c40f";
       }
-      const text = btn.querySelector("#themeSwitchText, #loginThemeText");
+      const text = btn.querySelector("#themeSwitchText, #sidebarThemeText, #loginThemeText");
       if (text) {
         text.innerText = isLight ? "โหมดสว่าง" : "โหมดมืด";
       }
     });
 
-    // 2. Mobile Menu Theme Buttons
+    // 2. Direct Sync for Sidebar Theme Elements
+    const sidebarText = document.getElementById("sidebarThemeText");
+    if (sidebarText) {
+      sidebarText.innerText = isLight ? "โหมดสว่าง" : "โหมดมืด";
+    }
+
+    // 3. Mobile Menu Theme Buttons
     const mobileThemeBtns = document.querySelectorAll("#mobileThemeSwitchBtn");
     mobileThemeBtns.forEach(btn => {
       const icon = btn.querySelector(".theme-switch-icon, i");
@@ -812,7 +818,7 @@
       }
     });
 
-    // 3. Admin Theme Button
+    // 4. Admin Theme Button
     const adminThemeBtn = document.getElementById("btnAdminTheme");
     if (adminThemeBtn) {
       const icon = document.getElementById("adminThemeIcon") || adminThemeBtn.querySelector("i");
@@ -1341,46 +1347,39 @@
 
       /* Status Card */
       .lyfe-sidebar-status-card {
-        margin: 14px 18px 6px !important;
-        padding: 12px 14px !important;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)) !important;
+        margin: 14px 18px 8px !important;
+        padding: 14px 18px !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)) !important;
         border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-radius: 12px !important;
+        border-radius: 14px !important;
         display: flex !important;
         align-items: center !important;
-        gap: 12px !important;
         flex-shrink: 0 !important;
       }
 
       .lyfe-sidebar-status-icon {
-        width: 34px !important;
-        height: 34px !important;
-        border-radius: 9px !important;
-        background: rgba(245, 158, 11, 0.15) !important;
-        border: 1px solid rgba(245, 158, 11, 0.3) !important;
-        color: #f59e0b !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 0.95rem !important;
+        display: none !important;
       }
 
       .lyfe-sidebar-status-info {
         display: flex !important;
         flex-direction: column !important;
-        gap: 2px !important;
+        gap: 3px !important;
+        width: 100% !important;
       }
 
       .lyfe-sidebar-status-title {
-        font-size: 0.85rem !important;
-        font-weight: 600 !important;
+        font-size: 0.98rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 1.5px !important;
         color: #ffffff !important;
+        text-transform: uppercase !important;
       }
 
       .lyfe-sidebar-status-sub {
         font-size: 0.68rem !important;
         color: rgba(255, 255, 255, 0.5) !important;
-        letter-spacing: 0.5px !important;
+        letter-spacing: 0.8px !important;
       }
 
       /* Scroll Area */
@@ -1538,6 +1537,10 @@
         transition: all 0.25s ease !important;
         user-select: none !important;
         -webkit-tap-highlight-color: transparent !important;
+      }
+
+      .lyfe-sidebar-control-btn .theme-switch-icon {
+        display: none !important;
       }
 
       .lyfe-sidebar-control-btn:hover {
@@ -1757,6 +1760,12 @@
         .hamburger {
           display: flex !important;
         }
+        header .theme-switch-btn,
+        .navbar .theme-switch-btn,
+        .top-nav .theme-switch-btn,
+        #themeSwitchBtn {
+          display: none !important;
+        }
       }
 
       @media (min-width: 769px) {
@@ -1857,11 +1866,8 @@
           </div>
 
           <div class="lyfe-sidebar-status-card">
-            <div class="lyfe-sidebar-status-icon">
-              <i class="fa-solid fa-crown"></i>
-            </div>
             <div class="lyfe-sidebar-status-info">
-              <div class="lyfe-sidebar-status-title">ไลฟ์สไตล์มีกูเป็นมงกฎ</div>
+              <div class="lyfe-sidebar-status-title">LYFESTYLE</div>
               <div class="lyfe-sidebar-status-sub">GANG SYSTEM • 6 YEARS</div>
             </div>
           </div>
@@ -1958,7 +1964,7 @@
             </div>
             <div class="lyfe-sidebar-controls-grid">
               <button type="button" class="lyfe-sidebar-control-btn theme-switch-btn" id="sidebarThemeBtn" title="สลับโหมดมืด / สว่าง">
-                <i class="fa-solid fa-moon theme-switch-icon" id="sidebarThemeIcon"></i>
+                <i class="theme-switch-icon" id="sidebarThemeIcon" style="display: none;"></i>
                 <span id="sidebarThemeText">โหมดมืด</span>
               </button>
               <button type="button" class="lyfe-sidebar-control-btn" id="sidebarMusicToggleBtn" title="เปิด / ปิด เสียงเพลง">
@@ -2210,7 +2216,10 @@
       const isLight = document.body.classList.contains("light-theme") || document.documentElement.classList.contains("light-theme");
       const icon = document.getElementById("sidebarThemeIcon");
       const text = document.getElementById("sidebarThemeText");
-      if (icon) icon.className = isLight ? "fa-solid fa-sun theme-switch-icon" : "fa-solid fa-moon theme-switch-icon";
+      if (icon) {
+        icon.className = isLight ? "fa-solid fa-sun theme-switch-icon" : "fa-solid fa-moon theme-switch-icon";
+        icon.style.display = "none";
+      }
       if (text) text.textContent = isLight ? "โหมดสว่าง" : "โหมดมืด";
     }
 
